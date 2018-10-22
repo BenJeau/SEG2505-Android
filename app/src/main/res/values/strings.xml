@@ -2,4 +2,19 @@
     <string name="app_name">SEG2505Project</string>
     <string name="title_activity_admin">AdminActivity</string>
     <string name="title_activity_welcome">WelcomeActivity</string>
+
+    <!-- Login Activity -->
+    <string name="login_title">Service de fournisseurs</string>
+    <string name="login_password_hint">Password</string>
+    <string name="login_username_hint">Username</string>
+    <string name="login_button">Login</string>
+
+    <!-- Welcome Activity -->
+    <string name="welcome_placeholder">Placeholder text, should say \'Bienvenue PRENOM! Vous avez une session en tant que ROLE D\’UTILISATEUR\' then if admin go to admin activity, same with the user\'s</string>
+
+    <!-- Administrator Activity -->
+    <string name="admin_appbar_title">Administrator</string>
+    <string name="admin_username_hint">Username</string>
+    <string name="admin_password_hint">Password</string>
+    <string name="admin_create_user_button">Create User</string>
 </resources>
