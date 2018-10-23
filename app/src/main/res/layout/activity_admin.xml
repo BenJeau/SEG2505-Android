@@ -12,12 +12,12 @@
         android:id="@+id/createUserTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="4dp"
-        android:text="Create a new user"
+        android:layout_marginStart="4dp"
+        android:text="@string/admin_subtitle"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.design.widget.TextInputLayout
@@ -34,6 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/admin_username_hint" />
+
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout

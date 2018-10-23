@@ -4,10 +4,13 @@
     <string name="title_activity_welcome">WelcomeActivity</string>
 
     <!-- Login Activity -->
-    <string name="login_title">Service de fournisseurs</string>
+    <string name="login_title_second">fournisseurs</string>
+    <string name="login_title_first">Service de </string>
     <string name="login_password_hint">Password</string>
     <string name="login_username_hint">Username</string>
     <string name="login_button">Login</string>
+    <string name="login_hint">Please enter the credentials of your account in the fields above</string>
+    <string name="login_icon_description">Earth</string>
 
     <!-- Welcome Activity -->
     <string name="welcome_placeholder">Placeholder text, should say \'Bienvenue PRENOM! Vous avez une session en tant que ROLE D\’UTILISATEUR\' then if admin go to admin activity, same with the user\'s</string>
@@ -17,4 +20,8 @@
     <string name="admin_username_hint">Username</string>
     <string name="admin_password_hint">Password</string>
     <string name="admin_create_user_button">Create User</string>
+    <string name="admin_subtitle">Create a new user</string>
+
+    <!-- Customer Activity -->
+    <string name="customer_appbar_title">Customer</string>
 </resources>
