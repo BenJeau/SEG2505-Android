@@ -8,6 +8,9 @@ import java.util.*;
 public class Admin extends Person {
 
     private List<Service> services;
+    public Admin(){
+
+    }
 
     public Admin(String email, String password){
         super(email, password);

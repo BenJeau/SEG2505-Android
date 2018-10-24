@@ -10,6 +10,9 @@ public class Person {
     private String email;
     private String password;
 
+    public Person(){
+
+    }
     public Person(String email, String password) {
         this.email = email;
         this.password = password;
