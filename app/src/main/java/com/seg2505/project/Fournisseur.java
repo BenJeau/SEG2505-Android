@@ -10,8 +10,8 @@ public class Fournisseur extends Person {
     private List<Service> services;
     private List<Disponibilite> disponibilites;
 
-    public Fournisseur(String aName, String aLastName) {
-        super(aName, aLastName);
+    public Fournisseur(String email, String password) {
+        super(email, password);
         services = new ArrayList<Service>();
         disponibilites = new ArrayList<Disponibilite>();
     }

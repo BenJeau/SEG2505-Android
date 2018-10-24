@@ -13,9 +13,9 @@ public class Proprietaire extends Person {
 
 
     // CONSTRUCTOR
-    public Proprietaire(String aName, String aLastName) {
+    public Proprietaire(String email, String password) {
 
-        super(aName, aLastName);
+        super(email, password);
         services = new ArrayList<Service>();
     }
 

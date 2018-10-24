@@ -9,8 +9,8 @@ public class Admin extends Person {
 
     private List<Service> services;
 
-    public Admin(String aName, String aLastName){
-        super(aName, aLastName);
+    public Admin(String email, String password){
+        super(email, password);
         services = new ArrayList<Service>();
     }
 

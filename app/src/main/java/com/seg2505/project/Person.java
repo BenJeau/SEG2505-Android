@@ -7,26 +7,26 @@ package com.seg2505.project;
 public class Person {
 
     //Person Attributes
-    private String name;
-    private String lastName;
+    private String email;
+    private String password;
 
-    public Person(String aName, String aLastName) {
-        name = aName;
-        lastName = aLastName;
+    public Person(String email, String password) {
+        this.email = email;
+        this.password = password;
     }
 
-    public String getName() {
-        return name;
+    public String getEmail() {
+        return email;
     }
 
 
-    public String getLastName() {
-        return lastName;
+    public String getPassword() {
+        return password;
     }
 
     public String toString() {
         return super.toString() + "["+
-                        "name" + ":" + getName()+ "," +
-                        "lastName" + ":" + getLastName()+ "]";
+                        "name" + ":" + getEmail()+ "," +
+                        "lastName" + ":" + getPassword()+ "]";
     }
 }
