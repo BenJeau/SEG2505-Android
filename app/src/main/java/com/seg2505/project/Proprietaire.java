@@ -10,6 +10,9 @@ public class Proprietaire extends Person {
     //Proprietaire Associations
 
     private List<Service> services;
+    public Proprietaire() {
+
+    }
 
 
     // CONSTRUCTOR

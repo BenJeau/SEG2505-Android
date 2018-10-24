@@ -59,6 +59,43 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
 
+                userReference1.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for(DataSnapshot postSnapshot : dataSnapshot.getChildren()){
+                            Proprietaire user = postSnapshot.getValue(Proprietaire.class);
+                            if (username.equals(user.getEmail())&& password.equals(user.getPassword())){
+                                Intent intent = new Intent(LoginActivity.this,WelcomeActivity.class);
+                                startActivity(intent);
+
+                            }
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+                serviceProviderReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for(DataSnapshot postSnapshot : dataSnapshot.getChildren()){
+                            Fournisseur user = postSnapshot.getValue(Fournisseur.class);
+                            if (username.equals(user.getEmail())&& password.equals(user.getPassword())){
+                                Intent intent = new Intent(LoginActivity.this,WelcomeActivity.class);
+                                startActivity(intent);
+
+                            }
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+
             }
         });
 

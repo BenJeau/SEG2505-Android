@@ -20,7 +20,6 @@ public class SignupActivity extends AppCompatActivity {
     Spinner role;
     EditText username;
     EditText psswrd;
-    TextView tx;
     FirebaseDatabase database;
 
 
@@ -32,7 +31,6 @@ public class SignupActivity extends AppCompatActivity {
         username = (EditText) findViewById(R.id.usernameEditText);
         psswrd = (EditText) findViewById(R.id.passwordEditText);
         role = (Spinner) findViewById(R.id.spinner);
-        tx = (TextView) findViewById(R.id.textView);
 
         database = FirebaseDatabase.getInstance();
 
@@ -45,7 +43,6 @@ public class SignupActivity extends AppCompatActivity {
         a.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tx.setText("jjjjj");
                 Person ac = null;
 
 
