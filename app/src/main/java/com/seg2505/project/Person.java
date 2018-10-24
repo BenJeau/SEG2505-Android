@@ -28,8 +28,6 @@ public class Person {
     }
 
     public String toString() {
-        return super.toString() + "["+
-                        "name" + ":" + getEmail()+ "," +
-                        "lastName" + ":" + getPassword()+ "]";
+        return  "["+ "name" + ":" + getEmail()+ "," + "lastName" + ":" + getPassword()+ "]";
     }
 }

@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 public class SignupActivity extends AppCompatActivity {
 
-    DatabaseReference userReference,adminReference,serviceProviderReference;
+    DatabaseReference userReference, adminReference, serviceProviderReference;
     Button a;
     Spinner role;
     EditText username;
@@ -28,17 +28,17 @@ public class SignupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-         a  = (Button) findViewById(R.id.createUserButton);
-         username = (EditText) findViewById(R.id.usernameEditText);
-         psswrd = (EditText) findViewById(R.id.passwordEditText);
-         role = (Spinner)  findViewById(R.id.spinner);
-         tx = (TextView) findViewById(R.id.textView);
+        a = (Button) findViewById(R.id.createUserButton);
+        username = (EditText) findViewById(R.id.usernameEditText);
+        psswrd = (EditText) findViewById(R.id.passwordEditText);
+        role = (Spinner) findViewById(R.id.spinner);
+        tx = (TextView) findViewById(R.id.textView);
 
-         database= FirebaseDatabase.getInstance();
+        database = FirebaseDatabase.getInstance();
 
-         userReference = database.getReference("users");
-         adminReference = userReference.child("admins");
-         serviceProviderReference= userReference.child("service Providers");
+        userReference = database.getReference("users");
+        adminReference = userReference.child("admins");
+        serviceProviderReference = userReference.child("service Providers");
         final DatabaseReference userReference1 = userReference.child("proprietaires");
 
 
@@ -49,13 +49,13 @@ public class SignupActivity extends AppCompatActivity {
                 Person ac = null;
 
 
-                if (role.getSelectedItem().equals("Admin")){
+                if (role.getSelectedItem().equals("Admin")) {
                     ac = new Admin(username.getText().toString(), psswrd.getText().toString());
                     adminReference.push().setValue(ac);
-                } else if(role.getSelectedItem() .equals("Prodiver")){
+                } else if (role.getSelectedItem().equals("Prodiver")) {
                     ac = new Fournisseur(username.getText().toString(), psswrd.getText().toString());
                     serviceProviderReference.push().setValue(ac);
-                }else if(role.getSelectedItem().equals("User") ){
+                } else if (role.getSelectedItem().equals("User")) {
                     ac = new Proprietaire(username.getText().toString(), psswrd.getText().toString());
                     userReference1.push().setValue(ac);
                 }
@@ -63,29 +63,6 @@ public class SignupActivity extends AppCompatActivity {
             }
         });
 
-        }
+    }
 
-
-
-    //databaseService = FirebaseDatabase.getInstance().getReference("products");
-
-//    public void CreateUser(){
-//        EditText username = (EditText) findViewById(R.id.usernameEditText);
-//        EditText psswrd = (EditText) findViewById(R.id.passwordEditText);
-//        Spinner role = (Spinner)  findViewById(R.id.spinner);
-//
-//
-//
-//        if (role.getSelectedItem() == "Admin"){
-//             a = new Admin(username.getText().toString(), psswrd.getText().toString());
-//        } else if(role.getSelectedItem() == "Service provider"){
-//             a = new Fournisseur(username.getText().toString(), psswrd.getText().toString());
-//        }else if(role.getSelectedItem() == "Proprietaire"){
-//             a = new Proprietaire(username.getText().toString(), psswrd.getText().toString());
-//        }
-//        System.out.println(role.getSelectedItem());
-//        TextView txt = (TextView) findViewById(R.id.textView);
-//        txt.setText("jjjjj");
-//        setContentView(R.layout.activity_login);
-//    }
 }
