@@ -5,14 +5,24 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class SignupActivity extends AppCompatActivity {
+
+    DatabaseReference databaseService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
     }
+
+    databaseService = FirebaseDatabase.getInstance().getReference("products");
+
     public void CreateUser(View view){
         EditText username = (EditText) findViewById(R.id.usernameEditText);
         EditText psswrd = (EditText) findViewById(R.id.passwordEditText);
