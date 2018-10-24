@@ -93,6 +93,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
+                app:errorEnabled="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/loginFirstTitle">
@@ -102,7 +103,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:hint="@string/login_username_hint" />
+                    android:hint="@string/login_username_hint"
+                    android:inputType="textPersonName"
+                    android:maxLines="1"
+                    android:singleLine="true"  />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -110,7 +114,7 @@
                 android:id="@+id/passwordLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                app:errorEnabled="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/usernameLayout">
@@ -120,7 +124,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:hint="@string/login_password_hint" />
+                    android:hint="@string/login_password_hint"
+                    android:inputType="textPersonName"
+                    android:maxLines="1"
+                    android:singleLine="true"  />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -146,6 +153,29 @@
             app:layout_constraintStart_toStartOf="@+id/constraintLayout"
             app:layout_constraintTop_toTopOf="@+id/constraintLayout" />
 
+        <Button
+            android:id="@+id/signupButton"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="48dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/signup_button"
+            android:elevation="5dp"
+            android:padding="5dp"
+            android:stateListAnimator="@animator/login_button_animator"
+            android:text="@string/signup_button"
+            android:textColor="@drawable/login_button_text"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/constraintLayout"
+            app:layout_constraintStart_toStartOf="@+id/constraintLayout"
+            app:layout_constraintTop_toBottomOf="@+id/loginButton" />
+
+        <!--
         <TextView
             android:id="@+id/explanation"
             android:layout_width="0dp"
@@ -163,7 +193,7 @@
             app:layout_constraintEnd_toEndOf="@+id/constraintLayout"
             app:layout_constraintStart_toStartOf="@+id/constraintLayout"
             app:layout_constraintTop_toBottomOf="@+id/loginButton" />
-
+            -->
     </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>

@@ -6,12 +6,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-public class AdminActivity extends AppCompatActivity {
+public class SignupActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin);
+        setContentView(R.layout.activity_signup);
     }
     public void CreateUser(View view){
         EditText username = (EditText) findViewById(R.id.usernameEditText);
