@@ -1,5 +1,6 @@
 package com.seg2505.project;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -40,7 +41,7 @@ public class SignupActivity extends AppCompatActivity {
             Person ac;
             @Override
             public void onClick(View view) {
-                tx.setText("jjjjj");
+
 
 
                 if (role.getSelectedItem() == "Admin"){
@@ -50,7 +51,11 @@ public class SignupActivity extends AppCompatActivity {
                 }else if(role.getSelectedItem() == "Proprietaire"){
                     ac = new Proprietaire(username.getText().toString(), psswrd.getText().toString());
                 }
-                //setContentView(R.layout.activity_login);
+                String str = ac.toString();
+                tx.setText(str);
+                Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
+                intent.putExtra("psswrd", ac.getPassword());
+                intent.putExtra("user", ac.getEmail());
             }
         });
 
