@@ -47,7 +47,6 @@
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="46dp"
-        android:onClick="CreateUser"
         android:text="@string/admin_create_user_button"
         app:layout_constraintStart_toStartOf="@+id/usernameLayout"
         app:layout_constraintTop_toBottomOf="@+id/spinner" />
@@ -61,5 +60,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/passwordLayout" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="223dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        app:layout_constraintTop_toBottomOf="@+id/createUserButton"
+        tools:layout_editor_absoluteX="16dp" />
 
 </android.support.constraint.ConstraintLayout>
