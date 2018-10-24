@@ -16,21 +16,31 @@ import android.widget.TextView;
 public class SignupActivity extends AppCompatActivity {
 
     DatabaseReference databaseService;
+    Button a;
+    Spinner role;
+    EditText username;
+    EditText psswrd;
+    TextView tx;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-        Button a  = (Button) findViewById(R.id.createUserButton);
+         a  = (Button) findViewById(R.id.createUserButton);
+         username = (EditText) findViewById(R.id.usernameEditText);
+         psswrd = (EditText) findViewById(R.id.passwordEditText);
+         role = (Spinner)  findViewById(R.id.spinner);
+         tx = (TextView) findViewById(R.id.textView);
+        tx.setText("jjjjj");
+
+
 
         a.setOnClickListener(new View.OnClickListener() {
             Person ac;
             @Override
             public void onClick(View view) {
-                EditText username = (EditText) findViewById(R.id.usernameEditText);
-                EditText psswrd = (EditText) findViewById(R.id.passwordEditText);
-                Spinner role = (Spinner)  findViewById(R.id.spinner);
-
+                tx.setText("jjjjj");
 
 
                 if (role.getSelectedItem() == "Admin"){
@@ -40,10 +50,7 @@ public class SignupActivity extends AppCompatActivity {
                 }else if(role.getSelectedItem() == "Proprietaire"){
                     ac = new Proprietaire(username.getText().toString(), psswrd.getText().toString());
                 }
-                System.out.println(role.getSelectedItem());
-                TextView txt = (TextView) findViewById(R.id.textView);
-                txt.setText("jjjjj");
-                setContentView(R.layout.activity_login);
+                //setContentView(R.layout.activity_login);
             }
         });
 
