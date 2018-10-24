@@ -12,6 +12,10 @@
         <activity
             android:name=".LoginActivity"
             android:theme="@style/NoActionBar">
+        </activity>
+        <activity
+            android:name=".WelcomeActivity"
+            android:theme="@style/NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,11 +23,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".WelcomeActivity"
-            android:theme="@style/NoActionBar"></activity>
-        <activity
             android:name=".AdminActivity"
-            android:label="@string/admin_appbar_title"></activity>
+            android:label="@string/admin_appbar_title">
+        </activity>
         <activity android:name=".CustomerActivity"
             android:label="@string/customer_appbar_title"></activity>
     </application>

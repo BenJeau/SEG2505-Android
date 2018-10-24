@@ -21,6 +21,12 @@
     <string name="admin_password_hint">Password</string>
     <string name="admin_create_user_button">Create User</string>
     <string name="admin_subtitle">Create a new user</string>
+    <string-array name="admin_roles">
+        <item>Choose a role</item>
+        <item>Admin</item>
+        <item>Fournisseur</item>
+        <item>Utilisateur</item>
+    </string-array>
 
     <!-- Customer Activity -->
     <string name="customer_appbar_title">Customer</string>
