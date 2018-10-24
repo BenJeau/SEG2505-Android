@@ -7,3 +7,4 @@ Nous utilisons [Trello](https://trello.com/b/3PInGFvG/seg-android-app) pour gard
 Ce répertoire contient le code nécessaire pour l'ouvrir dans Android Studio. Nous utilisons la version 3.2.1 de Android Studio.
 
 Nous utilisons UmpleOnline pour notre UML du code. Voici le lien: http://cruise.eecs.uottawa.ca/umpleonline/umple.php?model=181024659518#. 
+Faire sûr de peser le M pour voir les méthodes sur Umple après avoir clické le lien SVP.
