@@ -64,7 +64,7 @@
                 android:layout_width="1dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.46" />
+                app:layout_constraintGuide_percent="0.5" />
 
             <TextView
                 android:id="@+id/loginFirstTitle"
@@ -125,7 +125,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:hint="@string/login_password_hint"
-                    android:inputType="textPersonName"
+                    android:inputType="textPassword"
                     android:maxLines="1"
                     android:singleLine="true"  />
 
@@ -139,7 +139,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="237dp"
+            android:layout_marginTop="239dp"
             android:layout_marginEnd="32dp"
             android:background="@drawable/login_button"
             android:elevation="10dp"
@@ -153,6 +153,7 @@
             app:layout_constraintStart_toStartOf="@+id/constraintLayout"
             app:layout_constraintTop_toTopOf="@+id/constraintLayout" />
 
+        <!--
         <Button
             android:id="@+id/signupButton"
             style="@style/Widget.AppCompat.Button.Colored"
@@ -174,9 +175,8 @@
             app:layout_constraintEnd_toEndOf="@+id/constraintLayout"
             app:layout_constraintStart_toStartOf="@+id/constraintLayout"
             app:layout_constraintTop_toBottomOf="@+id/loginButton"
-            android:onClick="setContent"/>
+            android:onClick="setContent"/>-->
 
-        <!--
         <TextView
             android:id="@+id/explanation"
             android:layout_width="0dp"
@@ -187,14 +187,14 @@
             android:maxLines="2"
             android:singleLine="false"
             android:text="@string/login_hint"
+            android:textColor="@drawable/explanation_text"
             android:textAlignment="center"
-            android:textColor="@color/secondaryDarkColor"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/constraintLayout"
             app:layout_constraintStart_toStartOf="@+id/constraintLayout"
             app:layout_constraintTop_toBottomOf="@+id/loginButton" />
-            -->
+
     </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>

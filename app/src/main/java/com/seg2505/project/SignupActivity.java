@@ -5,13 +5,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
-import com.google.firebase.database.DataSnapshot;
+
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+
 import android.widget.Button;
-import android.widget.TextView;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -27,10 +25,10 @@ public class SignupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-        a = (Button) findViewById(R.id.createUserButton);
+        a = (Button) findViewById(R.id.signupButton);
         username = (EditText) findViewById(R.id.usernameEditText);
         psswrd = (EditText) findViewById(R.id.passwordEditText);
-        role = (Spinner) findViewById(R.id.spinner);
+        role = (Spinner) findViewById(R.id.dropdown);
 
         database = FirebaseDatabase.getInstance();
 

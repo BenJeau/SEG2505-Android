@@ -1,33 +1,32 @@
 <resources>
     <string name="app_name">SEG2505Project</string>
-    <string name="title_activity_admin">AdminActivity</string>
-    <string name="title_activity_welcome">WelcomeActivity</string>
 
     <!-- Login Activity -->
-    <string name="login_title_second">fournisseurs</string>
-    <string name="login_title_first">Service de </string>
+    <string name="login_title_second">Finder</string>
+    <string name="login_title_first">Service</string>
     <string name="login_password_hint">Password</string>
     <string name="login_username_hint">Username</string>
     <string name="login_button">Login</string>
-    <string name="signup_button">Sign up</string>
-    <string name="login_hint">Please enter the credentials of your account in the fields above</string>
+    <string name="login_hint">If you don\'t have an account, click here to sign up</string>
     <string name="login_icon_description">Earth</string>
+
+    <!-- Sign up Activity -->
+    <string name="signup_username_hint">Username</string>
+    <string name="signup_password_hint">Password</string>
+    <string name="signup_button">Sign Up</string>
+    <string name="signup_title_first">Create new</string>
+    <string name="signup_title_second">account</string>
+    <string name="signup_dropdown_title">Choose a role</string>
+    <string-array name="signup_dropdown_list">
+        <item>User</item>
+        <item>Provider</item>
+    </string-array>
 
     <!-- Welcome Activity -->
     <string name="welcome_placeholder">Placeholder text, should say \'Bienvenue PRENOM! Vous avez une session en tant que ROLE D\’UTILISATEUR\' then if admin go to admin activity, same with the user\'s</string>
 
-    <!-- Sign up Activity -->
-    <string name="admin_appbar_title">Sign Up</string>
-    <string name="admin_username_hint">Username</string>
-    <string name="admin_password_hint">Password</string>
-    <string name="admin_create_user_button">Create User</string>
-    <string-array name="admin_roles">
-        <item>Choose a role</item>
-        <item>Admin</item>
-        <item>Prodiver</item>
-        <item>User</item>
-    </string-array>
-
     <!-- Customer Activity -->
     <string name="customer_appbar_title">Customer</string>
+
+    <!-- Administrator Activity -->
 </resources>

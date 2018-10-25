@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -16,7 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
 
-    Button btnSignUp;
+    TextView btnSignUp;
     Button btnSignIn;
     EditText edtUsername;
     EditText edtPassword;
@@ -27,7 +28,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         btnSignIn = (Button) findViewById(R.id.loginButton );
 
-        btnSignUp = (Button) findViewById(R.id.signupButton  );
+        btnSignUp = (TextView) findViewById(R.id.explanation  );
         edtUsername = (EditText) findViewById(R.id.usernameEditText);
         edtPassword = (EditText) findViewById(R.id.passwordEditText);
         database= FirebaseDatabase.getInstance();
