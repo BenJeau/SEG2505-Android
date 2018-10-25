@@ -12,9 +12,11 @@ Faire sûr de peser le M pour voir les méthodes sur Umple après avoir clické 
 Pour accéder à notre répertoire [github](https://github.com/BenJeau/SEG2505-Android), utiliser le lien donner.
 
 Membres de l'équipe:
-github username : nom                             : numéro étudiant
-BenJeau              : Benoit Jeaurond          : 300015520
-amous123           : Alexander Moussa       : 300018112
-dngen049            : diedrick ngendahayo   : 300008344
-vergenieh             : Vergenie Howayek       : 300008321
-amprodz              : Aymen Mhamdi            : 300034572
+
+|Github Username | Nom  | Numéro Étudiant |
+| --- | --- | --- |
+|BenJeau              | Benoit Jeaurond        | 300015520|
+|amous123           | Alexander Moussa      | 300018112|
+|dngen049           | diedrick ngendahayo | 300008344|
+|vergenieh            |Vergenie Howayek    |300008321|
+|amprodz          | Aymen Mhamdi          |300034572|
