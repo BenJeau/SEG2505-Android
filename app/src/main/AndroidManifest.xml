@@ -25,9 +25,6 @@
         <activity
             android:name=".SignupActivity"
             android:theme="@style/NoActionBar"></activity>
-        <activity
-            android:name=".CustomerActivity"
-            android:label="@string/customer_appbar_title" />
         <activity android:name=".AdminActivity"
             android:label="Administrator"></activity>
     </application>

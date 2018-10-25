@@ -8,3 +8,13 @@ Ce répertoire contient le code nécessaire pour l'ouvrir dans Android Studio. N
 
 Nous utilisons UmpleOnline pour notre UML du code. Voici le lien pour notre premier livrable: http://cruise.eecs.uottawa.ca/umpleonline/umple.php?model=181024659518#. 
 Faire sûr de peser le M pour voir les méthodes sur Umple après avoir clické le lien SVP.
+
+Pour accéder à notre répertoire [github](https://github.com/BenJeau/SEG2505-Android), utiliser le lien donner.
+
+Membres de l'équipe:
+github username : nom                             : numéro étudiant
+BenJeau              : Benoit Jeaurond          : 300015520
+amous123           : Alexander Moussa       : 300018112
+dngen049            : diedrick ngendahayo   : 300008344
+vergenieh             : Vergenie Howayek       : 300008321
+amprodz              : Aymen Mhamdi            : 300034572

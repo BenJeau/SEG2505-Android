@@ -26,4 +26,6 @@
     <string name="customer_appbar_title">Customer</string>
 
     <!-- Administrator Activity -->
+    <string name="admin_first_row">Username</string>
+    <string name="admin_second_row">Role</string>
 </resources>
