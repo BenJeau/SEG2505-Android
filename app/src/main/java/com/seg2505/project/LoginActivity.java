@@ -30,6 +30,10 @@ public class LoginActivity extends AppCompatActivity {
     EditText edtPassword;
     DatabaseReference userReference;
     FirebaseDatabase database;
+
+    public static final String INTENT_KEY_NAME = "name";
+    public static final String INTENT_KEY_ROLE = "role";
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
@@ -86,6 +90,8 @@ public class LoginActivity extends AppCompatActivity {
                                         if (username.equals(user.getEmail())&& password.equals(user.getPassword())){
                                             Toast.makeText(getApplicationContext(), "Successfully Logged in", Toast.LENGTH_SHORT).show();
                                             Intent intent = new Intent(LoginActivity.this,WelcomeActivity.class);
+                                            intent.putExtra(INTENT_KEY_NAME, user.getEmail());
+                                            intent.putExtra(INTENT_KEY_ROLE, user.role);
                                             startActivity(intent);
 
                                         }
