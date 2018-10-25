@@ -3,6 +3,7 @@ package com.seg2505.project;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -10,8 +11,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import android.widget.Button;
 import android.widget.Toast;
@@ -27,6 +31,8 @@ public class SignupActivity extends AppCompatActivity {
     EditText edtUsername;
     EditText edtPassword;
     FirebaseDatabase database;
+    boolean exists = false;
+
 
 
     @Override
@@ -39,6 +45,7 @@ public class SignupActivity extends AppCompatActivity {
         role = (Spinner) findViewById(R.id.dropdown);
 
         database = FirebaseDatabase.getInstance();
+
 
 
         databaseReference = database.getReference("users");
@@ -62,9 +69,39 @@ public class SignupActivity extends AppCompatActivity {
                 if (!isValidPassword(password) &&!TextUtils.isEmpty(password) ){
                     edtPassword.setError("Password must be a minimum of 4 characters and have at least one capital letter and one number.");
                 }
+
+                databaseReference.addListenerForSingleValueEvent(new ValueEventListener(){
+
+
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        Person user = null;
+                        for(DataSnapshot postSnapshot : dataSnapshot.getChildren()){
+                            user = postSnapshot.getValue(Person.class);
+
+                            if (edtUsername.getText().toString().equals(user.getEmail())){
+                                exists = true;
+
+                                break;
+
+                            }
+                        }
+                        if(exists) {
+
+                            edtUsername.setError("Username already exist");
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+
                 Person ac = null;
 
-                if (username.length()>2 && isValidPassword(password)){
+                if (username.length()>2 && isValidPassword(password) && !exists ){
                     final ProgressDialog progressDialog = new ProgressDialog(SignupActivity.this, R.style.AppTheme_Blue_Dialog);
                     progressDialog.setIndeterminate(true);
                     progressDialog.setCancelable(false);
