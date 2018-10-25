@@ -15,6 +15,7 @@ public class Fournisseur extends Person {
     }
     public Fournisseur(String email, String password) {
         super(email, password);
+        this.role= "Provider";
         services = new ArrayList<Service>();
         disponibilites = new ArrayList<Disponibilite>();
     }

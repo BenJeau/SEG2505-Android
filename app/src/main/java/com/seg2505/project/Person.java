@@ -9,6 +9,7 @@ public class Person {
     //Person Attributes
     private String email;
     private String password;
+    String role;
 
     public Person(){
 

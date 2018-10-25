@@ -19,6 +19,7 @@ public class Proprietaire extends Person {
     public Proprietaire(String email, String password) {
 
         super(email, password);
+        this.role = "User";
         services = new ArrayList<Service>();
     }
 

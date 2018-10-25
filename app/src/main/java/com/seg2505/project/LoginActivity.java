@@ -1,13 +1,16 @@
 package com.seg2505.project;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,7 +24,7 @@ public class LoginActivity extends AppCompatActivity {
     Button btnSignIn;
     EditText edtUsername;
     EditText edtPassword;
-    DatabaseReference userReference,adminReference,serviceProviderReference,proprietaireReference;
+    DatabaseReference userReference;
     FirebaseDatabase database;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,67 +37,56 @@ public class LoginActivity extends AppCompatActivity {
         database= FirebaseDatabase.getInstance();
 
         userReference = database.getReference("users");
-        adminReference = userReference.child("admins");
-        serviceProviderReference= userReference.child("service Providers");
-        final DatabaseReference userReference1 = userReference.child("proprietaires");
+
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final String username = edtUsername.getText().toString();
                 final String password = edtPassword.getText().toString();
-                adminReference.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for(DataSnapshot postSnapshot : dataSnapshot.getChildren()){
-                            Admin admin = postSnapshot.getValue(Admin.class);
-                            if (username.equals(admin.getEmail())&& password.equals(admin.getPassword())){
-                                Intent intent = new Intent(LoginActivity.this,WelcomeActivity.class);
-                                startActivity(intent);
 
+                if(TextUtils.isEmpty(username)) {
+                    edtUsername.setError("User field cannot be empty");
+
+                }
+                if(username.length()<3 && !TextUtils.isEmpty(username)) {
+
+                    edtUsername.setError("Username must be 3 characters long");
+                }
+                if(TextUtils.isEmpty(password)) {
+                    edtPassword.setError("Password field cannot be empty");
+                }
+
+                if (username.length()>2 && !TextUtils.isEmpty(username)&& !TextUtils.isEmpty(password)){
+                    userReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+                            for(DataSnapshot postSnapshot : dataSnapshot.getChildren()){
+                                Person user = postSnapshot.getValue(Admin.class);
+                                if (username.equals(user.getEmail())&& password.equals(user.getPassword())){
+                                    Toast.makeText(getApplicationContext(), "Successfully Logged in", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(LoginActivity.this,WelcomeActivity.class);
+                                    startActivity(intent);
+
+                                }
+                                else {
+                                    Toast.makeText(getApplicationContext(), "Wrong login", Toast.LENGTH_SHORT).show();
+                                    edtPassword.getText().clear();
+                                }
                             }
                         }
-                    }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                    }
-                });
-
-                userReference1.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for(DataSnapshot postSnapshot : dataSnapshot.getChildren()){
-                            Proprietaire user = postSnapshot.getValue(Proprietaire.class);
-                            if (username.equals(user.getEmail())&& password.equals(user.getPassword())){
-                                Intent intent = new Intent(LoginActivity.this,WelcomeActivity.class);
-                                startActivity(intent);
-
-                            }
                         }
-                    }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    });
 
-                    }
-                });
+                }
 
-                serviceProviderReference.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for(DataSnapshot postSnapshot : dataSnapshot.getChildren()){
-                            Fournisseur user = postSnapshot.getValue(Fournisseur.class);
-                            if (username.equals(user.getEmail())&& password.equals(user.getPassword())){
-                                Intent intent = new Intent(LoginActivity.this,WelcomeActivity.class);
-                                startActivity(intent);
 
-                            }
-                        }
-                    }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                    }
-                });
+
 
 
             }
