@@ -18,7 +18,7 @@
     <string name="signup_title_second">account</string>
     <string name="signup_dropdown_title">Choose a role</string>
     <string-array name="signup_dropdown_list">
-        <item>User</item>
+        <item>Owner</item>
         <item>Provider</item>
     </string-array>
 
@@ -26,4 +26,6 @@
     <string name="customer_appbar_title">Customer</string>
 
     <!-- Administrator Activity -->
+    <string name="admin_first_row">Username</string>
+    <string name="admin_second_row">Role</string>
 </resources>
