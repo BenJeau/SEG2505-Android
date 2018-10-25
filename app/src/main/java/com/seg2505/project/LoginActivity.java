@@ -28,7 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     Button btnSignIn;
     EditText edtUsername;
     EditText edtPassword;
-    DatabaseReference userReference;
+    DatabaseReference userReference,adminReference;
     FirebaseDatabase database;
 
     public static final String INTENT_KEY_NAME = "name";
@@ -45,6 +45,8 @@ public class LoginActivity extends AppCompatActivity {
         database= FirebaseDatabase.getInstance();
 
         userReference = database.getReference("users");
+        adminReference = database.getReference("Admin");
+
 
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,88 +54,90 @@ public class LoginActivity extends AppCompatActivity {
 
                 final String username = edtUsername.getText().toString();
                 final String password = edtPassword.getText().toString();
+                if (username.equals("Admin")&&password.equals("Admin")){
+                    Toast.makeText(getApplicationContext(), "Admin successfully logged in", Toast.LENGTH_SHORT).show();
 
-                if(TextUtils.isEmpty(username)) {
-                    edtUsername.setError("User field cannot be empty.");
-
+                    Intent intent = new Intent(LoginActivity.this,AdminActivity.class);
+                    startActivity(intent);
                 }
-                if(username.length()<3 && !TextUtils.isEmpty(username)) {
+                else {
+                    if(TextUtils.isEmpty(username)) {
+                        edtUsername.setError("User field cannot be empty.");
 
-                    edtUsername.setError("Username must be 3 characters long.");
-                }
-                if(TextUtils.isEmpty(password)) {
-                    edtPassword.setError("Password field cannot be empty.");
-                }
-                if (!isValidPassword(password) && !TextUtils.isEmpty(password)){
-                    edtPassword.setError("Password must be a minimum of 4 characters and have at least one capital letter and one number.");
-                }
+                    }
+                    if(username.length()<3 && !TextUtils.isEmpty(username)) {
 
-                if (username.length()>2 && !TextUtils.isEmpty(username)&&  isValidPassword(password)){
-                    final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this, R.style.AppTheme_Red_Dialog);
-                    progressDialog.setIndeterminate(true);
-                    progressDialog.setCancelable(false);
-                    progressDialog.setMessage("Authenticating...");
-                    progressDialog.show();
-                    final Handler handler = new Handler();
-                    final Runnable r = new Runnable(){
+                        edtUsername.setError("Username must be 3 characters long.");
+                    }
+                    if(TextUtils.isEmpty(password)) {
+                        edtPassword.setError("Password field cannot be empty.");
+                    }
+                    if (!isValidPassword(password) && !TextUtils.isEmpty(password)){
+                        edtPassword.setError("Password must be a minimum of 4 characters and have at least one capital letter and one number.");
+                    }
 
-                        @Override
-                        public void run() {
-                            progressDialog.dismiss();
-                            userReference.addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (username.length()>2 && !TextUtils.isEmpty(username)&&  isValidPassword(password)){
+                        final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this, R.style.AppTheme_Red_Dialog);
+                        progressDialog.setIndeterminate(true);
+                        progressDialog.setCancelable(false);
+                        progressDialog.setMessage("Authenticating...");
+                        progressDialog.show();
+                        final Handler handler = new Handler();
+                        final Runnable r = new Runnable(){
 
-                                    Person user = null;
-                                    boolean exists = false;
-                                    for(DataSnapshot postSnapshot : dataSnapshot.getChildren()){
-                                        user = postSnapshot.getValue(Person.class);
+                            @Override
+                            public void run() {
+                                progressDialog.dismiss();
+                                userReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                                        if (username.equals(user.getEmail())){
-                                            exists = true;
+                                        Person user = null;
+                                        boolean exists = false;
+                                        for(DataSnapshot postSnapshot : dataSnapshot.getChildren()){
+                                            user = postSnapshot.getValue(Person.class);
 
-                                            break;
+                                            if (username.equals(user.getEmail())){
+                                                exists = true;
+
+                                                break;
+
+                                            }
+                                        }
+
+                                        if (!exists){
+                                            Toast.makeText(getApplicationContext(), "Wrong login, username not found", Toast.LENGTH_SHORT).show();
+
+                                        }
+                                        else if(exists && user.getPassword().equals(password)) {
+                                            Intent intent= new Intent(LoginActivity.this, WelcomeActivity.class);
+                                            intent.putExtra(INTENT_KEY_NAME, user.getEmail());
+                                            intent.putExtra(INTENT_KEY_ROLE, user.role);
+                                            startActivity(intent);
+                                            Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                                        }
+                                        else if (!password.equals(user.getPassword() ) && exists){
+                                            Toast.makeText(getApplicationContext(), "Wrong login, wrong password", Toast.LENGTH_SHORT).show();
 
                                         }
                                     }
 
-                                    if (!exists){
-                                        Toast.makeText(getApplicationContext(), "Wrong login, username not found", Toast.LENGTH_SHORT).show();
+
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
                                     }
-                                    else if(exists && user.getPassword().equals(password)) {
-                                        Intent intent= new Intent(LoginActivity.this, WelcomeActivity.class);
-                                        intent.putExtra(INTENT_KEY_NAME, user.getEmail());
-                                        intent.putExtra(INTENT_KEY_ROLE, user.role);
-                                        startActivity(intent);
-                                        Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                                    }
-                                    else if (!password.equals(user.getPassword() ) && exists){
-                                        Toast.makeText(getApplicationContext(), "Wrong login, wrong password", Toast.LENGTH_SHORT).show();
-
-                                    }
-                                }
-
-
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                }
-                            });
-                        }
-                    };
-                    handler.postDelayed(r, 1000);
+                                });
+                            }
+                        };
+                        handler.postDelayed(r, 1000);
 
 
 
 
+                    }
                 }
-
-
-
-
-
 
             }
         });
