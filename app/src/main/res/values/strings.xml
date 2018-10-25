@@ -22,9 +22,6 @@
         <item>Provider</item>
     </string-array>
 
-    <!-- Welcome Activity -->
-    <string name="welcome_placeholder">Placeholder text, should say \'Bienvenue PRENOM! Vous avez une session en tant que ROLE D\’UTILISATEUR\' then if admin go to admin activity, same with the user\'s</string>
-
     <!-- Customer Activity -->
     <string name="customer_appbar_title">Customer</string>
 

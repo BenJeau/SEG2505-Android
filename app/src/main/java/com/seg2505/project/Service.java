@@ -9,17 +9,17 @@ public class Service {
 
     //Service Associations
 
-    private List<Fournisseur> fournisseurs;
+    private List<Provider> providers;
 
 
 
 
 
     // CONSTRUCTOR
-    public Service( Proprietaire aProprietaire) {
+    public Service( Owner aOwner) {
 
 
-        fournisseurs = new ArrayList<Fournisseur>();
+        providers = new ArrayList<Provider>();
 
     }
 

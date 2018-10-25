@@ -7,7 +7,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,6 +30,10 @@ public class LoginActivity extends AppCompatActivity {
     EditText edtPassword;
     DatabaseReference userReference;
     FirebaseDatabase database;
+
+    public static final String INTENT_KEY_NAME = "name";
+    public static final String INTENT_KEY_ROLE = "role";
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
@@ -51,18 +54,18 @@ public class LoginActivity extends AppCompatActivity {
                 final String password = edtPassword.getText().toString();
 
                 if(TextUtils.isEmpty(username)) {
-                    edtUsername.setError("User field cannot be empty");
+                    edtUsername.setError("User field cannot be empty.");
 
                 }
                 if(username.length()<3 && !TextUtils.isEmpty(username)) {
 
-                    edtUsername.setError("Username must be 3 characters long");
+                    edtUsername.setError("Username must be 3 characters long.");
                 }
                 if(TextUtils.isEmpty(password)) {
-                    edtPassword.setError("Password field cannot be empty");
+                    edtPassword.setError("Password field cannot be empty.");
                 }
                 if (!isValidPassword(password) && !TextUtils.isEmpty(password)){
-                    edtPassword.setError("Password must be minimum 4 characters and have atleast one Capital letter and one number");
+                    edtPassword.setError("Password must be a minimum of 4 characters and have at least one capital letter and one number.");
                 }
 
                 if (username.length()>2 && !TextUtils.isEmpty(username)&&  isValidPassword(password)){
@@ -71,8 +74,8 @@ public class LoginActivity extends AppCompatActivity {
                     progressDialog.setCancelable(false);
                     progressDialog.setMessage("Authenticating...");
                     progressDialog.show();
-                     Handler handler = new Handler();
-                     Runnable r = new Runnable(){
+                    final Handler handler = new Handler();
+                    final Runnable r = new Runnable(){
 
                         @Override
                         public void run() {
@@ -80,7 +83,6 @@ public class LoginActivity extends AppCompatActivity {
                             userReference.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    Log.i("tagged", username+" "+password+" d  d");
 
                                     Person user = null;
                                     boolean exists = false;
@@ -100,7 +102,10 @@ public class LoginActivity extends AppCompatActivity {
 
                                     }
                                     else if(exists && user.getPassword().equals(password)) {
-                                        startActivity(new Intent(LoginActivity.this, WelcomeActivity.class));
+                                        Intent intent= new Intent(LoginActivity.this, WelcomeActivity.class);
+                                        intent.putExtra(INTENT_KEY_NAME, user.getEmail());
+                                        intent.putExtra(INTENT_KEY_ROLE, user.role);
+                                        startActivity(intent);
                                         Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
                                     }
                                     else if (!password.equals(user.getPassword() ) && exists){
