@@ -18,6 +18,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class LoginActivity extends AppCompatActivity {
 
     TextView btnSignUp;
@@ -55,8 +58,11 @@ public class LoginActivity extends AppCompatActivity {
                 if(TextUtils.isEmpty(password)) {
                     edtPassword.setError("Password field cannot be empty");
                 }
+                if (!isValidPassword(password) && !TextUtils.isEmpty(password)){
+                    edtPassword.setError("Password must be minimum 4 characters and have atleast one Capital letter and one number");
+                }
 
-                if (username.length()>2 && !TextUtils.isEmpty(username)&& !TextUtils.isEmpty(password)){
+                if (username.length()>2 && !TextUtils.isEmpty(username)&&  isValidPassword(password)){
                     userReference.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -73,6 +79,8 @@ public class LoginActivity extends AppCompatActivity {
                                 else {
                                     Toast.makeText(getApplicationContext(), "Wrong login", Toast.LENGTH_SHORT).show();
                                     edtPassword.getText().clear();
+                                    return;
+
                                 }
                             }
                         }
@@ -104,5 +112,19 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
+    public boolean isValidPassword(final String password) {
+
+        Pattern pattern;
+        Matcher matcher;
+
+        final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[A-Z])(?=\\S+$).{4,}$";
+
+        pattern = Pattern.compile(PASSWORD_PATTERN);
+        matcher = pattern.matcher(password);
+
+        return matcher.matches();
+
+    }
+
 
 }

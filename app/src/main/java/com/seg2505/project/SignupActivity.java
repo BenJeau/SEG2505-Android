@@ -15,6 +15,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class SignupActivity extends AppCompatActivity {
 
     DatabaseReference databaseReference;
@@ -55,9 +58,12 @@ public class SignupActivity extends AppCompatActivity {
 
                     edtUsername.setError("Username must be 3 characters long");
                 }
+                if (!isValidPassword(password) &&!TextUtils.isEmpty(password) ){
+                    edtPassword.setError("Password must be minimum 4 characters and have atleast one Capital letter and one number");
+                }
                 Person ac = null;
 
-                if (username.length()>2 && !TextUtils.isEmpty(username)&& !TextUtils.isEmpty(password)){
+                if (username.length()>2 && isValidPassword(password)){
                     if (role.getSelectedItem().equals("Provider")) {
                         ac = new Fournisseur(username, password);
                     } else if (role.getSelectedItem().equals("User")) {
@@ -74,6 +80,20 @@ public class SignupActivity extends AppCompatActivity {
 
             }
         });
+
+    }
+
+    public boolean isValidPassword(final String password) {
+
+        Pattern pattern;
+        Matcher matcher;
+
+        final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[A-Z])(?=\\S+$).{4,}$";
+
+        pattern = Pattern.compile(PASSWORD_PATTERN);
+        matcher = pattern.matcher(password);
+
+        return matcher.matches();
 
     }
 
