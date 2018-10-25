@@ -50,17 +50,17 @@ public class SignupActivity extends AppCompatActivity {
                 String username = edtUsername.getText().toString();
                 String password = edtPassword.getText().toString();
                 if(TextUtils.isEmpty(username)) {
-                    edtUsername.setError("User field cannot be empty");
+                    edtUsername.setError("User field cannot be empty.");
                 }
                 if(TextUtils.isEmpty(password)) {
-                    edtPassword.setError("Password field cannot be empty");
+                    edtPassword.setError("Password field cannot be empty.");
                 }
                 if(username.length()<3 && !TextUtils.isEmpty(username)) {
 
-                    edtUsername.setError("Username must be 3 characters long");
+                    edtUsername.setError("Username must be 3 characters long.");
                 }
                 if (!isValidPassword(password) &&!TextUtils.isEmpty(password) ){
-                    edtPassword.setError("Password must be minimum 4 characters and have atleast one Capital letter and one number");
+                    edtPassword.setError("Password must be a minimum of 4 characters and have at least one capital letter and one number.");
                 }
                 Person ac = null;
 
@@ -83,9 +83,9 @@ public class SignupActivity extends AppCompatActivity {
                         }
                     };
                     if (role.getSelectedItem().equals("Provider")) {
-                        ac = new Fournisseur(username, password);
+                        ac = new Provider(username, password);
                     } else if (role.getSelectedItem().equals("User")) {
-                        ac = new Proprietaire(username, password);
+                        ac = new Owner(username, password);
                     }
                     databaseReference.push().setValue(ac);
                     handler.postDelayed(r,1000);

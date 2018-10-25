@@ -5,18 +5,18 @@ import java.util.*;
  * Diedrick Ng
  * Kame House
  */
-public class Proprietaire extends Person {
+public class Owner extends Person {
 
-    //Proprietaire Associations
+    //Owner Associations
 
     private List<Service> services;
-    public Proprietaire() {
+    public Owner() {
 
     }
 
 
     // CONSTRUCTOR
-    public Proprietaire(String email, String password) {
+    public Owner(String email, String password) {
 
         super(email, password);
         this.role = "User";
