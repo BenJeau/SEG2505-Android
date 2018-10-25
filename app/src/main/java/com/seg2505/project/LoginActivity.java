@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -70,8 +71,8 @@ public class LoginActivity extends AppCompatActivity {
                     progressDialog.setCancelable(false);
                     progressDialog.setMessage("Authenticating...");
                     progressDialog.show();
-                    final Handler handler = new Handler();
-                    final Runnable r = new Runnable(){
+                     Handler handler = new Handler();
+                     Runnable r = new Runnable(){
 
                         @Override
                         public void run() {
@@ -79,28 +80,37 @@ public class LoginActivity extends AppCompatActivity {
                             userReference.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    Log.i("tagged", username+" "+password+" d  d");
 
-
+                                    Person user = null;
+                                    boolean exists = false;
                                     for(DataSnapshot postSnapshot : dataSnapshot.getChildren()){
-                                        Person user = postSnapshot.getValue(Admin.class);
-                                        if (username.equals(user.getEmail())&& password.equals(user.getPassword())){
-                                            Toast.makeText(getApplicationContext(), "Successfully Logged in", Toast.LENGTH_SHORT).show();
-                                            Intent intent = new Intent(LoginActivity.this,WelcomeActivity.class);
-                                            startActivity(intent);
+                                        user = postSnapshot.getValue(Person.class);
 
-                                        }
-                                        else if (!username.equals(user.getEmail())){
-                                            Toast.makeText(getApplicationContext(), "Wrong login, username not found", Toast.LENGTH_SHORT).show();
-                                            return;
+                                        if (username.equals(user.getEmail())){
+                                            exists = true;
 
-                                        }
-                                        else if (!password.equals(user.getPassword() ) && username.equals(user.getEmail())){
-                                            Toast.makeText(getApplicationContext(), "Wrong login, wrong password", Toast.LENGTH_SHORT).show();
-                                            return;
+                                            break;
 
                                         }
                                     }
+
+                                    if (!exists){
+                                        Toast.makeText(getApplicationContext(), "Wrong login, username not found", Toast.LENGTH_SHORT).show();
+
+                                    }
+                                    else if(exists && user.getPassword().equals(password)) {
+                                        startActivity(new Intent(LoginActivity.this, WelcomeActivity.class));
+                                        Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                                    }
+                                    else if (!password.equals(user.getPassword() ) && exists){
+                                        Toast.makeText(getApplicationContext(), "Wrong login, wrong password", Toast.LENGTH_SHORT).show();
+
+                                    }
                                 }
+
+
+
                                 @Override
                                 public void onCancelled(@NonNull DatabaseError databaseError) {
 
