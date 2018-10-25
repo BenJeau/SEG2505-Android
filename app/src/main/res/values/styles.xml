@@ -22,5 +22,18 @@
     </style>
 
 
+    <style name="AppTheme.Blue.Dialog" parent="Theme.AppCompat.Dialog">
+        <item name="colorAccent">@color/white</item>
+        <item name="android:textColorPrimary">@color/iron</item>
+        <item name="android:background">@color/primaryColor</item>
+    </style>
+
+    <style name="AppTheme.Red.Dialog" parent="Theme.AppCompat.Dialog">
+        <item name="colorAccent">@color/white</item>
+        <item name="android:textColorPrimary">@color/iron</item>
+        <item name="android:background">@color/secondaryColor</item>
+    </style>
+
+
 
 </resources>

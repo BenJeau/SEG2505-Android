@@ -2,6 +2,7 @@ package com.seg2505.project;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -64,16 +65,31 @@ public class SignupActivity extends AppCompatActivity {
                 Person ac = null;
 
                 if (username.length()>2 && isValidPassword(password)){
+                    final ProgressDialog progressDialog = new ProgressDialog(SignupActivity.this, R.style.AppTheme_Blue_Dialog);
+                    progressDialog.setIndeterminate(true);
+                    progressDialog.setCancelable(false);
+                    progressDialog.setMessage("Creating account...");
+                    progressDialog.show();
+                    final Handler handler = new Handler();
+                    final Runnable r = new Runnable(){
+
+                        @Override
+                        public void run() {
+                            progressDialog.dismiss();
+                            Toast.makeText(getApplicationContext(), "Account successfully created", Toast.LENGTH_SHORT).show();
+
+                            Intent intent = new Intent(SignupActivity.this,LoginActivity.class);
+                            startActivity(intent);
+                        }
+                    };
                     if (role.getSelectedItem().equals("Provider")) {
                         ac = new Fournisseur(username, password);
                     } else if (role.getSelectedItem().equals("User")) {
                         ac = new Proprietaire(username, password);
                     }
                     databaseReference.push().setValue(ac);
-                    Toast.makeText(getApplicationContext(), "Account successfully created", Toast.LENGTH_SHORT).show();
+                    handler.postDelayed(r,1000);
 
-                    Intent intent = new Intent(SignupActivity.this,LoginActivity.class);
-                    startActivity(intent);
                 }
 
 

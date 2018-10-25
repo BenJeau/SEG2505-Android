@@ -2,6 +2,7 @@ package com.seg2505.project;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -44,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 final String username = edtUsername.getText().toString();
                 final String password = edtPassword.getText().toString();
 
@@ -63,32 +65,53 @@ public class LoginActivity extends AppCompatActivity {
                 }
 
                 if (username.length()>2 && !TextUtils.isEmpty(username)&&  isValidPassword(password)){
-                    userReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this, R.style.AppTheme_Red_Dialog);
+                    progressDialog.setIndeterminate(true);
+                    progressDialog.setCancelable(false);
+                    progressDialog.setMessage("Authenticating...");
+                    progressDialog.show();
+                    final Handler handler = new Handler();
+                    final Runnable r = new Runnable(){
+
                         @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        public void run() {
+                            progressDialog.dismiss();
+                            userReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
 
-                            for(DataSnapshot postSnapshot : dataSnapshot.getChildren()){
-                                Person user = postSnapshot.getValue(Admin.class);
-                                if (username.equals(user.getEmail())&& password.equals(user.getPassword())){
-                                    Toast.makeText(getApplicationContext(), "Successfully Logged in", Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(LoginActivity.this,WelcomeActivity.class);
-                                    startActivity(intent);
+                                    for(DataSnapshot postSnapshot : dataSnapshot.getChildren()){
+                                        Person user = postSnapshot.getValue(Admin.class);
+                                        if (username.equals(user.getEmail())&& password.equals(user.getPassword())){
+                                            Toast.makeText(getApplicationContext(), "Successfully Logged in", Toast.LENGTH_SHORT).show();
+                                            Intent intent = new Intent(LoginActivity.this,WelcomeActivity.class);
+                                            startActivity(intent);
+
+                                        }
+                                        else if (!username.equals(user.getEmail())){
+                                            Toast.makeText(getApplicationContext(), "Wrong login, username not found", Toast.LENGTH_SHORT).show();
+                                            return;
+
+                                        }
+                                        else if (!password.equals(user.getPassword() ) && username.equals(user.getEmail())){
+                                            Toast.makeText(getApplicationContext(), "Wrong login, wrong password", Toast.LENGTH_SHORT).show();
+                                            return;
+
+                                        }
+                                    }
+                                }
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
 
                                 }
-                                else {
-                                    Toast.makeText(getApplicationContext(), "Wrong login", Toast.LENGTH_SHORT).show();
-                                    edtPassword.getText().clear();
-                                    return;
-
-                                }
-                            }
+                            });
                         }
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                    };
+                    handler.postDelayed(r, 1000);
 
-                        }
-                    });
+
+
 
                 }
 
