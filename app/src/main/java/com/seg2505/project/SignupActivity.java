@@ -60,7 +60,7 @@ public class SignupActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String username = edtUsername.getText().toString();
                 String password = edtPassword.getText().toString();
-                if(username.equals("Admin") && password.equals("Admin")){
+                if(username.equals("admin") && password.equals("admin")){
                     adminReference.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
