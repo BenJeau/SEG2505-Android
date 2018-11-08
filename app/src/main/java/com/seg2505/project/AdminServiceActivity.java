@@ -6,7 +6,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
+import android.app.Dialog;
+import android.view.LayoutInflater;
+import android.content.DialogInterface;
+import android.widget.Button;
 
 import java.util.ArrayList;
 
@@ -15,7 +20,7 @@ public class AdminServiceActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_service);
 
@@ -50,8 +55,33 @@ public class AdminServiceActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Dialog d = onCreateDialog(savedInstanceState);
+                d.show();
             }
         });
+    }
+
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        // Get the layout inflater
+        LayoutInflater inflater = this.getLayoutInflater();
+
+        // Inflate and set the layout for the dialog
+        // Pass null as the parent view because its going in the dialog layout
+        builder.setView(inflater.inflate(R.layout.create_service, null))
+                // Add action buttons
+                .setPositiveButton("Create", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        // TODO : Add service firebase function here
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //
+                    }
+                });
+        return builder.create();
     }
 }

@@ -148,4 +148,20 @@ public class LoginActivity extends AppCompatActivity {
 
         return matcher.matches();
     }
+
+    public static boolean isValidUsername(final String username) {
+        Pattern pattern;
+        Matcher matcher;
+
+        final String USERNAME_PATTERN = "^(?=\\S+$).{3,}$";
+
+        pattern = Pattern.compile(USERNAME_PATTERN);
+        matcher = pattern.matcher(username);
+
+        return matcher.matches();
+    }
+
+    public static boolean isValidAdministrator(String adminUsername, String adminPassword) {
+        return adminUsername.equals("admin") && adminPassword.equals("admin");
+    }
 }
