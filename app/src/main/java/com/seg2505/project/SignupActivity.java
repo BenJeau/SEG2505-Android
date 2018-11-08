@@ -21,9 +21,6 @@ import com.google.firebase.database.ValueEventListener;
 import android.widget.Button;
 import android.widget.Toast;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 public class SignupActivity extends AppCompatActivity {
 
     DatabaseReference databaseReference, adminReference;
@@ -104,7 +101,7 @@ public class SignupActivity extends AppCompatActivity {
                             for(DataSnapshot postSnapshot : dataSnapshot.getChildren()){
                                 user = postSnapshot.getValue(Person.class);
 
-                                if (edtUsername.getText().toString().equals(user.getEmail())){
+                                if (edtUsername.getText().toString().equals(user.getUsername())){
                                     exists = true;
                                     break;
                                 }

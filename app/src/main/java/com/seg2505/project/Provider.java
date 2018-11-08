@@ -13,8 +13,9 @@ public class Provider extends Person {
     public Provider() {
 
     }
-    public Provider(String email, String password) {
-        super(email, password);
+
+    public Provider(String username, String password) {
+        super(username, password);
         this.role= "Provider";
         services = new ArrayList<Service>();
         availabilities = new ArrayList<Availability>();

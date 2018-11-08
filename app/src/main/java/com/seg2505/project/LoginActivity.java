@@ -57,7 +57,8 @@ public class LoginActivity extends AppCompatActivity {
                 if (username.equals("admin") && password.equals("admin")) {
                     Toast.makeText(getApplicationContext(), "Admin successfully logged in", Toast.LENGTH_SHORT).show();
 
-                    Intent intent = new Intent(LoginActivity.this, AdminActivity.class);
+
+                    Intent intent = new Intent(LoginActivity.this,OptionActivity.class);
                     startActivity(intent);
                 } else {
                     if (TextUtils.isEmpty(username)) {
@@ -94,7 +95,7 @@ public class LoginActivity extends AppCompatActivity {
                                         for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                                             user = postSnapshot.getValue(Person.class);
 
-                                            if (username.equals(user.getEmail())) {
+                                            if (username.equals(user.getUsername())) {
                                                 exists = true;
                                                 break;
                                             }
@@ -104,7 +105,7 @@ public class LoginActivity extends AppCompatActivity {
                                             Toast.makeText(getApplicationContext(), "Wrong login, username not found", Toast.LENGTH_SHORT).show();
                                         } else if (user.getPassword().equals(password)) {
                                             Intent intent = new Intent(LoginActivity.this, WelcomeActivity.class);
-                                            intent.putExtra(INTENT_KEY_NAME, user.getEmail());
+                                            intent.putExtra(INTENT_KEY_NAME, user.getUsername());
                                             intent.putExtra(INTENT_KEY_ROLE, user.role);
                                             startActivity(intent);
                                             Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
