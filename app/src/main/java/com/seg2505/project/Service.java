@@ -14,7 +14,6 @@ public class Service {
 
     // CONSTRUCTOR
     public Service(String serviceName, double hourlyRate){
-
         providers = new ArrayList<Provider>();
 
         this.serviceName = serviceName;

@@ -12,10 +12,8 @@ public class Admin extends Person {
 
     }
 
-    public Admin(String email, String password){
-        super(email, password);
+    public Admin(String username, String password){
+        super(username, password);
         services = new ArrayList<Service>();
     }
-
-
 }
