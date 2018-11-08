@@ -17,7 +17,7 @@ public class OptionActivity extends AppCompatActivity {
         Button ViewUser = (Button) findViewById(R.id.BtnViewUser);
         Button ViewService = (Button) findViewById(R.id.BtnViewServices);
 
-        ViewService.setOnClickListener(new View.OnClickListener() {
+        ViewUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(OptionActivity.this,AdminActivity.class);
@@ -26,12 +26,12 @@ public class OptionActivity extends AppCompatActivity {
         });
 
 
-        ViewService.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(OptionActivity.this,OptionActivity.class);
-                startActivity(intent);
-            }
-        });
+//        ViewService.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(OptionActivity.this,OptionActivity.class);
+//                startActivity(intent);
+//            }
+//        });
     }
 }
