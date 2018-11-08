@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:theme="@android:style/Theme.Holo.Dialog">
+    android:padding="20dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -10,7 +10,7 @@
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/editText4"
+            android:id="@+id/serviceName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -20,7 +20,7 @@
             android:backgroundTint="@color/secondaryColor"/>
 
         <EditText
-            android:id="@+id/editText5"
+            android:id="@+id/hourlyRate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"

@@ -6,15 +6,19 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.text.Layout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.Inflater;
 
 public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.MyViewHolder> {
     private ArrayList<Service> mDataset;
@@ -92,9 +96,11 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.MyViewHo
             }
         });
 
+        LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+
         AlertDialog.Builder deleteDialogBuilder = new AlertDialog.Builder(context);
-        deleteDialogBuilder.setMessage("Are you sure you want to delete the service named '" + mDataset.get(position).getServiceName() + "'")
-                .setTitle("Delete Service");
+        deleteDialogBuilder.setTitle("Delete Service");
+        deleteDialogBuilder.setMessage("Are you sure you want to delete the service named '" + mDataset.get(position).getServiceName() + "'");
         deleteDialogBuilder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 removeAt(position);
@@ -108,10 +114,27 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.MyViewHo
         final AlertDialog deleteDialog = deleteDialogBuilder.create();
 
         AlertDialog.Builder modifyDialogBuilder = new AlertDialog.Builder(context);
-        modifyDialogBuilder.setMessage("Are you sure you want to modify the service named '" + mDataset.get(position).getServiceName() + "'")
-                .setTitle("Modify Service");
+        modifyDialogBuilder.setTitle("Modify Service");
+
+        View view = layoutInflater.inflate(R.layout.create_service, null);
+        final EditText hourlyRate = view.findViewById(R.id.hourlyRate);
+        final EditText serviceName = view.findViewById(R.id.serviceName);
+        hourlyRate.setText(Double.toString(mDataset.get(position).getHourlyRate()));
+        serviceName.setText(mDataset.get(position).getServiceName());
+
+        modifyDialogBuilder.setView(view);
+
         modifyDialogBuilder.setPositiveButton("Modify", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
+                String serviceNameText = serviceName.getText().toString();
+                String hourlyRateText = hourlyRate.getText().toString();
+
+                Service service = mDataset.get(position);
+                service.setHourlyRate(Double.parseDouble(hourlyRateText));
+                service.setServiceName(serviceNameText);
+
+                modifyAt(service, position);
+                // TODO : Verify if the values makes sense
                 // TODO : Modify service from firebase database
             }
         });
@@ -139,6 +162,16 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.MyViewHo
         mDataset.remove(position);
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, mDataset.size());
+    }
+
+    public void modifyAt(Service service, int position) {
+        mDataset.set(position, service);
+        notifyItemChanged(position);
+    }
+
+    public void add(Service service) {
+        mDataset.add(service);
+        notifyItemInserted(mDataset.size() - 1);
     }
 
     // Return the size of your dataset (invoked by the layout manager)

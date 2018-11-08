@@ -12,6 +12,7 @@ import android.app.Dialog;
 import android.view.LayoutInflater;
 import android.content.DialogInterface;
 import android.widget.Button;
+import android.widget.EditText;
 
 import java.util.ArrayList;
 
@@ -48,7 +49,7 @@ public class AdminServiceActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         // Specify an adapter (see also next example)
-        ServiceAdapter adapter = new ServiceAdapter(data, this);
+        adapter = new ServiceAdapter(data, this);
         recyclerView.setAdapter(adapter);
 
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -61,20 +62,31 @@ public class AdminServiceActivity extends AppCompatActivity {
         });
     }
 
+    ServiceAdapter adapter;
+
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         // Get the layout inflater
         LayoutInflater inflater = this.getLayoutInflater();
 
+
+        View view = inflater.inflate(R.layout.create_service, null);
+        final EditText hourlyRate = view.findViewById(R.id.hourlyRate);
+        final EditText serviceName = view.findViewById(R.id.serviceName);
+
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
-        builder.setView(inflater.inflate(R.layout.create_service, null))
+        builder.setTitle("Add Service");
+        builder.setView(view)
                 // Add action buttons
                 .setPositiveButton("Create", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
+                       Service service = new Service(serviceName.getText().toString(), Double.parseDouble(hourlyRate.getText().toString()));
+                       adapter.add(service);
                         // TODO : Add service firebase function here
+                        // TODO : Verify if the values makes sense
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
