@@ -1,7 +1,7 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/ProductCatalog
+    working_directory: ~/SEG2505-Android
     docker:
       - image: circleci/android:api-28-alpha
     environment:
