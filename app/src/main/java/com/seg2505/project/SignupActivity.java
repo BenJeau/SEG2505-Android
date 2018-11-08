@@ -26,7 +26,7 @@ import java.util.regex.Pattern;
 
 public class SignupActivity extends AppCompatActivity {
 
-    DatabaseReference databaseReference,adminReference;
+    DatabaseReference databaseReference, adminReference;
     Button a;
     Spinner role;
     EditText edtUsername;
@@ -34,8 +34,6 @@ public class SignupActivity extends AppCompatActivity {
     FirebaseDatabase database;
     boolean adminExists = false;
     boolean exists = false;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,12 +46,8 @@ public class SignupActivity extends AppCompatActivity {
 
         database = FirebaseDatabase.getInstance();
 
-
-
         databaseReference = database.getReference("users");
         adminReference = database.getReference("Admin");
-
-
 
         a.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,15 +90,13 @@ public class SignupActivity extends AppCompatActivity {
                         edtPassword.setError("Password field cannot be empty.");
                     }
                     if(username.length()<3 && !TextUtils.isEmpty(username)) {
-
                         edtUsername.setError("Username must be 3 characters long.");
                     }
-                    if (!isValidPassword(password) &&!TextUtils.isEmpty(password) ){
+                    if (!LoginActivity.isValidPassword(password) &&!TextUtils.isEmpty(password) ){
                         edtPassword.setError("Password must be a minimum of 4 characters and have at least one capital letter and one number.");
                     }
 
                     databaseReference.addListenerForSingleValueEvent(new ValueEventListener(){
-
 
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -114,13 +106,10 @@ public class SignupActivity extends AppCompatActivity {
 
                                 if (edtUsername.getText().toString().equals(user.getEmail())){
                                     exists = true;
-
                                     break;
-
                                 }
                             }
                             if(exists) {
-
                                 edtUsername.setError("Username already exist");
                             }
                         }
@@ -131,12 +120,9 @@ public class SignupActivity extends AppCompatActivity {
                         }
                     });
 
-
-
-
                     Person ac = null;
 
-                    if (username.length()>2 && isValidPassword(password) && !exists ){
+                    if (username.length()>2 && LoginActivity.isValidPassword(password) && !exists ){
                         final ProgressDialog progressDialog = new ProgressDialog(SignupActivity.this, R.style.AppTheme_Blue_Dialog);
                         progressDialog.setIndeterminate(true);
                         progressDialog.setCancelable(false);
@@ -161,30 +147,9 @@ public class SignupActivity extends AppCompatActivity {
                         }
                         databaseReference.push().setValue(ac);
                         handler.postDelayed(r,1000);
-
                     }
                 }
-
-
-
-
             }
         });
-
     }
-
-    public boolean isValidPassword(final String password) {
-
-        Pattern pattern;
-        Matcher matcher;
-
-        final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[A-Z])(?=\\S+$).{4,}$";
-
-        pattern = Pattern.compile(PASSWORD_PATTERN);
-        matcher = pattern.matcher(password);
-
-        return matcher.matches();
-
-    }
-
 }
