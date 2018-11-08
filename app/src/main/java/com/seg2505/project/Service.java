@@ -8,7 +8,6 @@ import java.util.*;
 public class Service {
 
     //Service Associations
-
     private List<Provider> providers;
     private String serviceName;
     private double hourlyRate;
@@ -36,6 +35,14 @@ public class Service {
 
     public double getHourlyRate(){
         return this.hourlyRate;
+    }
+
+    public void addProvider(Provider provider) {
+        this.providers.add(provider);
+    }
+
+    public List<Provider> getProviders() {
+        return this.providers;
     }
 
 }
