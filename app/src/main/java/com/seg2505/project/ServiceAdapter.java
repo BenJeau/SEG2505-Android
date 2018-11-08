@@ -58,7 +58,7 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.MyViewHo
         StringBuilder listOfPeople = new StringBuilder();
         List<Provider> providers = mDataset.get(position).getProviders();
         for (int i = 0; i < providers.size(); i++) {
-            listOfPeople.append(providers.get(i).getEmail());
+            listOfPeople.append(providers.get(i).getUsername());
             if (i != providers.size() - 1) {
                 listOfPeople.append("\n");
             }
@@ -71,11 +71,9 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.MyViewHo
                 if (holder.listPeople.getVisibility() == View.GONE) {
                     holder.listPeople.setVisibility(View.VISIBLE);
                     holder.hourlyCost.setVisibility(View.VISIBLE);
-                    Log.e("TESTEET", "1111111111");
                 } else {
                     holder.listPeople.setVisibility(View.GONE);
                     holder.hourlyCost.setVisibility(View.GONE);
-                    Log.e("TESTEET", "2222222222");
                 }
             }
         });

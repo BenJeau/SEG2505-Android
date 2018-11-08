@@ -45,7 +45,7 @@ public class AdminRecyclerViewAdapter extends RecyclerView.Adapter<AdminRecycler
     public void onBindViewHolder(MyViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.username.setText(mDataset.get(position).getEmail());
+        holder.username.setText(mDataset.get(position).getUsername());
         holder.role.setText(mDataset.get(position).role);
     }
 
