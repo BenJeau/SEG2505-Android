@@ -1,44 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:animateLayoutChanges="true"
-    android:layout_marginBottom="5dp"
-    android:padding="10dp"
-    android:id="@+id/cardView">
+    android:layout_margin="5dp"
+    android:animateLayoutChanges="true">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        android:padding="10dp">
 
         <TextView
-            android:text="Service 1"
+            android:textStyle="bold"
+            android:paddingStart="5dp"
             android:id="@+id/serviceTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
-
-        <TextView
-            android:id="@+id/hourlyCost"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/serviceTitle"
+            android:text="Service 1"
+            android:textColor="@color/secondaryColor"
+            android:textSize="17sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:visibility="gone"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/listPeople"
-            android:layout_width="0dp"
+        <ImageView
+            android:id="@+id/dropArrow"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/hourlyCost"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:lineSpacingExtra="2dp"
-            android:visibility="gone" />
+            android:src="@drawable/ic_keyboard_arrow_down_black_24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/serviceTitle">
+
+            <TextView
+                android:paddingStart="5dp"
+                android:id="@+id/hourlyRateTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingEnd="5dp"
+                android:text="Hourly Rate"
+                android:textColor="@color/secondaryColor"/>
+
+            <TextView
+                android:id="@+id/hourlyRate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                app:layout_constraintLeft_toRightOf="@id/hourlyRateTitle"
+                app:layout_constraintRight_toRightOf="parent" />
+
+            <TextView
+                android:id="@+id/listPeopleTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:paddingEnd="5dp"
+                android:paddingStart="5dp"
+                android:text="Providers"
+                android:textColor="@color/secondaryColor"
+                app:layout_constraintLeft_toLeftOf="@id/hourlyRateTitle"
+                app:layout_constraintTop_toBottomOf="@id/hourlyRateTitle" />
+
+            <TextView
+                android:id="@+id/listPeople"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:textColor="@android:color/black"
+                android:paddingBottom="5dp"
+                app:layout_constraintLeft_toRightOf="@id/listPeopleTitle"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/hourlyRateTitle" />
+
+            <Button
+                android:id="@+id/deleteButton"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="-10dp"
+                android:text="Delete"
+                app:layout_constraintTop_toBottomOf="@id/listPeople" />
+
+            <Button
+                android:id="@+id/modifyButton"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Modify"
+                app:layout_constraintLeft_toRightOf="@id/deleteButton"
+                app:layout_constraintTop_toBottomOf="@id/listPeople" />
+
+        </android.support.constraint.ConstraintLayout>
 
     </android.support.constraint.ConstraintLayout>
 

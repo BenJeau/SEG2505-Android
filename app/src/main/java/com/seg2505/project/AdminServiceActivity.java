@@ -21,28 +21,29 @@ public class AdminServiceActivity extends AppCompatActivity {
 
         // Gets the information from firebase
         final ArrayList<Service> data = new ArrayList<Service>();
-        Service temp1 = new Service("Help", 10.35);
-        temp1.addProvider(new Provider("Name", "password"));
-        temp1.addProvider(new Provider("sdfa", "password"));
-        temp1.addProvider(new Provider("2342w", "password"));
+        Service temp1 = new Service("Water", 10.87);
+        temp1.addProvider(new Provider("Jen", "password"));
+        temp1.addProvider(new Provider("Sofie", "password"));
+        temp1.addProvider(new Provider("Lauren", "password"));
 
-        Service temp2 = new Service("dfvsdfvfsd", 10.35);
-        temp1.addProvider(new Provider("Ngkjlg67me", "password"));
-        temp1.addProvider(new Provider("s67a", "password"));
-        temp1.addProvider(new Provider("2347w", "password"));
+        Service temp2 = new Service("Electricity", 1.35);
+        temp2.addProvider(new Provider("Vergenie", "password"));
+        temp2.addProvider(new Provider("Diedrick", "password"));
+        temp2.addProvider(new Provider("Alex", "password"));
+        temp2.addProvider(new Provider("Rick", "password"));
         data.add(temp1);
         data.add(temp2);
 
         recyclerView = findViewById(R.id.serviceRecyclerView);
 
-        recyclerView.setHasFixedSize(true);
+        recyclerView.setHasFixedSize(false);
 
         // Use a linear layout manager
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
         // Specify an adapter (see also next example)
-        ServiceAdapter adapter = new ServiceAdapter(data);
+        ServiceAdapter adapter = new ServiceAdapter(data, this);
         recyclerView.setAdapter(adapter);
 
         FloatingActionButton fab = findViewById(R.id.fab);

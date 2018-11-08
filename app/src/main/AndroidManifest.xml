@@ -15,11 +15,6 @@
             android:name=".LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".WelcomeActivity"
@@ -33,7 +28,12 @@
             android:name=".AdminActivity"
             android:label="Administrator"
             android:screenOrientation="portrait" />
-        <activity android:name=".AdminServiceActivity"></activity>
+        <activity android:name=".AdminServiceActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter></activity>
         <activity android:name=".OptionActivity"></activity>
     </application>
 
