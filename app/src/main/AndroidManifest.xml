@@ -34,6 +34,7 @@
             android:label="Administrator"
             android:screenOrientation="portrait" />
         <activity android:name=".AdminServiceActivity"></activity>
+        <activity android:name=".OptionActivity"></activity>
     </application>
 
 </manifest>
