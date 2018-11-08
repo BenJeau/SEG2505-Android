@@ -26,12 +26,12 @@ public class OptionActivity extends AppCompatActivity {
         });
 
 
-//        ViewService.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(OptionActivity.this,OptionActivity.class);
-//                startActivity(intent);
-//            }
-//        });
+        ViewService.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(OptionActivity.this,AdminServiceActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

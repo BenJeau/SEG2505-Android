@@ -15,7 +15,9 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Service"
-            android:inputType="textPersonName" />
+            android:textColor="@android:color/black"
+            android:inputType="textPersonName"
+            android:backgroundTint="@color/secondaryColor"/>
 
         <EditText
             android:id="@+id/editText5"
@@ -23,7 +25,9 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName"
-            android:hint="Hourly Rate" />
+            android:textColor="@android:color/black"
+            android:hint="Hourly Rate"
+            android:backgroundTint="@color/secondaryColor"/>
 
 
     </LinearLayout>
