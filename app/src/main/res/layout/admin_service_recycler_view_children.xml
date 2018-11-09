@@ -14,14 +14,14 @@
         android:padding="10dp">
 
         <TextView
-            android:textStyle="bold"
-            android:paddingStart="5dp"
             android:id="@+id/serviceTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Service 1"
+            android:paddingStart="5dp"
+            android:paddingEnd="0dp"
             android:textColor="@color/secondaryColor"
             android:textSize="17sp"
+            android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -30,6 +30,7 @@
             android:id="@+id/dropArrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/services_child_content_description"
             android:src="@drawable/ic_keyboard_arrow_down_black_24dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent" />
@@ -43,13 +44,13 @@
             app:layout_constraintTop_toBottomOf="@id/serviceTitle">
 
             <TextView
-                android:paddingStart="5dp"
                 android:id="@+id/hourlyRateTitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:paddingStart="5dp"
                 android:paddingEnd="5dp"
-                android:text="Hourly Rate"
-                android:textColor="@color/secondaryColor"/>
+                android:text="@string/services_child_hourly"
+                android:textColor="@color/secondaryColor" />
 
             <TextView
                 android:id="@+id/hourlyRate"
@@ -63,10 +64,10 @@
                 android:id="@+id/listPeopleTitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:paddingStart="5dp"
                 android:paddingTop="5dp"
                 android:paddingEnd="5dp"
-                android:paddingStart="5dp"
-                android:text="Providers"
+                android:text="@string/services_child_people"
                 android:textColor="@color/secondaryColor"
                 app:layout_constraintLeft_toLeftOf="@id/hourlyRateTitle"
                 app:layout_constraintTop_toBottomOf="@id/hourlyRateTitle" />
@@ -76,8 +77,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:paddingTop="5dp"
-                android:textColor="@android:color/black"
                 android:paddingBottom="5dp"
+                android:textColor="@android:color/black"
                 app:layout_constraintLeft_toRightOf="@id/listPeopleTitle"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/hourlyRateTitle" />
@@ -88,7 +89,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="-10dp"
-                android:text="Delete"
+                android:text="@string/services_child_delete_button"
                 app:layout_constraintTop_toBottomOf="@id/listPeople" />
 
             <Button
@@ -96,7 +97,7 @@
                 style="@style/Widget.AppCompat.Button.Borderless.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Modify"
+                android:text="@string/services_child_modify_button"
                 app:layout_constraintLeft_toRightOf="@id/deleteButton"
                 app:layout_constraintTop_toBottomOf="@id/listPeople" />
 

@@ -1,5 +1,6 @@
 package com.seg2505.project;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.constraint.ConstraintLayout;
@@ -18,21 +19,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.MyViewHolder> {
-    private ArrayList<Service> mDataset;
+
+    /**
+     * The dataset/database used by the recycler view
+     */
+    private ArrayList<Service> dataset;
+
+    /**
+     * The context of the Activity
+     */
     private Context context;
+
+    /**
+     * The layout to be displayed when the recycler view is empty
+     */
+    private ConstraintLayout emptyLayout;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        public TextView serviceTitle, hourlyCost, listPeople;
-        public CardView cardView;
-        public ImageView dropArrow;
-        public Button deleteButton, modifyButton;
-        public ConstraintLayout content;
+        private TextView serviceTitle, hourlyCost, listPeople;
+        private CardView cardView;
+        private ImageView dropArrow;
+        private Button deleteButton, modifyButton;
+        private ConstraintLayout content;
 
-        public MyViewHolder(View v) {
+        private MyViewHolder(View v) {
             super(v);
 
             serviceTitle = v.findViewById(R.id.serviceTitle);
@@ -47,9 +61,10 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.MyViewHo
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public ServiceAdapter(ArrayList<Service> myDataset, Context context) {
-        mDataset = myDataset;
+    public ServiceAdapter(ArrayList<Service> dataset, Context context) {
+        this.dataset = dataset;
         this.context = context;
+        checkIfEmpty();
     }
 
     // Create new views (invoked by the layout manager)
@@ -63,15 +78,20 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.MyViewHo
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(final ServiceAdapter.MyViewHolder holder, final int position) {
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
-        holder.serviceTitle.setText(mDataset.get(position).getServiceName());
-        holder.hourlyCost.setText(Double.toString(mDataset.get(position).getHourlyRate()) + " $");
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
+        String hourlyRateText = Double.toString(dataset.get(position).getHourlyRate());
+        String serviceNameText = dataset.get(position).getServiceName();
 
-        // Get list of people
+        holder.serviceTitle.setText(serviceNameText);
+        holder.hourlyCost.setText(hourlyRateText + " $");
+
+        // Initial setup (fixes bug when adding new service)
+        holder.dropArrow.setRotation(0);
+        holder.content.setVisibility(View.GONE);
+
+        // Gets list of providers and concatenates it into a string
         StringBuilder listOfPeople = new StringBuilder();
-        List<Provider> providers = mDataset.get(position).getProviders();
+        List<Provider> providers = dataset.get(position).getProviders();
         for (int i = 0; i < providers.size(); i++) {
             listOfPeople.append(providers.get(i).getUsername());
             if (i != providers.size() - 1) {
@@ -80,6 +100,7 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.MyViewHo
         }
         holder.listPeople.setText(listOfPeople);
 
+        // Expends/Closes the CardView when clicked
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,31 +114,40 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.MyViewHo
             }
         });
 
+        // Gets the layoutInflater from the context of the activity
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
+        // Creates the delete dialog
         AlertDialog.Builder deleteDialogBuilder = new AlertDialog.Builder(context);
+
         deleteDialogBuilder.setTitle("Delete Service");
-        deleteDialogBuilder.setMessage("Are you sure you want to delete the service named '" + mDataset.get(position).getServiceName() + "'");
+        deleteDialogBuilder.setMessage("Are you sure you want to delete the service named '" + dataset.get(position).getServiceName() + "'");
+
         deleteDialogBuilder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
+                holder.content.setVisibility(View.GONE);
                 removeAt(position);
                 // TODO : Delete service from firebase database
             }
         });
+
         deleteDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
             }
         });
+
         final AlertDialog deleteDialog = deleteDialogBuilder.create();
 
+        // Creates the modify dialog
         AlertDialog.Builder modifyDialogBuilder = new AlertDialog.Builder(context);
         modifyDialogBuilder.setTitle("Modify Service");
 
         View view = layoutInflater.inflate(R.layout.create_service, null);
         final EditText hourlyRate = view.findViewById(R.id.hourlyRate);
         final EditText serviceName = view.findViewById(R.id.serviceName);
-        hourlyRate.setText(Double.toString(mDataset.get(position).getHourlyRate()));
-        serviceName.setText(mDataset.get(position).getServiceName());
+
+        hourlyRate.setText(Double.toString(dataset.get(position).getHourlyRate()));
+        serviceName.setText(dataset.get(position).getServiceName());
 
         modifyDialogBuilder.setView(view);
 
@@ -126,7 +156,7 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.MyViewHo
                 String serviceNameText = serviceName.getText().toString();
                 String hourlyRateText = hourlyRate.getText().toString();
 
-                Service service = mDataset.get(position);
+                Service service = dataset.get(position);
                 service.setHourlyRate(Double.parseDouble(hourlyRateText));
                 service.setServiceName(serviceNameText);
 
@@ -141,6 +171,7 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.MyViewHo
         });
         final AlertDialog modifyDialog = modifyDialogBuilder.create();
 
+        // The callback methods for the buttons in each CardView/children
         holder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -155,25 +186,61 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.MyViewHo
         });
     }
 
+    /**
+     * Remove a service from the dataset and recycler view while
+     *
+     * @param position the position of the service in the list
+     */
     public void removeAt(int position) {
-        mDataset.remove(position);
+        dataset.remove(position);
         notifyItemRemoved(position);
-        notifyItemRangeChanged(position, mDataset.size());
+        notifyItemRangeChanged(position, dataset.size());
+
+        checkIfEmpty();
     }
 
+    /**
+     * Modifies the service at the specified position and
+     * refreshes the recycler view for that position
+     *
+     * @param service the replacement service object
+     * @param position the position of the service object in the dataset
+     */
     public void modifyAt(Service service, int position) {
-        mDataset.set(position, service);
+        dataset.set(position, service);
         notifyItemChanged(position);
     }
 
+    /**
+     * Adds the specified service while refreshing the recycler view
+     *
+     * @param service the service object to be added
+     */
     public void add(Service service) {
-        mDataset.add(service);
-        notifyItemInserted(mDataset.size() - 1);
+        dataset.add(service);
+        notifyItemInserted(dataset.size() - 1);
+
+        checkIfEmpty();
+    }
+
+    /**
+     * Adds/remove view for when the recycler view is empty
+     */
+    private void checkIfEmpty() {
+        if (emptyLayout == null) {
+            emptyLayout = ((Activity)context).getWindow().getDecorView().findViewById(R.id.emptyLayout);
+        }
+
+        if (dataset.isEmpty()) {
+            emptyLayout.setVisibility(View.VISIBLE);
+        } else if (emptyLayout.getVisibility() != View.GONE) {
+            emptyLayout.setVisibility(View.GONE);
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return mDataset.size();
+        return dataset.size();
     }
 }
