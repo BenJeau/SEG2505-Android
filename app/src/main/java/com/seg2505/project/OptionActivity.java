@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class OptionActivity extends AppCompatActivity {
 
@@ -13,6 +14,10 @@ public class OptionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_option);
+
+        String user = getIntent().getExtras().getString("user");
+        TextView txt = (TextView) findViewById(R.id.WelcomText);
+        txt.setText("Welcome " + user );
 
         Button ViewUser = (Button) findViewById(R.id.BtnViewUser);
         Button ViewService = (Button) findViewById(R.id.BtnViewServices);
