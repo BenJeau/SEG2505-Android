@@ -109,12 +109,12 @@ public class AdminServiceActivity extends AppCompatActivity {
     public static boolean validateDialog(EditText serviceName, EditText hourlyRate, String serviceText, String hourlyRateText) {
         boolean correctInfo = true;
 
-        if (isValidService(serviceText)) {
+        if (isFieldEmpty(serviceText)) {
             serviceName.setError("Service cannot be empty.");
             correctInfo = false;
         }
 
-        if (TextUtils.isEmpty(hourlyRateText)) {
+        if (isFieldEmpty(hourlyRateText)) {
             hourlyRate.setError("Hourly rate cannot be empty.");
             correctInfo = false;
         } else if (!isDouble(hourlyRate.getText().toString())) {
@@ -125,8 +125,8 @@ public class AdminServiceActivity extends AppCompatActivity {
         return correctInfo;
     }
 
-    public static boolean isValidService(String serviceName) {
-        return TextUtils.isEmpty(serviceName);
+    public static boolean isFieldEmpty(String text) {
+        return text == null || text.equals("");
     }
 
     public static boolean isDouble(String hourlyRate) {
