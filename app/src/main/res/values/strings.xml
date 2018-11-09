@@ -38,4 +38,10 @@
     <string name="services_child_modify_button">Modify</string>
     <string name="services_child_delete_button">Delete</string>
     <string name="services_child_content_description">Expend current service (to get more information)</string>
+
+    <!-- Option Activity -->
+    <string name="welcome">welcome</string>
+    <string name="view_services">View services</string>
+    <string name="view_user">View user</string>
+
 </resources>

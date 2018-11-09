@@ -18,6 +18,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.internal.InternalTokenResult;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -56,9 +57,8 @@ public class LoginActivity extends AppCompatActivity {
 
                 if (username.equals("admin") && password.equals("admin")) {
                     Toast.makeText(getApplicationContext(), "Admin successfully logged in", Toast.LENGTH_SHORT).show();
-
-
                     Intent intent = new Intent(LoginActivity.this,OptionActivity.class);
+                    intent.putExtra("user", username );
                     startActivity(intent);
                 } else {
                     if (TextUtils.isEmpty(username)) {
