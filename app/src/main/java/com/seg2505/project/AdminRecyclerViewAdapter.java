@@ -46,7 +46,7 @@ public class AdminRecyclerViewAdapter extends RecyclerView.Adapter<AdminRecycler
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         holder.username.setText(mDataset.get(position).getUsername());
-        holder.role.setText(mDataset.get(position).role);
+        holder.role.setText(mDataset.get(position).getRole());
     }
 
     // Return the size of your dataset (invoked by the layout manager)

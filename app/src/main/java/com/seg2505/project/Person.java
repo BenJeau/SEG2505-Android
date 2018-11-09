@@ -9,7 +9,7 @@ public class Person {
     //Person Attributes
     private String username;
     private String password;
-    String role;
+    private String role;
 
     public Person(){
 
@@ -18,6 +18,14 @@ public class Person {
     public Person(String username, String password) {
         this.username = username;
         this.password = password;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getRole() {
+        return role;
     }
 
     public String getUsername() {

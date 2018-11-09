@@ -106,7 +106,7 @@ public class LoginActivity extends AppCompatActivity {
                                         } else if (user.getPassword().equals(password)) {
                                             Intent intent = new Intent(LoginActivity.this, WelcomeActivity.class);
                                             intent.putExtra(INTENT_KEY_NAME, user.getUsername());
-                                            intent.putExtra(INTENT_KEY_ROLE, user.role);
+                                            intent.putExtra(INTENT_KEY_ROLE, user.getRole());
                                             startActivity(intent);
                                             Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
                                         } else if (!password.equals(user.getPassword())) {
