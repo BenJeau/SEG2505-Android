@@ -153,22 +153,9 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.MyViewHo
 
         modifyDialogBuilder.setPositiveButton("Modify", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                String serviceNameText = serviceName.getText().toString();
-                String hourlyRateText = hourlyRate.getText().toString();
-
-                Service service = dataset.get(position);
-                service.setHourlyRate(Double.parseDouble(hourlyRateText));
-                service.setServiceName(serviceNameText);
-
-                modifyAt(service, position);
-                // TODO : Verify if the values makes sense
-                // TODO : Modify service from firebase database
             }
         });
-        modifyDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-            }
-        });
+        modifyDialogBuilder.setNegativeButton("Cancel", null);
         final AlertDialog modifyDialog = modifyDialogBuilder.create();
 
         // The callback methods for the buttons in each CardView/children
@@ -182,6 +169,26 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.MyViewHo
             @Override
             public void onClick(View v) {
                 modifyDialog.show();
+                modifyDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        String serviceNameText = serviceName.getText().toString();
+                        String hourlyRateText = hourlyRate.getText().toString();
+
+                        if (AdminServiceActivity.validateDialog(serviceName, hourlyRate, serviceNameText, hourlyRateText)) {
+                            Service service = dataset.get(position);
+                            service.setHourlyRate(Double.parseDouble(hourlyRateText));
+                            service.setServiceName(serviceNameText);
+
+                            modifyAt(service, position);
+
+                            modifyDialog.dismiss();
+
+                            // TODO : Modify service from firebase database
+                        }
+                    }
+                });
             }
         });
     }

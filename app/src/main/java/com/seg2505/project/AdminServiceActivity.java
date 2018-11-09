@@ -80,14 +80,9 @@ public class AdminServiceActivity extends AppCompatActivity {
         builder.setTitle("Add Service");
         builder.setView(view);
         builder.setPositiveButton("Create",
-                new DialogInterface.OnClickListener()
-                {
+                new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which)
-                    {
-                        //Do nothing here because we override this button later to change the close behaviour.
-                        //However, we still need this because on older versions of Android unless we
-                        //pass a handler the button doesn't get instantiated
+                    public void onClick(DialogInterface dialog, int which) {
                     }
                 });
         builder.setNegativeButton("Cancel", null);
@@ -96,37 +91,45 @@ public class AdminServiceActivity extends AppCompatActivity {
         dialog.show();
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {boolean correctInfo = true;
+            public void onClick(View v) {
+                String serviceText = serviceName.getText().toString();
+                String hourlyRateText = hourlyRate.getText().toString();
 
-                if (isValidService(serviceName.getText().toString())) {
-                    serviceName.setError("Service cannot be empty.");
-                    correctInfo = false;
-                }
-                if (!isDouble(hourlyRate.getText().toString())) {
-                    hourlyRate.setError("Hourly rate has to be a double.");
-                    correctInfo = false;
-                }
-
-                if (correctInfo) {
-                    Service service = new Service(serviceName.getText().toString(), Double.parseDouble(hourlyRate.getText().toString()));
+                if (validateDialog(serviceName, hourlyRate, serviceText, hourlyRateText)) {
+                    Service service = new Service(serviceText, Double.parseDouble(hourlyRateText));
                     adapter.add(service);
                     dialog.dismiss();
+
+                    // TODO : Integrate firebase database here (when adding service)
                 }
-
-                Log.e("RETRDSTRDS", String.valueOf(correctInfo));
-
-                // TODO : Add service firebase function here
-                // TODO : Verify if the values makes sense
             }
         });
     }
 
+    public static boolean validateDialog(EditText serviceName, EditText hourlyRate, String serviceText, String hourlyRateText) {
+        boolean correctInfo = true;
+
+        if (isValidService(serviceText)) {
+            serviceName.setError("Service cannot be empty.");
+            correctInfo = false;
+        }
+
+        if (TextUtils.isEmpty(hourlyRateText)) {
+            hourlyRate.setError("Hourly rate cannot be empty.");
+            correctInfo = false;
+        } else if (!isDouble(hourlyRate.getText().toString())) {
+            hourlyRate.setError("Hourly rate has to be a double.");
+            correctInfo = false;
+        }
+
+        return correctInfo;
+    }
 
     public static boolean isValidService(String serviceName) {
         return TextUtils.isEmpty(serviceName);
     }
 
-    public boolean isDouble(String hourlyRate) {
+    public static boolean isDouble(String hourlyRate) {
         try {
             Double.parseDouble(hourlyRate);
             return true;
