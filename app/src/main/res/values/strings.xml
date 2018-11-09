@@ -28,4 +28,11 @@
     <!-- Administrator Activity -->
     <string name="admin_first_row">Username</string>
     <string name="admin_second_row">Role</string>
+
+    <!-- Option Activity -->
+    <string name="welcome">welcome</string>
+    <string name="view_services">View services</string>
+    <string name="view_user">View user</string>
+
+
 </resources>
