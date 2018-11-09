@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class AdminServiceActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
+    private ServiceAdapter adapter;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -27,6 +27,8 @@ public class AdminServiceActivity extends AppCompatActivity {
 
         // Gets the information from firebase
         final ArrayList<Service> data = new ArrayList<Service>();
+
+        // TODO : Get information from firebase and replace it with the information below
         Service temp1 = new Service("Water", 10.87);
         temp1.addProvider(new Provider("Jen", "password"));
         temp1.addProvider(new Provider("Sofie", "password"));
@@ -40,11 +42,11 @@ public class AdminServiceActivity extends AppCompatActivity {
         data.add(temp1);
         data.add(temp2);
 
-        recyclerView = findViewById(R.id.serviceRecyclerView);
-
+        // Gets the recycler view and sets it to have a dataset that may vary in size
+        RecyclerView recyclerView = findViewById(R.id.serviceRecyclerView);
         recyclerView.setHasFixedSize(false);
 
-        // Use a linear layout manager
+        // Uses a linear layout manager
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
@@ -52,49 +54,43 @@ public class AdminServiceActivity extends AppCompatActivity {
         adapter = new ServiceAdapter(data, this);
         recyclerView.setAdapter(adapter);
 
+        // A floating action button which helps the user to add a service
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Dialog d = onCreateDialog(savedInstanceState);
+                Dialog d = onCreateDialog();
                 d.show();
             }
         });
     }
 
-    ServiceAdapter adapter;
-
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
+    public Dialog onCreateDialog() {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
         // Get the layout inflater
         LayoutInflater inflater = this.getLayoutInflater();
-
-
         View view = inflater.inflate(R.layout.create_service, null);
         final EditText hourlyRate = view.findViewById(R.id.hourlyRate);
         final EditText serviceName = view.findViewById(R.id.serviceName);
 
-        // Inflate and set the layout for the dialog
-        // Pass null as the parent view because its going in the dialog layout
         builder.setTitle("Add Service");
-        builder.setView(view)
-                // Add action buttons
-                .setPositiveButton("Create", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                       Service service = new Service(serviceName.getText().toString(), Double.parseDouble(hourlyRate.getText().toString()));
 
-                       adapter.add(service);
-                        // TODO : Add service firebase function here
-                        // TODO : Verify if the values makes sense
-                    }
-                })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        //
-                    }
-                });
+        builder.setView(view);
+        builder.setPositiveButton("Create", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                Service service = new Service(serviceName.getText().toString(), Double.parseDouble(hourlyRate.getText().toString()));
+                adapter.add(service);
+                // TODO : Add service firebase function here
+                // TODO : Verify if the values makes sense
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {}
+        });
+
         return builder.create();
     }
 }
