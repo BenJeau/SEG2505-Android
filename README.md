@@ -22,3 +22,6 @@ Membres de l'équipe:
 |dngen049           | diedrick ngendahayo | 300008344|
 |vergenieh            |Vergenie Howayek    |300008321|
 |amprodz          | Aymen Mhamdi          |300034572|
+
+Nous avons connecté circleci à notre projet:
+![alt text](https://github.com/BenJeau/SEG2505-Android/blob/master/circleCiConnected.png)
