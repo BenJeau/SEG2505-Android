@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -40,16 +41,17 @@
             android:layout_height="wrap_content"
             android:paddingTop="5dp"
             android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/serviceTitle">
+            app:layout_constraintTop_toBottomOf="@id/serviceTitle"
+            tools:layout_editor_absoluteX="10dp">
 
             <TextView
-                android:paddingStart="5dp"
                 android:id="@+id/hourlyRateTitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:paddingEnd="5dp"
+                android:paddingStart="5dp"
                 android:text="Hourly Rate"
-                android:textColor="@color/secondaryColor"/>
+                android:textColor="@color/secondaryColor" />
 
             <TextView
                 android:id="@+id/hourlyRate"
@@ -63,9 +65,9 @@
                 android:id="@+id/listPeopleTitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:paddingTop="5dp"
                 android:paddingEnd="5dp"
                 android:paddingStart="5dp"
+                android:paddingTop="5dp"
                 android:text="Providers"
                 android:textColor="@color/secondaryColor"
                 app:layout_constraintLeft_toLeftOf="@id/hourlyRateTitle"
@@ -75,9 +77,9 @@
                 android:id="@+id/listPeople"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
                 android:paddingTop="5dp"
                 android:textColor="@android:color/black"
-                android:paddingBottom="5dp"
                 app:layout_constraintLeft_toRightOf="@id/listPeopleTitle"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/hourlyRateTitle" />

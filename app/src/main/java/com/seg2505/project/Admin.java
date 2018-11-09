@@ -16,4 +16,7 @@ public class Admin extends Person {
         super(username, password);
         services = new ArrayList<Service>();
     }
+    public void addService(Service s){
+        services.add(s);
+    }
 }

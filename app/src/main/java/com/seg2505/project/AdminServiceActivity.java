@@ -84,6 +84,7 @@ public class AdminServiceActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                        Service service = new Service(serviceName.getText().toString(), Double.parseDouble(hourlyRate.getText().toString()));
+
                        adapter.add(service);
                         // TODO : Add service firebase function here
                         // TODO : Verify if the values makes sense
