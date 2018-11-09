@@ -18,6 +18,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.internal.InternalTokenResult;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -56,9 +57,8 @@ public class LoginActivity extends AppCompatActivity {
 
                 if (username.equals("admin") && password.equals("admin")) {
                     Toast.makeText(getApplicationContext(), "Admin successfully logged in", Toast.LENGTH_SHORT).show();
-
-
                     Intent intent = new Intent(LoginActivity.this,OptionActivity.class);
+                    intent.putExtra("user", username );
                     startActivity(intent);
                 } else {
                     if (TextUtils.isEmpty(username)) {
@@ -95,7 +95,7 @@ public class LoginActivity extends AppCompatActivity {
                                         for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                                             user = postSnapshot.getValue(Person.class);
 
-                                            if (username.equals(user.getEmail())) {
+                                            if (username.equals(user.getUsername())) {
                                                 exists = true;
                                                 break;
                                             }
@@ -105,8 +105,8 @@ public class LoginActivity extends AppCompatActivity {
                                             Toast.makeText(getApplicationContext(), "Wrong login, username not found", Toast.LENGTH_SHORT).show();
                                         } else if (user.getPassword().equals(password)) {
                                             Intent intent = new Intent(LoginActivity.this, WelcomeActivity.class);
-                                            intent.putExtra(INTENT_KEY_NAME, user.getEmail());
-                                            intent.putExtra(INTENT_KEY_ROLE, user.role);
+                                            intent.putExtra(INTENT_KEY_NAME, user.getUsername());
+                                            intent.putExtra(INTENT_KEY_ROLE, user.getRole());
                                             startActivity(intent);
                                             Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
                                         } else if (!password.equals(user.getPassword())) {
@@ -147,5 +147,21 @@ public class LoginActivity extends AppCompatActivity {
         matcher = pattern.matcher(password);
 
         return matcher.matches();
+    }
+
+    public static boolean isValidUsername(final String username) {
+        Pattern pattern;
+        Matcher matcher;
+
+        final String USERNAME_PATTERN = "^(?=\\S+$).{3,}$";
+
+        pattern = Pattern.compile(USERNAME_PATTERN);
+        matcher = pattern.matcher(username);
+
+        return matcher.matches();
+    }
+
+    public static boolean isValidAdministrator(String adminUsername, String adminPassword) {
+        return adminUsername.equals("admin") && adminPassword.equals("admin");
     }
 }

@@ -28,4 +28,20 @@
     <!-- Administrator Activity -->
     <string name="admin_first_row">Username</string>
     <string name="admin_second_row">Role</string>
+
+    <!-- Services Activity -->
+    <string name="services_empty_recycler_view">There are no services. To add services click on the
+        plus button on the lower right.</string>
+    <string name="services_content_description">Smiley face</string>
+    <string name="services_child_hourly">Hourly Rate</string>
+    <string name="services_child_people">Providers</string>
+    <string name="services_child_modify_button">Modify</string>
+    <string name="services_child_delete_button">Delete</string>
+    <string name="services_child_content_description">Expend current service (to get more information)</string>
+
+    <!-- Option Activity -->
+    <string name="welcome">welcome</string>
+    <string name="view_services">View services</string>
+    <string name="view_user">View user</string>
+
 </resources>

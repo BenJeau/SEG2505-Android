@@ -8,19 +8,15 @@ import java.util.*;
 public class Owner extends Person {
 
     //Owner Associations
-
     private List<Service> services;
     public Owner() {
 
     }
 
-
     // CONSTRUCTOR
-    public Owner(String email, String password) {
-
-        super(email, password);
-        this.role = "Owner";
+    public Owner(String username, String password) {
+        super(username, password);
+        setRole("Owner");
         services = new ArrayList<Service>();
     }
-
 }

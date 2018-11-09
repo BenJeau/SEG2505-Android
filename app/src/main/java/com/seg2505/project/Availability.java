@@ -10,7 +10,6 @@ public class Availability {
     private String day;
     private String time;
 
-
     // CONSTRUCTOR
 
     public Availability(String aDay, String aTime) {

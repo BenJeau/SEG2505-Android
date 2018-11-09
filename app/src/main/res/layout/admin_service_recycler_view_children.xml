@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:animateLayoutChanges="true">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/serviceTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingStart="5dp"
+            android:paddingEnd="0dp"
+            android:textColor="@color/secondaryColor"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/dropArrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/services_child_content_description"
+            android:src="@drawable/ic_keyboard_arrow_down_black_24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/serviceTitle"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            tools:layout_editor_absoluteX="10dp">
+
+            <TextView
+                android:id="@+id/hourlyRateTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:text="@string/services_child_hourly"
+                android:textColor="@color/secondaryColor" />
+
+            <TextView
+                android:id="@+id/hourlyRate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                app:layout_constraintLeft_toRightOf="@id/hourlyRateTitle"
+                app:layout_constraintRight_toRightOf="parent" />
+
+            <TextView
+                android:id="@+id/listPeopleTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingStart="5dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="5dp"
+                android:text="@string/services_child_people"
+                android:textColor="@color/secondaryColor"
+                app:layout_constraintLeft_toLeftOf="@id/hourlyRateTitle"
+                app:layout_constraintTop_toBottomOf="@id/hourlyRateTitle" />
+
+            <TextView
+                android:id="@+id/listPeople"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:textColor="@android:color/black"
+                app:layout_constraintLeft_toRightOf="@id/listPeopleTitle"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/hourlyRateTitle" />
+
+            <Button
+                android:id="@+id/deleteButton"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="-10dp"
+                android:text="@string/services_child_delete_button"
+                app:layout_constraintTop_toBottomOf="@id/listPeople" />
+
+            <Button
+                android:id="@+id/modifyButton"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/services_child_modify_button"
+                app:layout_constraintLeft_toRightOf="@id/deleteButton"
+                app:layout_constraintTop_toBottomOf="@id/listPeople" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.v7.widget.CardView>
