@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.app.Dialog;
@@ -15,6 +16,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class AdminServiceActivity extends AppCompatActivity {
 
@@ -59,13 +62,12 @@ public class AdminServiceActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Dialog d = onCreateDialog();
-                d.show();
+                onCreateDialog();
             }
         });
     }
 
-    public Dialog onCreateDialog() {
+    public void onCreateDialog() {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
@@ -76,21 +78,60 @@ public class AdminServiceActivity extends AppCompatActivity {
         final EditText serviceName = view.findViewById(R.id.serviceName);
 
         builder.setTitle("Add Service");
-
         builder.setView(view);
-        builder.setPositiveButton("Create", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Create",
+                new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        //Do nothing here because we override this button later to change the close behaviour.
+                        //However, we still need this because on older versions of Android unless we
+                        //pass a handler the button doesn't get instantiated
+                    }
+                });
+        builder.setNegativeButton("Cancel", null);
+
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int id) {
-                Service service = new Service(serviceName.getText().toString(), Double.parseDouble(hourlyRate.getText().toString()));
-                adapter.add(service);
+            public void onClick(View v) {boolean correctInfo = true;
+
+                if (isValidService(serviceName.getText().toString())) {
+                    serviceName.setError("Service cannot be empty.");
+                    correctInfo = false;
+                }
+                if (!isDouble(hourlyRate.getText().toString())) {
+                    hourlyRate.setError("Hourly rate has to be a double.");
+                    correctInfo = false;
+                }
+
+                if (correctInfo) {
+                    Service service = new Service(serviceName.getText().toString(), Double.parseDouble(hourlyRate.getText().toString()));
+                    adapter.add(service);
+                    dialog.dismiss();
+                }
+
+                Log.e("RETRDSTRDS", String.valueOf(correctInfo));
+
                 // TODO : Add service firebase function here
                 // TODO : Verify if the values makes sense
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {}
-        });
+    }
 
-        return builder.create();
+
+    public static boolean isValidService(String serviceName) {
+        return TextUtils.isEmpty(serviceName);
+    }
+
+    public boolean isDouble(String hourlyRate) {
+        try {
+            Double.parseDouble(hourlyRate);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 }
