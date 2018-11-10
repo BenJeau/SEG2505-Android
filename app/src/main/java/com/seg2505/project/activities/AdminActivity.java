@@ -1,4 +1,4 @@
-package com.seg2505.project;
+package com.seg2505.project.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +10,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.seg2505.project.adapters.AdminRecyclerViewAdapter;
+import com.seg2505.project.R;
+import com.seg2505.project.model.Person;
 
 import java.util.ArrayList;
 

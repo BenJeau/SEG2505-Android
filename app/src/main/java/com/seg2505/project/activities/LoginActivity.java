@@ -1,4 +1,4 @@
-package com.seg2505.project;
+package com.seg2505.project.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -18,7 +18,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.internal.InternalTokenResult;
+import com.seg2505.project.R;
+import com.seg2505.project.model.Person;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

@@ -1,10 +1,13 @@
-package com.seg2505.project;
+package com.seg2505.project.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.seg2505.project.R;
+import com.seg2505.project.model.Person;
 
 import java.util.ArrayList;
 

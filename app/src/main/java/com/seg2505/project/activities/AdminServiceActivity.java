@@ -1,27 +1,34 @@
-package com.seg2505.project;
+package com.seg2505.project.activities;
 
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
-import android.app.Dialog;
 import android.view.LayoutInflater;
 import android.content.DialogInterface;
-import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.seg2505.project.R;
+import com.seg2505.project.adapters.ServiceAdapter;
+import com.seg2505.project.model.Provider;
+import com.seg2505.project.model.Service;
+
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class AdminServiceActivity extends AppCompatActivity {
 
     private ServiceAdapter adapter;
+    private DatabaseReference serviceReference;
+    private FirebaseDatabase database;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -30,6 +37,8 @@ public class AdminServiceActivity extends AppCompatActivity {
 
         // Gets the information from firebase
         final ArrayList<Service> data = new ArrayList<Service>();
+        database = FirebaseDatabase.getInstance();
+        serviceReference = database.getReference("services");
 
         // TODO : Get information from firebase and replace it with the information below
         Service temp1 = new Service("Water", 10.87);
@@ -96,7 +105,19 @@ public class AdminServiceActivity extends AppCompatActivity {
                 String hourlyRateText = hourlyRate.getText().toString();
 
                 if (validateDialog(serviceName, hourlyRate, serviceText, hourlyRateText)) {
-                    Service service = new Service(serviceText, Double.parseDouble(hourlyRateText));
+                    final Service service = new Service(serviceText, Double.parseDouble(hourlyRateText));
+                    serviceReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    serviceReference.push().setValue(service);
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+
+                    });
                     adapter.add(service);
                     dialog.dismiss();
 

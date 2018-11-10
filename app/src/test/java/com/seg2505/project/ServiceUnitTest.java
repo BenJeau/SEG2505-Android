@@ -1,4 +1,6 @@
 package com.seg2505.project;
+import com.seg2505.project.activities.AdminServiceActivity;
+
 import static org.junit.Assert.*;
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package com.seg2505.project;
+package com.seg2505.project.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -17,6 +17,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.seg2505.project.R;
+import com.seg2505.project.model.Admin;
+import com.seg2505.project.model.Owner;
+import com.seg2505.project.model.Person;
+import com.seg2505.project.model.Provider;
 
 import android.widget.Button;
 import android.widget.Toast;

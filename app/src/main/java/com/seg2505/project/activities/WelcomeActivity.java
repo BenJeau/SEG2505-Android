@@ -1,8 +1,10 @@
-package com.seg2505.project;
+package com.seg2505.project.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
+
+import com.seg2505.project.R;
 
 public class WelcomeActivity extends AppCompatActivity {
 

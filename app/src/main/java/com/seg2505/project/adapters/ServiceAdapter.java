@@ -1,4 +1,4 @@
-package com.seg2505.project;
+package com.seg2505.project.adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -14,6 +14,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.seg2505.project.R;
+import com.seg2505.project.activities.AdminServiceActivity;
+import com.seg2505.project.model.Provider;
+import com.seg2505.project.model.Service;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,6 @@
-package com.seg2505.project;
+package com.seg2505.project.model;
+
+import com.seg2505.project.model.Provider;
 
 import java.util.*;
 /**

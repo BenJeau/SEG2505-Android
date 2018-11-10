@@ -1,12 +1,13 @@
-package com.seg2505.project;
+package com.seg2505.project.activities;
 
 import android.content.Intent;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.seg2505.project.R;
 
 public class OptionActivity extends AppCompatActivity {
 
