@@ -3,6 +3,7 @@ package com.seg2505.project.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
@@ -15,6 +16,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 import com.seg2505.project.R;
 import com.seg2505.project.activities.AdminServiceActivity;
 import com.seg2505.project.model.Provider;
@@ -204,12 +208,15 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.MyViewHo
      * @param position the position of the service in the list
      */
     public void removeAt(int position) {
+        AdminServiceActivity.serviceReference.child(dataset.get(position).getServiceId()).removeValue();
         dataset.remove(position);
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, dataset.size());
 
         checkIfEmpty();
     }
+
+
 
     /**
      * Modifies the service at the specified position and
@@ -219,6 +226,7 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.MyViewHo
      * @param position the position of the service object in the dataset
      */
     public void modifyAt(Service service, int position) {
+        AdminServiceActivity.serviceReference.child(dataset.get(position).getServiceId()).setValue(service);
         dataset.set(position, service);
         notifyItemChanged(position);
     }
@@ -234,6 +242,7 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.MyViewHo
 
         checkIfEmpty();
     }
+
 
     /**
      * Adds/remove view for when the recycler view is empty

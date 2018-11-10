@@ -18,6 +18,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.seg2505.project.R;
+import com.seg2505.project.adapters.AdminRecyclerViewAdapter;
 import com.seg2505.project.adapters.ServiceAdapter;
 import com.seg2505.project.model.Provider;
 import com.seg2505.project.model.Service;
@@ -27,7 +28,7 @@ import java.util.ArrayList;
 public class AdminServiceActivity extends AppCompatActivity {
 
     private ServiceAdapter adapter;
-    private DatabaseReference serviceReference;
+    static public DatabaseReference serviceReference;
     private FirebaseDatabase database;
 
     @Override
@@ -41,31 +42,37 @@ public class AdminServiceActivity extends AppCompatActivity {
         serviceReference = database.getReference("services");
 
         // TODO : Get information from firebase and replace it with the information below
+        serviceReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    Service user = postSnapshot.getValue(Service.class);
+                    data.add(user);
+                }
+                // Gets the recycler view and sets it to have a dataset that may vary in size
+                RecyclerView recyclerView = findViewById(R.id.serviceRecyclerView);
+                recyclerView.setHasFixedSize(false);
 
-        Service temp1 = new Service("Water", 10.87);
-        temp1.addProvider(new Provider("Jen", "password"));
-        temp1.addProvider(new Provider("Sofie", "password"));
-        temp1.addProvider(new Provider("Lauren", "password"));
+                // Uses a linear layout manager
+                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(AdminServiceActivity.this);
+                recyclerView.setLayoutManager(layoutManager);
 
-        Service temp2 = new Service("Electricity", 1.35);
-        temp2.addProvider(new Provider("Vergenie", "password"));
-        temp2.addProvider(new Provider("Diedrick", "password"));
-        temp2.addProvider(new Provider("Alex", "password"));
-        temp2.addProvider(new Provider("Rick", "password"));
-        data.add(temp1);
-        data.add(temp2);
+                // Specify an adapter (see also next example)
+                adapter = new ServiceAdapter(data, AdminServiceActivity.this);
+                recyclerView.setAdapter(adapter);
 
-        // Gets the recycler view and sets it to have a dataset that may vary in size
-        RecyclerView recyclerView = findViewById(R.id.serviceRecyclerView);
-        recyclerView.setHasFixedSize(false);
 
-        // Uses a linear layout manager
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
+            }
 
-        // Specify an adapter (see also next example)
-        adapter = new ServiceAdapter(data, this);
-        recyclerView.setAdapter(adapter);
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+
+
+
+
 
         // A floating action button which helps the user to add a service
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -106,23 +113,11 @@ public class AdminServiceActivity extends AppCompatActivity {
                 String hourlyRateText = hourlyRate.getText().toString();
 
                 if (validateDialog(serviceName, hourlyRate, serviceText, hourlyRateText)) {
-                    final Service service = new Service(serviceText, Double.parseDouble(hourlyRateText));
+                    String id = serviceReference.push().getKey();
+                    final Service service = new Service(serviceText, Double.parseDouble(hourlyRateText),id);
                     service.addProvider(new Provider("Jen", "password"));
                     service.addProvider(new Provider("dd", "password"));
-
-
-                    serviceReference.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    serviceReference.push().setValue(service);
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                            }
-
-                    });
+                    serviceReference.child(id).setValue(service);
                     adapter.add(service);
                     dialog.dismiss();
 
@@ -163,4 +158,5 @@ public class AdminServiceActivity extends AppCompatActivity {
             return false;
         }
     }
+
 }

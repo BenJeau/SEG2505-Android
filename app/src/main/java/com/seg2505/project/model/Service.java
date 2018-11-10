@@ -13,13 +13,15 @@ public class Service {
     private List<Provider> providers;
     private String serviceName;
     private double hourlyRate;
+    private String serviceId;
 
     // CONSTRUCTOR
-    public Service(String serviceName, double hourlyRate){
+    public Service(String serviceName, double hourlyRate,String serviceId){
         providers = new ArrayList<Provider>();
 
         this.serviceName = serviceName;
         this.hourlyRate = hourlyRate;
+        this.serviceId=serviceId;
     }
 
     public Service(){
@@ -50,4 +52,7 @@ public class Service {
         return this.providers;
     }
 
+    public String getServiceId() {
+        return serviceId;
+    }
 }
