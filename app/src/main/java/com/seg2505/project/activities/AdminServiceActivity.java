@@ -147,7 +147,7 @@ public class AdminServiceActivity extends AppCompatActivity {
     }
 
     public static boolean isFieldEmpty(String text) {
-        return text == null || text.equals("");
+        return text == null || text.equals("") || text.trim().length()==0;
     }
 
     public static boolean isDouble(String hourlyRate) {
