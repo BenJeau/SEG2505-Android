@@ -41,6 +41,7 @@ public class AdminServiceActivity extends AppCompatActivity {
         serviceReference = database.getReference("services");
 
         // TODO : Get information from firebase and replace it with the information below
+
         Service temp1 = new Service("Water", 10.87);
         temp1.addProvider(new Provider("Jen", "password"));
         temp1.addProvider(new Provider("Sofie", "password"));
@@ -106,6 +107,10 @@ public class AdminServiceActivity extends AppCompatActivity {
 
                 if (validateDialog(serviceName, hourlyRate, serviceText, hourlyRateText)) {
                     final Service service = new Service(serviceText, Double.parseDouble(hourlyRateText));
+                    service.addProvider(new Provider("Jen", "password"));
+                    service.addProvider(new Provider("dd", "password"));
+
+
                     serviceReference.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

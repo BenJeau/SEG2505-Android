@@ -22,6 +22,10 @@ public class Service {
         this.hourlyRate = hourlyRate;
     }
 
+    public Service(){
+
+    }
+
     public void setServiceName(String serviceName){
         this.serviceName = serviceName;
     }

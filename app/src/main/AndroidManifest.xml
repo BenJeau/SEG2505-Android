@@ -37,7 +37,13 @@
             android:label="Services"></activity>
 
         <activity android:name=".activities.OptionActivity"
-            android:label="Administrator"></activity>
+            android:label="Administrator">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
