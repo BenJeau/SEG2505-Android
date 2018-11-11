@@ -8,6 +8,7 @@ Ce répertoire contient le code nécessaire pour l'ouvrir dans Android Studio. N
 
 Nous utilisons UmpleOnline pour notre UML du code. Voici le lien pour notre premier livrable: http://cruise.eecs.uottawa.ca/umpleonline/umple.php?model=181109551413
 Faire sûr de peser le M pour voir les méthodes sur Umple après avoir clické le lien SVP. Vous pouvez aussi visionner le diagramme UML dans le fichier pdf nommé SEG2505_Android_UML.
+keyID: Une clès spécifiques attacher à chaque instance d'un objet pour faciliter le transfert de data entre Firebase et l'application.
 
 Pour accéder à notre répertoire [github](https://github.com/BenJeau/SEG2505-Android), utiliser le lien donner.
 
