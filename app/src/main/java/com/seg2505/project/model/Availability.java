@@ -16,4 +16,12 @@ public class Availability {
         day = aDay;
         time = aTime;
     }
+
+    public String getDay() {
+        return day;
+    }
+
+    public String getTime() {
+        return time;
+    }
 }
