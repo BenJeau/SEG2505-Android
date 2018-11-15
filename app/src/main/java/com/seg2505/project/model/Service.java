@@ -16,7 +16,7 @@ public class Service {
     private String serviceId;
 
     // CONSTRUCTOR
-    public Service(String serviceName, double hourlyRate,String serviceId){
+    public Service(String serviceName, double hourlyRate, String serviceId){
         providers = new ArrayList<Provider>();
 
         this.serviceName = serviceName;
