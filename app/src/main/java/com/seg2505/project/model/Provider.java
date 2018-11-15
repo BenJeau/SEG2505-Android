@@ -9,6 +9,7 @@ public class Provider extends Person {
     //Provider Associations
     private List<Service> services;
     private List<Availability> availabilities;
+    private Address address;
 
     public Provider() {
 
@@ -23,5 +24,9 @@ public class Provider extends Person {
 
     public void addAvailabity( Availability a){
         availabilities.add(a);
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }
