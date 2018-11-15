@@ -20,4 +20,8 @@ public class Provider extends Person {
         services = new ArrayList<Service>();
         availabilities = new ArrayList<Availability>();
     }
+
+    public void addAvailabity( Availability a){
+        availabilities.add(a);
+    }
 }
