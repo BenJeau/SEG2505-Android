@@ -94,10 +94,12 @@ public class ProviderServiceActivity extends AppCompatActivity {
         View view = inflater.inflate(R.layout.create_service, null);
         final EditText hourlyRate = view.findViewById(R.id.hourlyRate);
         final EditText serviceName = view.findViewById(R.id.serviceName);
+
+        /*
         final EditText address = view.findViewById(R.id.address);
         final EditText phoneNumber = view.findViewById(R.id.phoneNumber);
         final EditText companyName = view.findViewById(R.id.companyName);
-        final EditText generalDescription = view.findViewById(R.id.generalDescription);
+        final EditText generalDescription = view.findViewById(R.id.generalDescription);*/
 
         builder.setTitle("Add Service");
         builder.setView(view);

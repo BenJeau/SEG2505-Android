@@ -55,7 +55,6 @@
             android:textColor="@android:color/black"
             android:hint="Street Name"
             android:backgroundTint="@color/secondaryColor"
-            app:layout_constraintBottom_toTopOf=""
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/streetNumber"
             app:layout_constraintTop_toTopOf="@id/streetNumber" />
@@ -69,7 +68,6 @@
             android:hint="City Name"
             android:inputType="textPersonName"
             android:textColor="@android:color/black"
-            app:layout_constraintBottom_toTopOf=""
             app:layout_constraintEnd_toStartOf="@id/provinceName"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/streetNumber" />
@@ -83,7 +81,6 @@
             android:textColor="@android:color/black"
             android:hint="Province/State Name"
             android:backgroundTint="@color/secondaryColor"
-            app:layout_constraintBottom_toTopOf=""
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/cityName"
             app:layout_constraintTop_toBottomOf="@id/streetName" />
@@ -97,7 +94,6 @@
             android:textColor="@android:color/black"
             android:hint="Country Name"
             android:backgroundTint="@color/secondaryColor"
-            app:layout_constraintBottom_toTopOf=""
             app:layout_constraintEnd_toStartOf="@id/postalCode"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cityName" />
@@ -111,7 +107,6 @@
             android:textColor="@android:color/black"
             android:hint="Postal Code"
             android:backgroundTint="@color/secondaryColor"
-            app:layout_constraintBottom_toTopOf=""
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/countryName"
             app:layout_constraintTop_toBottomOf="@id/cityName" />
@@ -136,7 +131,6 @@
         android:textColor="@android:color/black"
         android:hint="Phone Number"
         android:backgroundTint="@color/secondaryColor"
-        app:layout_constraintBottom_toTopOf=""
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/phoneNumberTitle" />
@@ -161,7 +155,6 @@
         android:textColor="@android:color/black"
         android:hint="Company Name"
         android:backgroundTint="@color/secondaryColor"
-        app:layout_constraintBottom_toTopOf=""
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/companyNameTitle" />
@@ -186,7 +179,6 @@
         android:textColor="@android:color/black"
         android:hint="Company Name"
         android:backgroundTint="@color/secondaryColor"
-        app:layout_constraintBottom_toTopOf=""
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/descriptionTitle" />
