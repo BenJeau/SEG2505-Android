@@ -19,6 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.seg2505.project.R;
+import com.seg2505.project.model.LoggedUser;
 import com.seg2505.project.model.Person;
 
 import java.util.regex.Matcher;
@@ -105,9 +106,10 @@ public class LoginActivity extends AppCompatActivity {
                                         if (!exists) {
                                             Toast.makeText(getApplicationContext(), "Wrong login, username not found", Toast.LENGTH_SHORT).show();
                                         } else if (user.getPassword().equals(password)) {
-                                            Intent intent = new Intent(LoginActivity.this, WelcomeActivity.class);
+                                            Intent intent = new Intent(LoginActivity.this, ProviderAvailabilityActivity.class);
                                             intent.putExtra(INTENT_KEY_NAME, user.getUsername());
                                             intent.putExtra(INTENT_KEY_ROLE, user.getRole());
+                                            LoggedUser.setId(user.getId());
                                             startActivity(intent);
                                             Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
                                         } else if (!password.equals(user.getPassword())) {

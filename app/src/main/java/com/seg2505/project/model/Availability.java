@@ -11,6 +11,9 @@ public class Availability {
     private String time;
 
     // CONSTRUCTOR
+    public Availability(){
+
+    }
 
     public Availability(String aDay, String aTime) {
         day = aDay;
@@ -23,5 +26,13 @@ public class Availability {
 
     public String getTime() {
         return time;
+    }
+
+    public void setDay(String day) {
+        this.day = day;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 }

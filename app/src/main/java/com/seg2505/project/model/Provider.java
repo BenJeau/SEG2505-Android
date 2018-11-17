@@ -26,7 +26,14 @@ public class Provider extends Person {
         availabilities.add(a);
     }
 
+    public List<Availability> getAvailabilities() {
+        return availabilities;
+    }
+
     public void setAddress(Address address) {
         this.address = address;
+    }
+    public void createAvailabilities(){
+        availabilities = new ArrayList<Availability>();
     }
 }

@@ -40,10 +40,11 @@
         <activity
             android:name=".activities.OptionActivity"
             android:label="Administrator"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".activities.ProviderHomeActivity"
-            android:label="Provider">
-        </activity>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.ProviderHomeActivity"
+            android:label="Provider"></activity>
+        <activity android:name=".activities.ProviderAvailabilityActivity"></activity>
     </application>
 
 </manifest>
