@@ -22,6 +22,7 @@ import com.seg2505.project.model.Admin;
 import com.seg2505.project.model.Owner;
 import com.seg2505.project.model.Person;
 import com.seg2505.project.model.Provider;
+import com.seg2505.project.model.UserExistsListener;
 
 import android.widget.Button;
 import android.widget.Toast;
@@ -54,8 +55,8 @@ public class SignupActivity extends AppCompatActivity {
         a.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String username = edtUsername.getText().toString();
-                String password = edtPassword.getText().toString();
+                final String username = edtUsername.getText().toString();
+                final String password = edtPassword.getText().toString();
                 if(username.equals("admin") && password.equals("admin")){
                     adminReference.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -69,7 +70,8 @@ public class SignupActivity extends AppCompatActivity {
                                 return;
                             }
                             if (!adminExists){
-                                adminReference.push().setValue(new Admin(edtUsername.getText().toString(),edtPassword.getText().toString()));
+                                String id = adminReference.push().getKey();
+                                adminReference.child(id).setValue(new Admin(edtUsername.getText().toString(),edtPassword.getText().toString(),id));
                                 Toast.makeText(getApplicationContext(), "Admin successfully created", Toast.LENGTH_SHORT).show();
 
                                 Intent intent = new Intent(SignupActivity.this,LoginActivity.class);
@@ -98,60 +100,74 @@ public class SignupActivity extends AppCompatActivity {
                         edtPassword.setError("Password must be a minimum of 4 characters and have at least one capital letter and one number.");
                     }
 
-                    databaseReference.addListenerForSingleValueEvent(new ValueEventListener(){
 
+                    isCheckUser(username, new UserExistsListener() {
                         @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            Person user = null;
-                            for(DataSnapshot postSnapshot : dataSnapshot.getChildren()){
-                                user = postSnapshot.getValue(Person.class);
+                        public void onExists(boolean isRegistered) {
+                            if (!isRegistered){
+                                Person ac = null;
+                                if (username.length()>2 && LoginActivity.isValidPassword(password) ){
+                                    final ProgressDialog progressDialog = new ProgressDialog(SignupActivity.this, R.style.AppTheme_Blue_Dialog);
+                                    progressDialog.setIndeterminate(true);
+                                    progressDialog.setCancelable(false);
+                                    progressDialog.setMessage("Creating account...");
+                                    progressDialog.show();
+                                    final Handler handler = new Handler();
+                                    final Runnable r = new Runnable(){
 
-                                if (edtUsername.getText().toString().equals(user.getUsername())){
-                                    exists = true;
-                                    break;
+                                        @Override
+                                        public void run() {
+                                            progressDialog.dismiss();
+                                            Toast.makeText(getApplicationContext(), "Account successfully created", Toast.LENGTH_SHORT).show();
+
+                                            Intent intent = new Intent(SignupActivity.this,LoginActivity.class);
+                                            startActivity(intent);
+                                        }
+                                    };
+                                    String id = databaseReference.push().getKey();
+                                    if (role.getSelectedItem().equals("Provider")) {
+                                        ac = new Provider(username, password,id);
+                                    } else if (role.getSelectedItem().equals("Owner")) {
+                                        ac = new Owner(username, password,id);
+                                    }
+                                    databaseReference.child(id).setValue(ac);
+                                    handler.postDelayed(r,1000);
                                 }
                             }
-                            if(exists) {
-                                edtUsername.setError("Username already exist");
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
                         }
                     });
 
-                    Person ac = null;
 
-                    if (username.length()>2 && LoginActivity.isValidPassword(password) && !exists ){
-                        final ProgressDialog progressDialog = new ProgressDialog(SignupActivity.this, R.style.AppTheme_Blue_Dialog);
-                        progressDialog.setIndeterminate(true);
-                        progressDialog.setCancelable(false);
-                        progressDialog.setMessage("Creating account...");
-                        progressDialog.show();
-                        final Handler handler = new Handler();
-                        final Runnable r = new Runnable(){
-
-                            @Override
-                            public void run() {
-                                progressDialog.dismiss();
-                                Toast.makeText(getApplicationContext(), "Account successfully created", Toast.LENGTH_SHORT).show();
-
-                                Intent intent = new Intent(SignupActivity.this,LoginActivity.class);
-                                startActivity(intent);
-                            }
-                        };
-                        if (role.getSelectedItem().equals("Provider")) {
-                            ac = new Provider(username, password);
-                        } else if (role.getSelectedItem().equals("Owner")) {
-                            ac = new Owner(username, password);
-                        }
-                        databaseReference.push().setValue(ac);
-                        handler.postDelayed(r,1000);
-                    }
                 }
             }
         });
     }
+    public void isCheckUser(String username, final UserExistsListener listener){
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener(){
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Person user = null;
+                boolean userExists=false;
+                for(DataSnapshot postSnapshot : dataSnapshot.getChildren()){
+                    user = postSnapshot.getValue(Person.class);
+
+                    if (edtUsername.getText().toString().equals(user.getUsername())){
+                        userExists = true;
+                        edtUsername.setError("Username already exist");
+                        ;
+                    }
+                }
+                listener.onExists(userExists);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+    }
 }
+

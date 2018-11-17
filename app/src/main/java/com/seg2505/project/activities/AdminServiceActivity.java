@@ -115,7 +115,7 @@ public class AdminServiceActivity extends AppCompatActivity {
                 if (validateDialog(serviceName, hourlyRate, serviceText, hourlyRateText)) {
                     String id = serviceReference.push().getKey();
                     final Service service = new Service(serviceText, Double.parseDouble(hourlyRateText),id);
-                    service.addProvider(new Provider("", ""));
+                    service.addProvider(new Provider("", "",""));
                     /*service.addProvider(new Provider("Jen", "password"));
                     service.addProvider(new Provider("dd", "password"));*/
                     serviceReference.child(id).setValue(service);

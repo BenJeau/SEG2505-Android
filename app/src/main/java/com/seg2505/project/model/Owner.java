@@ -14,8 +14,8 @@ public class Owner extends Person {
     }
 
     // CONSTRUCTOR
-    public Owner(String username, String password) {
-        super(username, password);
+    public Owner(String username, String password,String id) {
+        super(username, password,id);
         setRole("Owner");
         services = new ArrayList<Service>();
     }

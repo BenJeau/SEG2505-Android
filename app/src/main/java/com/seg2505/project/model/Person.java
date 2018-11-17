@@ -10,14 +10,16 @@ public class Person {
     private String username;
     private String password;
     private String role;
+    private String id;
 
     public Person(){
 
     }
 
-    public Person(String username, String password) {
+    public Person(String username, String password,String id) {
         this.username = username;
         this.password = password;
+        this.id=id;
     }
 
     public void setRole(String role) {
@@ -38,5 +40,13 @@ public class Person {
 
     public String toString() {
         return  "["+ "name" + ":" + getUsername()+ "," + "lastName" + ":" + getPassword()+ "]";
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
     }
 }

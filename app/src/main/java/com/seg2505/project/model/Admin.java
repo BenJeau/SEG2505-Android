@@ -12,8 +12,8 @@ public class Admin extends Person {
 
     }
 
-    public Admin(String username, String password){
-        super(username, password);
+    public Admin(String username, String password,String id){
+        super(username, password, id);
         services = new ArrayList<Service>();
     }
     public void addService(Service s){
