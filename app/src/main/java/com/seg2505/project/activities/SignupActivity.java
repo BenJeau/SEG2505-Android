@@ -105,7 +105,6 @@ public class SignupActivity extends AppCompatActivity {
                         @Override
                         public void onExists(boolean isRegistered) {
                             if (!isRegistered){
-                                Person ac = null;
                                 if (username.length()>2 && LoginActivity.isValidPassword(password) ){
                                     final ProgressDialog progressDialog = new ProgressDialog(SignupActivity.this, R.style.AppTheme_Blue_Dialog);
                                     progressDialog.setIndeterminate(true);
@@ -126,11 +125,12 @@ public class SignupActivity extends AppCompatActivity {
                                     };
                                     String id = databaseReference.push().getKey();
                                     if (role.getSelectedItem().equals("Provider")) {
-                                        ac = new Provider(username, password,id);
+                                        Provider ac = new Provider(username, password,id);
+                                        databaseReference.child(id).setValue(ac);
                                     } else if (role.getSelectedItem().equals("Owner")) {
-                                        ac = new Owner(username, password,id);
+                                        Owner ac = new Owner(username, password,id);
+                                        databaseReference.child(id).setValue(ac);
                                     }
-                                    databaseReference.child(id).setValue(ac);
                                     handler.postDelayed(r,1000);
                                 }
                             }

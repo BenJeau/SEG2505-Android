@@ -33,6 +33,11 @@ public class Provider extends Person {
     public void setAddress(Address address) {
         this.address = address;
     }
+
+    public Address getAddress() {
+        return this.address;
+    }
+
     public void createAvailabilities(){
         availabilities = new ArrayList<Availability>();
     }

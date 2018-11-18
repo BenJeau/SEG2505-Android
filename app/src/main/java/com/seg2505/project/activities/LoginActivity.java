@@ -20,7 +20,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.seg2505.project.R;
 import com.seg2505.project.model.LoggedUser;
+import com.seg2505.project.model.Owner;
 import com.seg2505.project.model.Person;
+import com.seg2505.project.model.Provider;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -35,6 +37,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public static final String INTENT_KEY_NAME = "name";
     public static final String INTENT_KEY_ROLE = "role";
+    public static final String INTENT_KEY_HASINFO = "info";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,8 +97,16 @@ public class LoginActivity extends AppCompatActivity {
 
                                         Person user = null;
                                         boolean exists = false;
+
                                         for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                                            user = postSnapshot.getValue(Person.class);
+                                            DataSnapshot snapshot = postSnapshot;
+                                            user = snapshot.getValue(Person.class);
+
+                                            if (user.getRole().equals("Provider")) {
+                                                user = snapshot.getValue(Provider.class);
+                                            } else if (user.getRole().equals("Owner")){
+                                                user = snapshot.getValue(Owner.class);
+                                            }
 
                                             if (username.equals(user.getUsername())) {
                                                 exists = true;
@@ -106,9 +117,14 @@ public class LoginActivity extends AppCompatActivity {
                                         if (!exists) {
                                             Toast.makeText(getApplicationContext(), "Wrong login, username not found", Toast.LENGTH_SHORT).show();
                                         } else if (user.getPassword().equals(password)) {
-                                            Intent intent = new Intent(LoginActivity.this, ProviderAvailabilityActivity.class);
+                                            Intent intent = new Intent(LoginActivity.this, WelcomeActivity.class);
                                             intent.putExtra(INTENT_KEY_NAME, user.getUsername());
                                             intent.putExtra(INTENT_KEY_ROLE, user.getRole());
+
+                                            if (user.getRole().equals("Provider")) {
+                                                intent.putExtra(INTENT_KEY_HASINFO, ((Provider)user).getAddress() != null);
+                                            }
+
                                             LoggedUser.setId(user.getId());
                                             startActivity(intent);
                                             Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();

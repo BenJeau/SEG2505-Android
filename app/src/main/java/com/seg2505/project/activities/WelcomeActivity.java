@@ -1,5 +1,7 @@
 package com.seg2505.project.activities;
 
+import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -14,9 +16,27 @@ public class WelcomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_welcome);
 
         String name = getIntent().getExtras().getString(LoginActivity.INTENT_KEY_NAME, "");
-        String role = getIntent().getExtras().getString(LoginActivity.INTENT_KEY_ROLE, "");
+        final String role = getIntent().getExtras().getString(LoginActivity.INTENT_KEY_ROLE, "");
+        final boolean hasInfo = getIntent().getExtras().getBoolean(LoginActivity.INTENT_KEY_HASINFO, false);
 
         TextView welcomeMessage = findViewById(R.id.welcomeText);
         welcomeMessage.setText("Welcome " + name + "! You are logged in as a " + role);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (role.equals("Provider")) {
+                    Intent intent;
+
+                    if (hasInfo) {
+                        intent = new Intent(WelcomeActivity.this, ProviderHomeActivity.class);
+                    } else {
+                        intent = new Intent(WelcomeActivity.this, ProviderInfoActivity.class);
+                    }
+
+                    WelcomeActivity.this.startActivity(intent);
+                }
+            }
+        }, 2000);
     }
 }
