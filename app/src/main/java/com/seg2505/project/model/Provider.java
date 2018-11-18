@@ -38,6 +38,22 @@ public class Provider extends Person {
         return this.address;
     }
 
+    public void addService(Service service) {
+        services.add(service);
+    }
+
+    public void removeService(int position) {
+        services.remove(position);
+    }
+
+    public List<Service> getServices() {
+        return services;
+    }
+
+    public void createServices(){
+        services = new ArrayList<Service>();
+    }
+
     public void createAvailabilities(){
         availabilities = new ArrayList<Availability>();
     }

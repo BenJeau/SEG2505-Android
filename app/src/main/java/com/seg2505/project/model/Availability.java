@@ -35,4 +35,8 @@ public class Availability {
     public void setTime(String time) {
         this.time = time;
     }
+
+    public String toString() {
+        return day + " " + time;
+    }
 }

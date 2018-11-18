@@ -12,9 +12,10 @@ import com.seg2505.project.model.Person;
 import com.seg2505.project.model.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ProviderRecyclerViewAdapter extends RecyclerView.Adapter<ProviderRecyclerViewAdapter.MyViewHolder> {
-    private ArrayList<Service> mDataset;
+    private List<Service> mDataset;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -34,7 +35,7 @@ public class ProviderRecyclerViewAdapter extends RecyclerView.Adapter<ProviderRe
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public ProviderRecyclerViewAdapter(ArrayList<Service> myDataset) {
+    public ProviderRecyclerViewAdapter(List<Service> myDataset) {
         mDataset = myDataset;
     }
 
