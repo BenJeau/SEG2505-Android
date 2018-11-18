@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android" android:color="#0c1a6e">
+
+
+    <item
+        android:state_focused="false"
+        android:state_pressed="true"
+        android:drawable="@drawable/circular_text_selected" />
+
+    <item android:drawable="@drawable/circle" />
+</ripple>
