@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_weight="2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        >
+        <TextView
+            android:id="@+id/day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Choose Day"
+            android:textSize="25dp"
+            android:layout_centerInParent="true"/>
+
+
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+
+        android:background="?android:attr/selectableItemBackgroundBorderless">
+        <TextView
+            android:clickable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MON"
+            android:textSize="18dp"
+            android:background="@drawable/rounded_textview"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+            android:gravity="center"
+            android:id="@+id/mon" />
+        <TextView
+            android:clickable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TUE"
+            android:layout_marginLeft="10dp"
+            android:textSize="18dp"
+            android:background="@drawable/rounded_textview"
+            android:gravity="center"
+            android:layout_toRightOf="@+id/mon"
+            android:id="@+id/tue" />
+        <TextView
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="WED"
+            android:textSize="18dp"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/tue"
+            android:background="@drawable/rounded_textview"
+            android:gravity="center"
+            android:id="@+id/wed" />
+        <TextView
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="THU"
+            android:layout_marginTop="10dp"
+            android:textSize="18dp"
+            android:background="@drawable/rounded_textview"
+            android:gravity="center"
+            android:layout_below="@id/mon"
+            android:id="@+id/thu" />
+        <TextView
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="FRI"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:textSize="18dp"
+            android:background="@drawable/rounded_textview"
+            android:gravity="center"
+            android:layout_below="@id/mon"
+            android:layout_toRightOf="@+id/thu"
+            android:id="@+id/fri" />
+        <TextView
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SAT"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:textSize="18dp"
+            android:background="@drawable/rounded_textview"
+            android:gravity="center"
+            android:layout_below="@id/mon"
+            android:layout_toRightOf="@+id/fri"
+            android:id="@+id/sat" />
+        <TextView
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SUN"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:textSize="18dp"
+            android:background="@drawable/rounded_textview"
+            android:gravity="center"
+            android:layout_below="@id/fri"
+            android:layout_toRightOf="@id/thu"
+            android:id="@+id/sun" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>

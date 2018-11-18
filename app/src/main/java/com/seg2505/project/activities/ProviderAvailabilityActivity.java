@@ -2,6 +2,8 @@ package com.seg2505.project.activities;
 
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -20,7 +22,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.seg2505.project.R;
+import com.seg2505.project.TabbedDialog;
 import com.seg2505.project.adapters.AvailabilityAdapter;
+import com.seg2505.project.interfaces.Cancelable;
 import com.seg2505.project.model.Availability;
 import com.seg2505.project.model.LoggedUser;
 import com.seg2505.project.model.Provider;
@@ -28,13 +32,14 @@ import com.seg2505.project.model.Provider;
 import java.util.ArrayList;
 
 
-public class ProviderAvailabilityActivity extends AppCompatActivity {
+public class ProviderAvailabilityActivity extends AppCompatActivity implements Cancelable {
 
     private AvailabilityAdapter adapter;
     static public DatabaseReference userReference;
     private FirebaseDatabase database;
     private String userId;
     private Provider provider;
+    private TabbedDialog dialogFragment;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -90,11 +95,24 @@ public class ProviderAvailabilityActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onCreateDialog();
+                onCreateDialog1();
             }
         });
     }
 
+    private void onCreateDialog1() {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        Fragment prev = getSupportFragmentManager().findFragmentByTag("dialog");
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
+        dialogFragment = new TabbedDialog();
+        dialogFragment.show(ft,"dialog");
+        dialogFragment.setCancelable(this);
+
+
+    }
 
 
     public void onCreateDialog() {
@@ -140,7 +158,20 @@ public class ProviderAvailabilityActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void setCanceled(Boolean canceled1,String day,String time) {
+        if (canceled1){
+            Log.i("tagged","dddddd");
+
+        }
+        else{
+            final Availability availability = new Availability(day, time);
+            provider.addAvailabity(availability);
+            userReference.setValue(provider);
+            adapter.add(availability);
+        }
+        dialogFragment.dismiss();
 
 
-
+    }
 }

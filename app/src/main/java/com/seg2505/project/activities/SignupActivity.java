@@ -19,11 +19,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.seg2505.project.R;
 import com.seg2505.project.model.Admin;
-import com.seg2505.project.model.Availability;
 import com.seg2505.project.model.Owner;
 import com.seg2505.project.model.Person;
 import com.seg2505.project.model.Provider;
-import com.seg2505.project.model.UserExistsListener;
+import com.seg2505.project.interfaces.UserExistsListener;
 
 import android.widget.Button;
 import android.widget.Toast;
