@@ -68,28 +68,8 @@ public class ProviderHomeActivity extends AppCompatActivity {
             }
         });
     }
-//    public void onCreateDialog() {
-//
-//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//
-//        // Get the layout inflater
-//        LayoutInflater inflater = this.getLayoutInflater();
-//        View view = inflater.inflate(R.layout.add_services, null);
-//
-//        final AlertDialog dialog = builder.create();
-//
-//        builder.setTitle("Services");
-//        builder.setView(view);
-//        RecyclerView recyclerView = view.findViewById(R.id.serviceRecyclerView1);
-//        recyclerView.setHasFixedSize(false);
-//
-//
 
-//
-//
 
-//
-//    }
 
     public void onCreateDialog() {
 
@@ -130,7 +110,7 @@ public class ProviderHomeActivity extends AppCompatActivity {
                 recyclerView.setLayoutManager(layoutManager);
 
                 // Specify an adapter (see also next example)
-                DialogAdapter adapter = new DialogAdapter(data);
+                DialogAdapter adapter = new DialogAdapter(data, provider);
                 recyclerView.setAdapter(adapter);
 
 
