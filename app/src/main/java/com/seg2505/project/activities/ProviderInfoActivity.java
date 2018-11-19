@@ -171,9 +171,6 @@ public class ProviderInfoActivity  extends AppCompatActivity {
     }
 
         public static boolean isValidStreetNum(String streetNum) {
-            if(streetNum.trim().isEmpty()) {
-                return false;
-            }
             try {
                 Integer.parseInt(streetNum);
             } catch(NumberFormatException e) {
@@ -183,9 +180,6 @@ public class ProviderInfoActivity  extends AppCompatActivity {
         }
 
         public static boolean isValidStreetName(String streetName) {
-            if(streetName.trim().isEmpty()) {
-                return false;
-            }
             for (int i = 0; i != streetName.length(); i++) {
                 String chars = String.valueOf(streetName.charAt(i));
                 if (!Character.isLetterOrDigit(streetName.charAt(i)) || !Character.isSpaceChar(streetName.charAt(i)) || chars != "-") {
@@ -196,9 +190,6 @@ public class ProviderInfoActivity  extends AppCompatActivity {
         }
 
         public static boolean isValidPostalCode(String postalCode) {
-            if(postalCode.trim().isEmpty()) {
-                return false;
-            }
             if (postalCode.length() != 6) {
                 return false;
             }
@@ -217,6 +208,9 @@ public class ProviderInfoActivity  extends AppCompatActivity {
         }
 
         public static boolean isValidName(String name) {
+            if(!Character.isUpperCase(name.charAt(0))) {
+                return false;
+            }
             for (int i = 0; i != name.length(); i++) {
                 String chars = String.valueOf(name.charAt(i));
                 if (!Character.isLetter(name.charAt(i)) || chars != "-") {
@@ -227,12 +221,9 @@ public class ProviderInfoActivity  extends AppCompatActivity {
         }
 
         public static boolean isValidCompanyName(String companyName) {
-            if(companyName.trim().isEmpty()) {
-                return false;
-            }
             for (int i = 0; i != companyName.length(); i++) {
                 String chars = String.valueOf(companyName.charAt(i));
-                if (!Character.isLetter(companyName.charAt(i)) || !Character.isSpaceChar(companyName.charAt(i)) || chars != "-") {
+                if (!Character.isLetter(companyName.charAt(i)) || !Character.isSpaceChar(companyName.charAt(i)) || chars != "-" || chars != ".") {
                     return false;
                 }
             }
@@ -247,9 +238,6 @@ public class ProviderInfoActivity  extends AppCompatActivity {
         }
 
         public static boolean isValidPhoneNumber(String phoneNumber) {
-            if(phoneNumber.trim().isEmpty()) {
-                return false;
-            }
             if(phoneNumber.length() > 12) {
                 return false;
             }
@@ -275,6 +263,13 @@ public class ProviderInfoActivity  extends AppCompatActivity {
                 if(!Character.isDigit(phoneNumber.charAt(i))) {
                     return false;
                 }
+            }
+            return true;
+        }
+
+        public static boolean empty(String string) {
+            if(string.trim().isEmpty()) {
+                return false;
             }
             return true;
         }
