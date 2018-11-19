@@ -18,6 +18,7 @@ import com.seg2505.project.model.Service;
 import android.view.LayoutInflater;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Diedrick Ng
@@ -32,6 +33,8 @@ public class DialogAdapter extends RecyclerView.Adapter<DialogAdapter.MyViewHold
     private ArrayList<Service> dataset;
 
     private Provider provider;
+
+    private  ArrayList<Service> mdata;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -54,8 +57,21 @@ public class DialogAdapter extends RecyclerView.Adapter<DialogAdapter.MyViewHold
     }
 
     public DialogAdapter(ArrayList<Service> dataset, Provider provider) {
-        this.dataset = dataset;
+
         this.provider = provider;
+        this.mdata = new ArrayList<>();
+
+        // Enleve service deja selectionner
+
+        Iterator<Service> i = provider.getServices().iterator();
+        while(i.hasNext()){
+            Service s = i.next();
+            if(dataset.contains(s)){
+                dataset.remove(s);
+            }
+        }
+        this.dataset = dataset;
+
 
     }
 
@@ -88,23 +104,17 @@ public class DialogAdapter extends RecyclerView.Adapter<DialogAdapter.MyViewHold
 
     public void add(int position){
 
-        Service service = dataset.get(position);
-        service.addProvider(provider);
-        // TODO : Integrate Firebase  here
-        
-//        String userId = LoggedUser.id;
-//
-//        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        DatabaseReference serviceReference =  database.getReference().child("users").child(userId);
-//        ProviderRecyclerViewAdapter adapter = new ProviderRecyclerViewAdapter(dataset);
-//
-//        String id = serviceReference.push().getKey();
-//        serviceReference.child(id).setValue(service);
-//        adapter.add(service);
-
+        mdata.add(dataset.get(position));
         dataset.remove(position);
-
-
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, dataset.size());
     }
 
+    public ArrayList<Service> getDataset() {
+        return dataset;
+    }
+
+    public ArrayList<Service> getMdata() {
+        return mdata;
+    }
 }
