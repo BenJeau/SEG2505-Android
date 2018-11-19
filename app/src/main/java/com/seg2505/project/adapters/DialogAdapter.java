@@ -1,10 +1,7 @@
 package com.seg2505.project.adapters;
 
-import android.app.Dialog;
+
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,13 +27,15 @@ public class DialogAdapter extends RecyclerView.Adapter<DialogAdapter.MyViewHold
      */
     private ArrayList<Service> dataset;
 
+    private Context context;
+
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         private TextView serviceTitle, hourlyRate, listPeople;
-        private Button AddButton;
+        public ImageView deleteIcon;
 
 
         private MyViewHolder(View v) {
@@ -52,14 +51,14 @@ public class DialogAdapter extends RecyclerView.Adapter<DialogAdapter.MyViewHold
     public DialogAdapter(ArrayList<Service> dataset) {
         this.dataset = dataset;
 
+
     }
 
 
     @Override
     public DialogAdapter.MyViewHolder onCreateViewHolder( ViewGroup parent, int i) {
-        final View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.add_services, parent, false);
-        return new MyViewHolder(itemView);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.provider_service_recycler_view_children, parent, false);
+        return new MyViewHolder(v);
     }
 
     @Override
@@ -67,12 +66,14 @@ public class DialogAdapter extends RecyclerView.Adapter<DialogAdapter.MyViewHold
         holder.serviceTitle.setText(dataset.get(i).getServiceName());
         holder.hourlyRate.setText(Double.toString(dataset.get(i).getHourlyRate()));
 
-        
+
+
 
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return dataset.size();
     }
+
 }
