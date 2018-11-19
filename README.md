@@ -1,5 +1,7 @@
 # SEG2505-Android
 
+[![CircleCI](https://circleci.com/gh/BenJeau/SEG2505-Android/tree/master.svg?style=svg)](https://circleci.com/gh/BenJeau/SEG2505-Android/tree/master)
+
 Cette application Android est pour le cours SEG2505 et vise à être utile pour les fournisseurs de services pour qu'ils puissent être facilement accessibles de nos téléphones mobiles.
 
 Nous utilisons [Trello](https://trello.com/b/3PInGFvG/seg-android-app) pour garder une trace de notre processus de développement et assigner des tâches aux membres de notre équipe.
