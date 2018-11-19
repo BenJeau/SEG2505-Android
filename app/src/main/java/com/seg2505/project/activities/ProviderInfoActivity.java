@@ -42,7 +42,7 @@ import java.util.regex.Pattern;
 
 public class ProviderInfoActivity  extends AppCompatActivity {
 
-    Button BtnSubmitInfo;
+   /* Button BtnSubmitInfo;
     EditText edtStreetNumber, edtStreetName, edtCityName, edtProvinceName, edtCountryName, edtPostalCode, edtPhoneNumber, edtCompanyName, edtDescription;
     CheckBox licensedCheckbox;
     DatabaseReference providerReference;
@@ -169,7 +169,7 @@ public class ProviderInfoActivity  extends AppCompatActivity {
             }
         });
     }
-
+*/
         public static boolean isValidStreetNum(String streetNum) {
             try {
                 Integer.parseInt(streetNum);
@@ -182,7 +182,7 @@ public class ProviderInfoActivity  extends AppCompatActivity {
         public static boolean isValidStreetName(String streetName) {
             for (int i = 0; i != streetName.length(); i++) {
                 String chars = String.valueOf(streetName.charAt(i));
-                if (!Character.isLetterOrDigit(streetName.charAt(i)) || !Character.isSpaceChar(streetName.charAt(i)) || chars != "-") {
+                if (!Character.isLetterOrDigit(streetName.charAt(i)) || !Character.isSpaceChar(streetName.charAt(i)) || !chars.equals("-")) {
                     return false;
                 }
             }
@@ -213,7 +213,7 @@ public class ProviderInfoActivity  extends AppCompatActivity {
             }
             for (int i = 0; i != name.length(); i++) {
                 String chars = String.valueOf(name.charAt(i));
-                if (!Character.isLetter(name.charAt(i)) || chars != "-") {
+                if (!Character.isLetter(name.charAt(i)) || !chars.equals("-")) {
                     return false;
                 }
             }
@@ -223,7 +223,7 @@ public class ProviderInfoActivity  extends AppCompatActivity {
         public static boolean isValidCompanyName(String companyName) {
             for (int i = 0; i != companyName.length(); i++) {
                 String chars = String.valueOf(companyName.charAt(i));
-                if (!Character.isLetter(companyName.charAt(i)) || !Character.isSpaceChar(companyName.charAt(i)) || chars != "-" || chars != ".") {
+                if (!Character.isLetter(companyName.charAt(i)) || !Character.isSpaceChar(companyName.charAt(i)) || !chars.equals("-") || !chars.equals(".")) {
                     return false;
                 }
             }
@@ -247,11 +247,11 @@ public class ProviderInfoActivity  extends AppCompatActivity {
                 }
             }
             String chars = String.valueOf(phoneNumber.charAt(3));
-            if (chars != "-") {
+            if (!chars.equals("-")) {
                 return false;
             }
             String chars1 = String.valueOf(phoneNumber.charAt(7));
-            if (chars != "-") {
+            if (!chars.equals("-")) {
                 return false;
             }
             for(int i = 4; i < 7; i++) {
