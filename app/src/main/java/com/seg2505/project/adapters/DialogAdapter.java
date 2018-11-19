@@ -57,7 +57,7 @@ public class DialogAdapter extends RecyclerView.Adapter<DialogAdapter.MyViewHold
 
     @Override
     public DialogAdapter.MyViewHolder onCreateViewHolder( ViewGroup parent, int i) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.provider_service_recycler_view_children, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.dialog_service_recyler_view, parent, false);
         return new MyViewHolder(v);
     }
 
@@ -65,9 +65,7 @@ public class DialogAdapter extends RecyclerView.Adapter<DialogAdapter.MyViewHold
     public void onBindViewHolder( MyViewHolder holder, int i) {
         holder.serviceTitle.setText(dataset.get(i).getServiceName());
         holder.hourlyRate.setText(Double.toString(dataset.get(i).getHourlyRate()));
-
-
-
+        
 
     }
 
