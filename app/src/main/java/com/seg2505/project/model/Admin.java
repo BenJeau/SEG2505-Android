@@ -1,10 +1,7 @@
 package com.seg2505.project.model;
 
 import java.util.*;
-/**
- * Diedrick Ng
- * Kame House
- */
+
 public class Admin extends Person {
 
     private List<Service> services;
