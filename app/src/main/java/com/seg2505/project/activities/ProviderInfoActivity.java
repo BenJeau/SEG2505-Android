@@ -180,13 +180,10 @@ public class ProviderInfoActivity  extends AppCompatActivity {
         }
 
         public static boolean isValidStreetName(String streetName) {
-            for (int i = 0; i != streetName.length(); i++) {
-                String chars = String.valueOf(streetName.charAt(i));
-                if (!Character.isLetterOrDigit(streetName.charAt(i)) || !Character.isSpaceChar(streetName.charAt(i)) || !chars.equals("-")) {
-                    return false;
-                }
-            }
-            return true;
+           Pattern p = Pattern.compile("[^a-z0-9- ]", Pattern.CASE_INSENSITIVE);
+           Matcher m = p.matcher(streetName);
+           boolean b = m.find();
+           return !b;
         }
 
         public static boolean isValidPostalCode(String postalCode) {
@@ -195,7 +192,9 @@ public class ProviderInfoActivity  extends AppCompatActivity {
             }
             for (int i = 0; i < postalCode.length(); i++) {
                 if (i%2 == 0) {
-                    if(!Character.isLetter(postalCode.charAt(i)) || !Character.isUpperCase(postalCode.charAt(i))) {
+                    if(!Character.isLetter(postalCode.charAt(i))){
+                        return false;
+                    } else if (!Character.isUpperCase(postalCode.charAt(i))) {
                         return false;
                     }
                 } else {
@@ -211,23 +210,17 @@ public class ProviderInfoActivity  extends AppCompatActivity {
             if(!Character.isUpperCase(name.charAt(0))) {
                 return false;
             }
-            for (int i = 0; i != name.length(); i++) {
-                String chars = String.valueOf(name.charAt(i));
-                if (!Character.isLetter(name.charAt(i)) || !chars.equals("-")) {
-                    return false;
-                }
-            }
-            return true;
+            Pattern p = Pattern.compile("[^a-z- ]", Pattern.CASE_INSENSITIVE);
+            Matcher m = p.matcher(name);
+            boolean b = m.find();
+            return !b;
         }
 
         public static boolean isValidCompanyName(String companyName) {
-            for (int i = 0; i != companyName.length(); i++) {
-                String chars = String.valueOf(companyName.charAt(i));
-                if (!Character.isLetter(companyName.charAt(i)) || !Character.isSpaceChar(companyName.charAt(i)) || !chars.equals("-") || !chars.equals(".")) {
-                    return false;
-                }
-            }
-            return true;
+            Pattern p = Pattern.compile("[^a-z-. ]", Pattern.CASE_INSENSITIVE);
+            Matcher m = p.matcher(companyName);
+            boolean b = m.find();
+            return !b;
         }
 
         public static boolean isValidDescription(String description) {
@@ -238,33 +231,10 @@ public class ProviderInfoActivity  extends AppCompatActivity {
         }
 
         public static boolean isValidPhoneNumber(String phoneNumber) {
-            if(phoneNumber.length() > 12) {
-                return false;
+            if(phoneNumber.matches("[0-9]+") && phoneNumber.length() == 10 ) {
+                return true;
             }
-            for(int i = 0; i < 3;i++) {
-                if(!Character.isDigit(phoneNumber.charAt(i))) {
-                    return false;
-                }
-            }
-            String chars = String.valueOf(phoneNumber.charAt(3));
-            if (!chars.equals("-")) {
-                return false;
-            }
-            String chars1 = String.valueOf(phoneNumber.charAt(7));
-            if (!chars.equals("-")) {
-                return false;
-            }
-            for(int i = 4; i < 7; i++) {
-                if(!Character.isDigit(phoneNumber.charAt(i))) {
-                    return false;
-                }
-            }
-            for(int i = 8; i < phoneNumber.length(); i++) {
-                if(!Character.isDigit(phoneNumber.charAt(i))) {
-                    return false;
-                }
-            }
-            return true;
+            return false;
         }
 
         public static boolean empty(String string) {
