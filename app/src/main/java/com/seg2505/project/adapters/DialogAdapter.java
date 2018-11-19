@@ -3,6 +3,7 @@ package com.seg2505.project.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -55,8 +56,7 @@ public class DialogAdapter extends RecyclerView.Adapter<DialogAdapter.MyViewHold
 
         }
     }
-
-    public DialogAdapter(ArrayList<Service> dataset, Provider provider) {
+    public DialogAdapter(ArrayList<Service> mdataset, Provider provider) {
 
         this.provider = provider;
         this.mdata = new ArrayList<>();
@@ -66,11 +66,11 @@ public class DialogAdapter extends RecyclerView.Adapter<DialogAdapter.MyViewHold
         Iterator<Service> i = provider.getServices().iterator();
         while(i.hasNext()){
             Service s = i.next();
-            if(dataset.contains(s)){
-                dataset.remove(s);
+            if(mdataset.contains(s)){
+                mdataset.remove(s);
             }
         }
-        this.dataset = dataset;
+        this.dataset = mdataset;
 
 
     }

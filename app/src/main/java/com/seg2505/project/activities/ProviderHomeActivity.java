@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -33,6 +34,7 @@ import com.seg2505.project.model.Provider;
 import com.seg2505.project.model.Service;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class ProviderHomeActivity extends AppCompatActivity {
@@ -70,8 +72,9 @@ public class ProviderHomeActivity extends AppCompatActivity {
     }
 
 
-
+    private DialogAdapter adapter;
     public void onCreateDialog() {
+
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
@@ -87,6 +90,30 @@ public class ProviderHomeActivity extends AppCompatActivity {
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        ArrayList<Service> s = adapter.getMdata();
+
+                        Iterator<Service> i = s.iterator();
+                        while(i.hasNext()){
+                            Service service = i.next();
+                            provider.addService(service);
+                        }
+
+                        if(provider.getServices() != null) {
+                            serviceAdapter.updateList(provider.getServices());
+                        }
+
+//                        Service service = dataset.get(position);
+//                        service.addProvider(provider);
+//                        provider.addService(service);
+//
+//                        String userId = LoggedUser.id;
+//
+//                        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//                        DatabaseReference userReference =  database.getReference().child("users").child(userId);
+//
+//                        String id = userReference.push().getKey();
+//                        userReference.child(id).setValue(service);
+//                        adapter.add(service);
                     }
                 });
         builder.setNegativeButton("Cancel", null);
@@ -110,7 +137,7 @@ public class ProviderHomeActivity extends AppCompatActivity {
                 recyclerView.setLayoutManager(layoutManager);
 
                 // Specify an adapter (see also next example)
-                DialogAdapter adapter = new DialogAdapter(data, provider);
+                adapter = new DialogAdapter(data, provider);
                 recyclerView.setAdapter(adapter);
 
 
@@ -125,13 +152,6 @@ public class ProviderHomeActivity extends AppCompatActivity {
 
         final AlertDialog dialog = builder.create();
         dialog.show();
-        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                    dialog.dismiss();
-
-            }
-        });
 
 
 
@@ -187,6 +207,7 @@ public class ProviderHomeActivity extends AppCompatActivity {
 
         populateServiceRecyclerView(provider.getServices());
     }
+    ProviderRecyclerViewAdapter serviceAdapter;
 
     private void populateServiceRecyclerView(List<Service> data) {
 
@@ -199,7 +220,7 @@ public class ProviderHomeActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         // Specify an adapter (see also next example)
-        ProviderRecyclerViewAdapter adapter = new ProviderRecyclerViewAdapter(data);
-        recyclerView.setAdapter(adapter);
+        serviceAdapter = new ProviderRecyclerViewAdapter(data);
+        recyclerView.setAdapter(serviceAdapter);
     }
 }

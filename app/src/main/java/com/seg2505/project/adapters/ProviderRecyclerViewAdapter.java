@@ -84,6 +84,11 @@ public class ProviderRecyclerViewAdapter extends RecyclerView.Adapter<ProviderRe
         notifyItemInserted(mDataset.size() - 1);
     }
 
+    public void updateList(List<Service> data) {
+        mDataset = data;
+        notifyDataSetChanged();
+    }
+
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
