@@ -52,7 +52,7 @@ public class ProviderInfoActivity  extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_provider_info);
 
         BtnSubmitInfo = findViewById(R.id.BtnSubmitInfo);
         edtStreetNumber = findViewById(R.id.streetNumber);
@@ -65,10 +65,14 @@ public class ProviderInfoActivity  extends AppCompatActivity {
         edtCompanyName = findViewById(R.id.companyName);
         edtDescription = findViewById(R.id.description);
         edtLicensedCheckbox = findViewById(R.id.licensedCheckbox);
+        userId=LoggedUser.id;
 
         database = FirebaseDatabase.getInstance();
+        userReference = database.getReference().child("users").child(userId);
+
 
         //databaseReference = database.getReference("provider");
+
 
         BtnSubmitInfo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,9 +141,29 @@ public class ProviderInfoActivity  extends AppCompatActivity {
                 if (isValidDescription(description)) {
                     edtDescription.setError("Cannot exceed limit of 300 characters.");
                 }
-                if (isValidStreetName(streetName) && isValidName(cityName) && isValidName(provinceName) && isValidName(countryName) &&
-                        isValidPostalCode(postalCode) && isValidPhoneNumber(phoneNumber) && isValidCompanyName(companyName) && isValidDescription(description)) {
+                if (/*isValidStreetName(streetName) && isValidName(cityName) && isValidName(provinceName) && isValidName(countryName) &&
+                        isValidPostalCode(postalCode) && isValidPhoneNumber(phoneNumber) && isValidCompanyName(companyName) && isValidDescription(description)*/
+                        true) {
 
+                    userReference.addListenerForSingleValueEvent(new ValueEventListener(){
+
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            provider = dataSnapshot.getValue(Provider.class);
+                            ProviderInfo providerInfo = new ProviderInfo(phoneNumber, companyName, description, licensedCheckbox);
+                            int streetNum = Integer.parseInt(streetNumber);
+                            Address address = new Address(streetNum, streetName, cityName, provinceName, countryName);
+                            provider.setAddress(address);
+                            provider.setInfo(providerInfo);
+                            userReference.setValue(provider);
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
                     final ProgressDialog progressDialog = new ProgressDialog(ProviderInfoActivity.this, R.style.AppTheme_Blue_Dialog);
                     progressDialog.setIndeterminate(true);
                     progressDialog.setCancelable(false);
@@ -159,14 +183,14 @@ public class ProviderInfoActivity  extends AppCompatActivity {
                     };
 
                     // TODO : Add new provider info and address to database
-                    provider = getInfoDatabase();
+                    /*provider = getInfoDatabase();
                     ProviderInfo providerInfo = new ProviderInfo(phoneNumber, companyName, description, licensedCheckbox);
                     int streetNum = Integer.parseInt(streetNumber);
                     Address address = new Address(streetNum, streetName, cityName, provinceName, countryName);
                     provider.setAddress(address);
                     provider.setInfo(providerInfo);
                     userId = provider.getId();
-                    userReference.setValue(provider);
+                    userReference.setValue(provider);*/
 
                     handler.postDelayed(r, 1000);
                 }

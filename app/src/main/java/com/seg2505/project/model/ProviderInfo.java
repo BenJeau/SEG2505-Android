@@ -6,6 +6,9 @@ public class ProviderInfo{
     private String companyName;
     private String description;
     private boolean licensed;
+    public ProviderInfo(){
+
+    }
 
     public ProviderInfo(String phoneNumber, String companyName, String description, boolean licensed) {
         this.phoneNumber = phoneNumber;
