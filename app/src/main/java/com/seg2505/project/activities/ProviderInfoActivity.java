@@ -96,73 +96,73 @@ public class ProviderInfoActivity  extends AppCompatActivity {
                 if (TextUtils.isEmpty(streetNumber)) {
                     edtStreetNumber.setError("Street number field cannot be empty.");
                     error = true;
-                }
-                if (!isValidStreetNum(streetNumber) && !TextUtils.isEmpty(streetNumber)) {
+                } else if (!isValidStreetNum(streetNumber)) {
                     edtStreetNumber.setError("Street number must be an integer");
                     error = true;
                 }
+
                 if (TextUtils.isEmpty(streetName)) {
                     edtStreetName.setError("Street name field cannot be empty.");
                     error = true;
-                }
-                if (!isValidStreetName(streetName) && !TextUtils.isEmpty(streetName)) {
+                } else if (!isValidStreetName(streetName)) {
                     edtStreetName.setError("Street name must use valid characters: letters, numbers, spaces and hyphens.");
                     error = true;
                 }
+
                 if (TextUtils.isEmpty(cityName)) {
                     edtCityName.setError("City name field cannot be empty.");
                     error = true;
-                }
-                if (isValidName(cityName) && !TextUtils.isEmpty(cityName)) {
+                } else if (isValidName(cityName)) {
                     edtCityName.setError("City name must use valid characters: letters and hyphens.");
                     error = true;
                 }
+
                 if (TextUtils.isEmpty(provinceName)) {
                     edtProvinceName.setError("Province name field cannot be empty.");
                     error = true;
-                }
-                if (isValidName(provinceName) && !TextUtils.isEmpty(provinceName)) {
+                } else if (isValidName(provinceName)) {
                     edtProvinceName.setError("Province name must use valid characters: letters and hyphens.");
                     error = true;
                 }
+
                 if (TextUtils.isEmpty(countryName)) {
                     edtCountryName.setError("Country name field cannot be empty.");
                     error = true;
-                }
-                if (isValidName(countryName) && !TextUtils.isEmpty(countryName)) {
+                } else if (isValidName(countryName)) {
                     edtCountryName.setError("Country name must use valid characters: letters and hyphens.");
                     error = true;
                 }
+
                 if (TextUtils.isEmpty(postalCode)) {
                     edtPostalCode.setError("Postal code field cannot be empty.");
                     error = true;
-                }
-                if (!isValidPostalCode(postalCode) && !TextUtils.isEmpty(postalCode)) {
+                } else if (!isValidPostalCode(postalCode)) {
                     edtPostalCode.setError("Postal code must follow specific pattern: X1X1X1. \n X: A valid upercase letter. \n 1: A valid number.");
                     error = true;
                 }
+
                 if (TextUtils.isEmpty(phoneNumber)) {
                     edtPhoneNumber.setError("Phone number field cannot be empty.");
                     error = true;
-                }
-                if (!isValidPhoneNumber(phoneNumber) && !TextUtils.isEmpty(phoneNumber)) {
+                } else if (!isValidPhoneNumber(phoneNumber)) {
                     edtPhoneNumber.setError("Phone number must follow specific pattern: XXX-XXX-XXXX. \n X: a valid number.");
                     error = true;
                 }
+
                 if (TextUtils.isEmpty(companyName)) {
                     edtCompanyName.setError("Company name field cannot be empty.");
                     error = true;
-                }
-                if (!isValidCompanyName(companyName) && !TextUtils.isEmpty(companyName)) {
+                } else if (!isValidCompanyName(companyName)) {
                     edtCompanyName.setError("Country name must use valid characters: letters, spaces and hyphens.");
                     error = true;
                 }
+
                 if (!isValidDescription(description)) {
                     edtDescription.setError("Cannot exceed limit of 300 characters.");
                     error = true;
                 }
+
                 if (!error) {
-                    Log.e("HELP", "111111111111111111");
 
                     userReference.addListenerForSingleValueEvent(new ValueEventListener(){
 
@@ -201,42 +201,12 @@ public class ProviderInfoActivity  extends AppCompatActivity {
                         }
                     };
 
-                    // TODO : Add new provider info and address to database
-                    /*provider = getInfoDatabase();
-                    ProviderInfo providerInfo = new ProviderInfo(phoneNumber, companyName, description, licensedCheckbox);
-                    int streetNum = Integer.parseInt(streetNumber);
-                    Address address = new Address(streetNum, streetName, cityName, provinceName, countryName);
-                    provider.setAddress(address);
-                    provider.setInfo(providerInfo);
-                    userId = provider.getId();
-                    userReference.setValue(provider);*/
-
                     handler.postDelayed(r, 1000);
                 }
 
             }
         });
 
-    }
-
-    private Provider getInfoDatabase() {
-        String userId = LoggedUser.id;
-
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-       DatabaseReference userReference = database.getReference().child("users").child(userId);
-
-        userReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                provider = dataSnapshot.getValue(Provider.class);
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
-        return provider;
     }
 
         public static boolean isValidStreetNum(String streetNum) {
