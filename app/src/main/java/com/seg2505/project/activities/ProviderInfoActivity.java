@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.LayoutInflater;
 import android.content.DialogInterface;
@@ -89,61 +90,79 @@ public class ProviderInfoActivity  extends AppCompatActivity {
                 final String description = edtDescription.getText().toString();
                 final boolean licensedCheckbox = edtLicensedCheckbox.isChecked();
 
+                boolean error = false;
+
 
                 if (TextUtils.isEmpty(streetNumber)) {
                     edtStreetNumber.setError("Street number field cannot be empty.");
+                    error = true;
                 }
-                if (isValidStreetNum(streetNumber) && !TextUtils.isEmpty(streetNumber)) {
+                if (!isValidStreetNum(streetNumber) && !TextUtils.isEmpty(streetNumber)) {
                     edtStreetNumber.setError("Street number must be an integer");
+                    error = true;
                 }
                 if (TextUtils.isEmpty(streetName)) {
                     edtStreetName.setError("Street name field cannot be empty.");
+                    error = true;
                 }
-                if (isValidStreetName(streetName) && !TextUtils.isEmpty(streetName)) {
+                if (!isValidStreetName(streetName) && !TextUtils.isEmpty(streetName)) {
                     edtStreetName.setError("Street name must use valid characters: letters, numbers, spaces and hyphens.");
+                    error = true;
                 }
                 if (TextUtils.isEmpty(cityName)) {
                     edtCityName.setError("City name field cannot be empty.");
+                    error = true;
                 }
                 if (isValidName(cityName) && !TextUtils.isEmpty(cityName)) {
                     edtCityName.setError("City name must use valid characters: letters and hyphens.");
+                    error = true;
                 }
                 if (TextUtils.isEmpty(provinceName)) {
                     edtProvinceName.setError("Province name field cannot be empty.");
+                    error = true;
                 }
                 if (isValidName(provinceName) && !TextUtils.isEmpty(provinceName)) {
                     edtProvinceName.setError("Province name must use valid characters: letters and hyphens.");
+                    error = true;
                 }
                 if (TextUtils.isEmpty(countryName)) {
                     edtCountryName.setError("Country name field cannot be empty.");
+                    error = true;
                 }
                 if (isValidName(countryName) && !TextUtils.isEmpty(countryName)) {
                     edtCountryName.setError("Country name must use valid characters: letters and hyphens.");
+                    error = true;
                 }
                 if (TextUtils.isEmpty(postalCode)) {
                     edtPostalCode.setError("Postal code field cannot be empty.");
+                    error = true;
                 }
-                if (isValidPostalCode(postalCode) && !TextUtils.isEmpty(postalCode)) {
+                if (!isValidPostalCode(postalCode) && !TextUtils.isEmpty(postalCode)) {
                     edtPostalCode.setError("Postal code must follow specific pattern: X1X1X1. \n X: A valid upercase letter. \n 1: A valid number.");
+                    error = true;
                 }
                 if (TextUtils.isEmpty(phoneNumber)) {
                     edtPhoneNumber.setError("Phone number field cannot be empty.");
+                    error = true;
                 }
-                if (isValidPhoneNumber(phoneNumber) && !TextUtils.isEmpty(phoneNumber)) {
+                if (!isValidPhoneNumber(phoneNumber) && !TextUtils.isEmpty(phoneNumber)) {
                     edtPhoneNumber.setError("Phone number must follow specific pattern: XXX-XXX-XXXX. \n X: a valid number.");
+                    error = true;
                 }
                 if (TextUtils.isEmpty(companyName)) {
                     edtCompanyName.setError("Company name field cannot be empty.");
+                    error = true;
                 }
-                if (isValidCompanyName(companyName) && !TextUtils.isEmpty(companyName)) {
+                if (!isValidCompanyName(companyName) && !TextUtils.isEmpty(companyName)) {
                     edtCompanyName.setError("Country name must use valid characters: letters, spaces and hyphens.");
+                    error = true;
                 }
-                if (isValidDescription(description)) {
+                if (!isValidDescription(description)) {
                     edtDescription.setError("Cannot exceed limit of 300 characters.");
+                    error = true;
                 }
-                if (/*isValidStreetName(streetName) && isValidName(cityName) && isValidName(provinceName) && isValidName(countryName) &&
-                        isValidPostalCode(postalCode) && isValidPhoneNumber(phoneNumber) && isValidCompanyName(companyName) && isValidDescription(description)*/
-                        true) {
+                if (!error) {
+                    Log.e("HELP", "111111111111111111");
 
                     userReference.addListenerForSingleValueEvent(new ValueEventListener(){
 
@@ -257,7 +276,7 @@ public class ProviderInfoActivity  extends AppCompatActivity {
         }
 
         public static boolean isValidName(String name) {
-            if(!Character.isUpperCase(name.charAt(0))) {
+            if(!empty(name) || Character.isUpperCase(name.charAt(0))) {
                 return false;
             }
             Pattern p = Pattern.compile("[^a-z- ]", Pattern.CASE_INSENSITIVE);
