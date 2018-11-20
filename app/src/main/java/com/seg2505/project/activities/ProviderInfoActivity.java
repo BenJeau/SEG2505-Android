@@ -44,21 +44,11 @@ public class ProviderInfoActivity  extends AppCompatActivity {
     Button BtnSubmitInfo;
     EditText edtStreetNumber, edtStreetName, edtCityName, edtProvinceName, edtCountryName, edtPostalCode, edtPhoneNumber, edtCompanyName, edtDescription;
     CheckBox edtLicensedCheckbox;
-    DatabaseReference databaseReference;
+    //DatabaseReference databaseReference;
     FirebaseDatabase database;
     private Provider provider;
     private DatabaseReference userReference;
     private String userId;
-
-/*    public static final String INTENT_KEY_streetNumber = "street number";
-    public static final String INTENT_KEY_streetName = "street name";
-    public static final String INTENT_KEY_cityName = "city name";
-    public static final String INTENT_KEY_provinceName = "province name";
-    public static final String INTENT_KEY_countryName = "country name";
-    public static final String INTENT_KEY_postalCode = "postal code";
-    public static final String INTENT_KEY_phoneNumber = "phone number";
-    public static final String INTENT_KEY_companyName = "company name";
-    public static final String INTENT_KEY_description = "description"; */
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,7 +68,7 @@ public class ProviderInfoActivity  extends AppCompatActivity {
 
         database = FirebaseDatabase.getInstance();
 
-        databaseReference = database.getReference("provider");
+        //databaseReference = database.getReference("provider");
 
         BtnSubmitInfo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -179,9 +169,6 @@ public class ProviderInfoActivity  extends AppCompatActivity {
                     userReference.setValue(provider);
 
                     handler.postDelayed(r, 1000);
-
-                    Intent intent = new Intent(ProviderInfoActivity.this, ProviderHomeActivity.class);
-                    ProviderInfoActivity.this.startActivity(intent);
                 }
 
             }
