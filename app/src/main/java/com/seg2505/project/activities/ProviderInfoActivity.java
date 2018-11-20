@@ -72,7 +72,7 @@ public class ProviderInfoActivity  extends AppCompatActivity {
         edtPhoneNumber = findViewById(R.id.phoneNumber);
         edtCompanyName = findViewById(R.id.companyName);
         edtDescription = findViewById(R.id.description);
-
+/*
         database = FirebaseDatabase.getInstance();
 
         providerReference = database.getReference("provider");
@@ -167,7 +167,7 @@ public class ProviderInfoActivity  extends AppCompatActivity {
                 Intent intent = new Intent(ProviderInfoActivity.this, ProviderHomeActivity.class);
                 ProviderInfoActivity.this.startActivity(intent);
             }
-        });
+        });*/
     }
 
         public static boolean isValidStreetNum(String streetNum) {

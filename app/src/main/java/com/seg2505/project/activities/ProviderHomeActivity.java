@@ -51,6 +51,11 @@ public class ProviderHomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_provider_home);
 
+        String userId = LoggedUser.id;
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        userReference = database.getReference().child("users").child(userId);
+
         getInfoDatabase();
 
         Button button = findViewById(R.id.availabilitiesButton);
@@ -95,31 +100,23 @@ public class ProviderHomeActivity extends AppCompatActivity {
                         Iterator<Service> i = s.iterator();
                         while(i.hasNext()){
                             Service service = i.next();
-                            provider.addService(service);
+                            service.addProvider(provider);
+                            provider.addService(service.getServiceId());
                         }
 
                         if(provider.getServices() != null) {
-                            serviceAdapter.updateList(provider.getServices());
+                            //serviceAdapter.updateList(provider.getServices());
                         }
 
-//                        Service service = dataset.get(position);
-//                        service.addProvider(provider);
-//                        provider.addService(service);
-//
-//                        String userId = LoggedUser.id;
-//
-//                        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//                        DatabaseReference userReference =  database.getReference().child("users").child(userId);
-//
-//                        String id = userReference.push().getKey();
-//                        userReference.child(id).setValue(service);
-//                        adapter.add(service);
+
+
+                        userReference.setValue(provider);
                     }
                 });
         builder.setNegativeButton("Cancel", null);
 
 
-        final ArrayList<Service> data = new ArrayList<Service>();
+        final ArrayList<String> data = new ArrayList<>();
         database = FirebaseDatabase.getInstance();
         serviceReference = database.getReference("services");
 
@@ -128,8 +125,8 @@ public class ProviderHomeActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Service user = postSnapshot.getValue(Service.class);
-                    data.add(user);
+                    Service service = postSnapshot.getValue(Service.class);
+                    data.add(service.getServiceId());
                 }
 
                 // Uses a linear layout manager
@@ -157,10 +154,6 @@ public class ProviderHomeActivity extends AppCompatActivity {
 
     }
     private void getInfoDatabase() {
-        String userId = LoggedUser.id;
-
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        userReference = database.getReference().child("users").child(userId);
 
         userReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -205,7 +198,7 @@ public class ProviderHomeActivity extends AppCompatActivity {
             provider.createServices();
         }
 
-        populateServiceRecyclerView(provider.getServices());
+        //populateServiceRecyclerView(provider.getServices());
     }
     ProviderRecyclerViewAdapter serviceAdapter;
 

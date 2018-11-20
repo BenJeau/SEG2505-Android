@@ -45,6 +45,10 @@ public class Service {
     }
 
     public void addProvider(Provider provider) {
+        if (providers == null) {
+            providers = new ArrayList<Provider>();
+        }
+
         this.providers.add(provider);
     }
 

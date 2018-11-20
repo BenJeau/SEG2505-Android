@@ -1,11 +1,11 @@
 package com.seg2505.project.model;
 
-public class ProviderInfo{
+public class  ProviderInfo{
 
     private String phoneNumber;
     private String companyName;
     private String description;
-    private boolean Licensed;
+    private boolean licensed;
 
     public ProviderInfo(String phoneNumber, String companyName, String description, boolean licensed) {
         this.phoneNumber = phoneNumber;
