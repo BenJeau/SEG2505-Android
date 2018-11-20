@@ -93,7 +93,7 @@ public class ProviderInfoActivity  extends AppCompatActivity {
                 if (TextUtils.isEmpty(streetNumber)) {
                     edtStreetNumber.setError("Street number field cannot be empty.");
                 }
-                if (isValidStreetNum(streetNumber) && !TextUtils.isEmpty(streetNumber)) {
+                if (!isValidStreetNum(streetNumber) && !TextUtils.isEmpty(streetNumber)) {
                     edtStreetNumber.setError("Street number must be an integer");
                 }
                 if (TextUtils.isEmpty(streetName)) {
@@ -138,7 +138,7 @@ public class ProviderInfoActivity  extends AppCompatActivity {
                 if (isValidCompanyName(companyName) && !TextUtils.isEmpty(companyName)) {
                     edtCompanyName.setError("Country name must use valid characters: letters, spaces and hyphens.");
                 }
-                if (isValidDescription(description)) {
+                if (!isValidDescription(description)) {
                     edtDescription.setError("Cannot exceed limit of 300 characters.");
                 }
                 if (/*isValidStreetName(streetName) && isValidName(cityName) && isValidName(provinceName) && isValidName(countryName) &&
