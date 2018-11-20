@@ -55,4 +55,10 @@ public class Service {
     public String getServiceId() {
         return serviceId;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        Service s = (Service) obj;
+        return s.serviceId.equals(this.serviceId);
+    }
 }
