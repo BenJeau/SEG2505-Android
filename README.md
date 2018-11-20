@@ -16,6 +16,18 @@ Pour accéder à notre répertoire [github](https://github.com/BenJeau/SEG2505-A
 
 Le fichier APK peut se retrouver à la racine de ce répertoire dans le fichier nommé *Droids_debug.apk*. Il y a un bug dans le fichier APK, il n'est pas capable de prendre le role de l'utilisateur de firebase, mais ce problème n'est pas présent lorsque tu installe l'application directement par Android Studio.
 
+## Contraintes Services
+Pour les inscriptions de fournisseurs de services, il faut que: 
+  1. Street number doit être un integer.
+  2. Street name doit contenir UNIQUEMENT des lettres, espaces, nombres et traits d'union.
+  3. Le code postal doit être du format X1X1X1, donc LettreChiffreLettreChiffreLettreChiffre, avec aucun espace et les lettres sont   
+     toutes des lettres majuscules.
+  4. City name, province/state name et country namme peuvent UNIQUEMENT contenir des lettres, traits d'union.
+  5. Company name doit contenir seulement des lettres, traits d'union, espaces et AUCUN numéro.
+  6. Description se limite a 300 charactères. 
+  7. Le numéro de téléphone est de ce format 6131234567, avec aucun espace et 10 numéros avec l'indicatif régional. 
+  8. Seule la description peut être vide. 
+
 ## Membres de l'équipe
 
 |Github Username | Nom  | Numéro Étudiant |
