@@ -33,10 +33,9 @@ import com.seg2505.project.model.Person;
 import com.seg2505.project.model.Provider;
 import com.seg2505.project.model.Service;
 import com.seg2505.project.model.Address;
-import com.seg2505.project.model.Availability;
+import com.seg2505.project.model.ProviderInfo;
 
 import java.util.ArrayList;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -44,11 +43,14 @@ public class ProviderInfoActivity  extends AppCompatActivity {
 
     Button BtnSubmitInfo;
     EditText edtStreetNumber, edtStreetName, edtCityName, edtProvinceName, edtCountryName, edtPostalCode, edtPhoneNumber, edtCompanyName, edtDescription;
-    CheckBox licensedCheckbox;
-    DatabaseReference providerReference;
+    CheckBox edtLicensedCheckbox;
+    DatabaseReference databaseReference;
     FirebaseDatabase database;
+    private Provider provider;
+    private DatabaseReference userReference;
+    private String userId;
 
-    public static final String INTENT_KEY_streetNumber = "street number";
+/*    public static final String INTENT_KEY_streetNumber = "street number";
     public static final String INTENT_KEY_streetName = "street name";
     public static final String INTENT_KEY_cityName = "city name";
     public static final String INTENT_KEY_provinceName = "province name";
@@ -56,7 +58,7 @@ public class ProviderInfoActivity  extends AppCompatActivity {
     public static final String INTENT_KEY_postalCode = "postal code";
     public static final String INTENT_KEY_phoneNumber = "phone number";
     public static final String INTENT_KEY_companyName = "company name";
-    public static final String INTENT_KEY_description = "description";
+    public static final String INTENT_KEY_description = "description"; */
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,11 +74,11 @@ public class ProviderInfoActivity  extends AppCompatActivity {
         edtPhoneNumber = findViewById(R.id.phoneNumber);
         edtCompanyName = findViewById(R.id.companyName);
         edtDescription = findViewById(R.id.description);
+        edtLicensedCheckbox = findViewById(R.id.licensedCheckbox);
 
         database = FirebaseDatabase.getInstance();
 
-        providerReference = database.getReference("provider");
-        adminReference = database.getReference("Admin");
+        databaseReference = database.getReference("provider");
 
         BtnSubmitInfo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,84 +93,126 @@ public class ProviderInfoActivity  extends AppCompatActivity {
                 final String phoneNumber = edtPhoneNumber.getText().toString();
                 final String companyName = edtCompanyName.getText().toString();
                 final String description = edtDescription.getText().toString();
+                final boolean licensedCheckbox = edtLicensedCheckbox.isChecked();
 
 
-                    if (TextUtils.isEmpty(streetNumber)) {
-                        edtStreetNumber.setError("User field cannot be empty.");
-                    }
-                    if (username.length() < 3 && !TextUtils.isEmpty(username)) {
-                        edtUsername.setError("Username must be 3 characters long.");
-                    }
-                    if (TextUtils.isEmpty(password)) {
-                        edtPassword.setError("Password field cannot be empty.");
-                    }
-                    if (!isValidPassword(password) && !TextUtils.isEmpty(password)) {
-                        edtPassword.setError("Password must be a minimum of 4 characters and have at least one capital letter and one number.");
-                    }
+                if (TextUtils.isEmpty(streetNumber)) {
+                    edtStreetNumber.setError("Street number field cannot be empty.");
+                }
+                if (isValidStreetNum(streetNumber) && !TextUtils.isEmpty(streetNumber)) {
+                    edtStreetNumber.setError("Street number must be an integer");
+                }
+                if (TextUtils.isEmpty(streetName)) {
+                    edtStreetName.setError("Street name field cannot be empty.");
+                }
+                if (isValidStreetName(streetName) && !TextUtils.isEmpty(streetName)) {
+                    edtStreetName.setError("Street name must use valid characters: letters, numbers, spaces and hyphens.");
+                }
+                if (TextUtils.isEmpty(cityName)) {
+                    edtCityName.setError("City name field cannot be empty.");
+                }
+                if (isValidName(cityName) && !TextUtils.isEmpty(cityName)) {
+                    edtCityName.setError("City name must use valid characters: letters and hyphens.");
+                }
+                if (TextUtils.isEmpty(provinceName)) {
+                    edtProvinceName.setError("Province name field cannot be empty.");
+                }
+                if (isValidName(provinceName) && !TextUtils.isEmpty(provinceName)) {
+                    edtProvinceName.setError("Province name must use valid characters: letters and hyphens.");
+                }
+                if (TextUtils.isEmpty(countryName)) {
+                    edtCountryName.setError("Country name field cannot be empty.");
+                }
+                if (isValidName(countryName) && !TextUtils.isEmpty(countryName)) {
+                    edtCountryName.setError("Country name must use valid characters: letters and hyphens.");
+                }
+                if (TextUtils.isEmpty(postalCode)) {
+                    edtPostalCode.setError("Postal code field cannot be empty.");
+                }
+                if (isValidPostalCode(postalCode) && !TextUtils.isEmpty(postalCode)) {
+                    edtPostalCode.setError("Postal code must follow specific pattern: X1X1X1. \n X: A valid upercase letter. \n 1: A valid number.");
+                }
+                if (TextUtils.isEmpty(phoneNumber)) {
+                    edtPhoneNumber.setError("Phone number field cannot be empty.");
+                }
+                if (isValidPhoneNumber(phoneNumber) && !TextUtils.isEmpty(phoneNumber)) {
+                    edtPhoneNumber.setError("Phone number must follow specific pattern: XXX-XXX-XXXX. \n X: a valid number.");
+                }
+                if (TextUtils.isEmpty(companyName)) {
+                    edtCompanyName.setError("Company name field cannot be empty.");
+                }
+                if (isValidCompanyName(companyName) && !TextUtils.isEmpty(companyName)) {
+                    edtCompanyName.setError("Country name must use valid characters: letters, spaces and hyphens.");
+                }
+                if (isValidDescription(description)) {
+                    edtDescription.setError("Cannot exceed limit of 300 characters.");
+                }
+                if (isValidStreetName(streetName) && isValidName(cityName) && isValidName(provinceName) && isValidName(countryName) &&
+                        isValidPostalCode(postalCode) && isValidPhoneNumber(phoneNumber) && isValidCompanyName(companyName) && isValidDescription(description)) {
 
-                    if (username.length() > 2 && !TextUtils.isEmpty(username) && isValidPassword(password)) {
-                        final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this, R.style.AppTheme_Red_Dialog);
-                        progressDialog.setIndeterminate(true);
-                        progressDialog.setCancelable(false);
-                        progressDialog.setMessage("Authenticating...");
-                        progressDialog.show();
-                        final Handler handler = new Handler();
-                        final Runnable r = new Runnable() {
+                    final ProgressDialog progressDialog = new ProgressDialog(ProviderInfoActivity.this, R.style.AppTheme_Blue_Dialog);
+                    progressDialog.setIndeterminate(true);
+                    progressDialog.setCancelable(false);
+                    progressDialog.setMessage("Creating account...");
+                    progressDialog.show();
+                    final Handler handler = new Handler();
+                    final Runnable r = new Runnable() {
 
-                            @Override
-                            public void run() {
-                                progressDialog.dismiss();
-                                userReference.addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        @Override
+                        public void run() {
+                            progressDialog.dismiss();
+                            Toast.makeText(getApplicationContext(), "Account information successfully added", Toast.LENGTH_SHORT).show();
 
-                                        Person user = null;
-                                        boolean exists = false;
-                                        for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                                            user = postSnapshot.getValue(Person.class);
+                            Intent intent = new Intent(ProviderInfoActivity.this, ProviderHomeActivity.class);
+                            startActivity(intent);
+                        }
+                    };
 
-                                            if (username.equals(user.getUsername())) {
-                                                exists = true;
-                                                break;
-                                            }
-                                        }
 
-                                        if (!exists) {
-                                            Toast.makeText(getApplicationContext(), "Wrong login, username not found", Toast.LENGTH_SHORT).show();
-                                        } else if (user.getPassword().equals(password)) {
-                                            Intent intent = new Intent(LoginActivity.this, ProviderAvailabilityActivity.class);
-                                            intent.putExtra(INTENT_KEY_NAME, user.getUsername());
-                                            intent.putExtra(INTENT_KEY_ROLE, user.getRole());
-                                            LoggedUser.setId(user.getId());
-                                            startActivity(intent);
-                                            Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                                        } else if (!password.equals(user.getPassword())) {
-                                            Toast.makeText(getApplicationContext(), "Wrong login, wrong password", Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
+                    // TODO : Add new provider info and address to database
+                    provider = getInfoDatabase();
+                    ProviderInfo providerInfo = new ProviderInfo(phoneNumber, companyName, description, licensedCheckbox);
+                    int streetNum = Integer.parseInt(streetNumber);
+                    Address address = new Address(streetNum, streetName, cityName, provinceName, countryName);
+                    provider.setAddress(address);
+                    provider.setInfo(providerInfo);
+                    userId = provider.getId();
+                    //databaseReference.child(userId).setValue(ac);
+                    provider = dataSnapshot.getValue(Provider.class);
+                    data.add(provider.getAddress());
+                    data.add(provider.getInfo());
 
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    handler.postDelayed(r, 1000);
 
-                                    }
-                                });
-                            }
-                        };
-                        handler.postDelayed(r, 1000);
-                    }
-
+                    Intent intent = new Intent(ProviderInfoActivity.this, ProviderHomeActivity.class);
+                    ProviderInfoActivity.this.startActivity(intent);
+                }
 
             }
         });
 
-        btnSignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ProviderInfoActivity.this, ProviderHomeActivity.class);
-                ProviderInfoActivity.this.startActivity(intent);
-            }
-        });
     }
+
+    private Provider getInfoDatabase() {
+        String userId = LoggedUser.id;
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+       DatabaseReference userReference = database.getReference().child("users").child(userId);
+
+        userReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                provider = dataSnapshot.getValue(Provider.class);
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+        return provider;
+    }
+
 
         public static boolean isValidStreetNum(String streetNum) {
             if(streetNum.trim().isEmpty()) {
