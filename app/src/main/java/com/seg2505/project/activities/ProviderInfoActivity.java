@@ -168,7 +168,6 @@ public class ProviderInfoActivity  extends AppCompatActivity {
                         }
                     };
 
-
                     // TODO : Add new provider info and address to database
                     provider = getInfoDatabase();
                     ProviderInfo providerInfo = new ProviderInfo(phoneNumber, companyName, description, licensedCheckbox);
@@ -177,10 +176,7 @@ public class ProviderInfoActivity  extends AppCompatActivity {
                     provider.setAddress(address);
                     provider.setInfo(providerInfo);
                     userId = provider.getId();
-                    //databaseReference.child(userId).setValue(ac);
-                    provider = dataSnapshot.getValue(Provider.class);
-                    data.add(provider.getAddress());
-                    data.add(provider.getInfo());
+                    userReference.setValue(provider);
 
                     handler.postDelayed(r, 1000);
 
