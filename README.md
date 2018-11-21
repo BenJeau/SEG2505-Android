@@ -27,6 +27,11 @@ Pour les inscriptions de fournisseurs de services, il faut que:
   6. Description se limite a 300 charactères. 
   7. Le numéro de téléphone est de ce format 6131234567, avec aucun espace et 10 numéros avec l'indicatif régional. 
   8. Seule la description peut être vide. 
+  
+## Provider Credentials
+Veuillez noter que si le Provider a déjà entré son information, l'activity pour entrer son information ne sera pas montré.
+1. __Username__ aymen6 - __Password__ Asd4
+2. __Username__ Test - __Password__ Test1
 
 ## Membres de l'équipe
 
