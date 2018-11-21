@@ -41,20 +41,15 @@ public class ProviderHomeActivity extends AppCompatActivity {
 
     private Provider provider;
     private DatabaseReference userReference;
-
-
-    static public DatabaseReference serviceReference;
+    private DatabaseReference serviceReference;
     private FirebaseDatabase database;
+    private DialogAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_provider_home);
 
-        String userId = LoggedUser.id;
-
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        userReference = database.getReference().child("users").child(userId);
 
         getInfoDatabase();
 
@@ -77,9 +72,7 @@ public class ProviderHomeActivity extends AppCompatActivity {
     }
 
 
-    private DialogAdapter adapter;
     public void onCreateDialog() {
-
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
@@ -105,11 +98,10 @@ public class ProviderHomeActivity extends AppCompatActivity {
                         }
 
                         if(provider.getServices() != null) {
-                            //serviceAdapter.updateList(provider.getServices());
+                            serviceAdapter.updateList(provider.getServices());
                         }
 
-
-
+                        userReference = database.getReference().child("users").child(LoggedUser.id);
                         userReference.setValue(provider);
                     }
                 });
@@ -148,7 +140,8 @@ public class ProviderHomeActivity extends AppCompatActivity {
 
     }
     private void getInfoDatabase() {
-
+        database = FirebaseDatabase.getInstance();
+        userReference = database.getReference().child("users").child(LoggedUser.id);
         userReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -192,11 +185,11 @@ public class ProviderHomeActivity extends AppCompatActivity {
             provider.createServices();
         }
 
-        //populateServiceRecyclerView(provider.getServices());
+        populateServiceRecyclerView(provider.getServices());
     }
     ProviderRecyclerViewAdapter serviceAdapter;
 
-    private void populateServiceRecyclerView(List<Service> data) {
+    private void populateServiceRecyclerView(List<String> data) {
 
         // Gets the recycler view and sets it to have a dataset that may vary in size
         RecyclerView recyclerView = findViewById(R.id.serviceRecyclerView);
