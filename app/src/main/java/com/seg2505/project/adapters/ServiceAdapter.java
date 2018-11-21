@@ -106,14 +106,15 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.MyViewHo
 
         // Gets list of providers and concatenates it into a string
         StringBuilder listOfPeople = new StringBuilder();
+        /*
         List<Provider> providers = dataset.get(position).getProviders();
         for (int i = 0; i < providers.size(); i++) {
             listOfPeople.append(providers.get(i).getUsername());
             if (i != providers.size() - 1) {
                 listOfPeople.append("\n");
             }
-        }
-        holder.listPeople.setText(listOfPeople);
+        }*/
+        holder.listPeople.setText("");
 
         // Expends/Closes the CardView when clicked
         holder.cardView.setOnClickListener(new View.OnClickListener() {

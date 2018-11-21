@@ -79,6 +79,13 @@ public class ProviderRecyclerViewAdapter extends RecyclerView.Adapter<ProviderRe
      * @param position the position of the service in the list
      */
     public void removeAt(int position) {
+
+        List<String> providersIds = mDataset.get(position).getProviders();
+        providersIds.remove(LoggedUser.id);
+
+        DatabaseReference serviceReference = database.getReference("services");
+        serviceReference.child(mDataset.get(position).getServiceId()).child("providers").setValue(providersIds);
+
         mDataset.remove(position);
         List<String> serviceIds = new ArrayList<String>();
 
@@ -86,8 +93,8 @@ public class ProviderRecyclerViewAdapter extends RecyclerView.Adapter<ProviderRe
         for (Service service : mDataset) {
             serviceIds.add(service.getServiceId());
         }
-
         userReference.setValue(serviceIds);
+
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, mDataset.size());
     }

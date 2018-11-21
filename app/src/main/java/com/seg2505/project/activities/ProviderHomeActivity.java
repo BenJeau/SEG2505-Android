@@ -36,6 +36,7 @@ import com.seg2505.project.model.Service;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.PropertyPermission;
 
 public class ProviderHomeActivity extends AppCompatActivity {
 
@@ -93,8 +94,11 @@ public class ProviderHomeActivity extends AppCompatActivity {
                         Iterator<Service> i = s.iterator();
                         while(i.hasNext()){
                             Service service = i.next();
-                            service.addProvider(provider);
+                            service.addProvider(provider.getId());
                             provider.addService(service.getServiceId());
+
+                            serviceReference = database.getReference("services");
+                            serviceReference.child(service.getServiceId()).child("providers").setValue(service.getProviders());
                         }
 
                         if(provider.getServices() != null) {
