@@ -66,42 +66,30 @@ public class DialogAdapter extends RecyclerView.Adapter<DialogAdapter.MyViewHold
     private FirebaseDatabase database;
 
 
-    public DialogAdapter(ArrayList<String> mdataset, Provider provider) {
+    public DialogAdapter(ArrayList<Service> mdataset, Provider provider) {
 
         this.provider = provider;
         this.mdata = new ArrayList<>();
         this.dataset = new ArrayList<>();
 
-        // Enleve service deja selectionner
-
-        Iterator<String> i = provider.getServices().iterator();
-        while(i.hasNext()){
-            String s = i.next();
-            if(mdataset.contains(s)){
-                mdataset.remove(s);
-            }
-        }
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         serviceReference = database.getReference().child("services");
 
+        for (Service service : mdataset) {
+            if (!provider.getServices().contains(service.getServiceId())) {
+                serviceReference.child(service.getServiceId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        dataset.add(dataSnapshot.getValue(Service.class));
+                    }
 
-
-        for (String serviceId : mdataset) {
-            serviceReference.child(serviceId).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    dataset.add(dataSnapshot.getValue(Service.class));
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                }
-            });
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
+                });
+            }
         }
-
-
-
     }
 
 

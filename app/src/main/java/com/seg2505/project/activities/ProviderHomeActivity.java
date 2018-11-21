@@ -114,9 +114,10 @@ public class ProviderHomeActivity extends AppCompatActivity {
                     }
                 });
         builder.setNegativeButton("Cancel", null);
+        final AlertDialog dialog = builder.create();
 
 
-        final ArrayList<String> data = new ArrayList<>();
+        final ArrayList<Service> data = new ArrayList<>();
         database = FirebaseDatabase.getInstance();
         serviceReference = database.getReference("services");
 
@@ -126,7 +127,7 @@ public class ProviderHomeActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Service service = postSnapshot.getValue(Service.class);
-                    data.add(service.getServiceId());
+                    data.add(service);
                 }
 
                 // Uses a linear layout manager
@@ -137,20 +138,13 @@ public class ProviderHomeActivity extends AppCompatActivity {
                 adapter = new DialogAdapter(data, provider);
                 recyclerView.setAdapter(adapter);
 
-
-
-
+                dialog.show();
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-
-        final AlertDialog dialog = builder.create();
-        dialog.show();
-
-
 
     }
     private void getInfoDatabase() {
