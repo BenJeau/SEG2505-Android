@@ -130,7 +130,7 @@ public class ProviderInfoActivity  extends AppCompatActivity {
                     edtCountryName.setError("Country name field cannot be empty.");
                     error = true;
                 } else if (isValidName(countryName)) {
-                    edtCountryName.setError("Country name must use valid characters: letters and hyphens.");
+                    edtCountryName.setError("Country name must start with Caps use valid characters: letters and hyphens.");
                     error = true;
                 }
 
