@@ -6,7 +6,7 @@
 Cette application Android est pour le cours SEG2505 et vise à être utile pour les fournisseurs de services pour qu'ils puissent être facilement accessibles de nos téléphones mobiles. Ce répertoire contient le code nécessaire pour l'ouvrir dans Android Studio. Nous utilisons la version 3.2.1 de Android Studio.
 
 ## UML
-Nous utilisons UmpleOnline pour notre UML du code. Voici le lien pour notre premier livrable: http://cruise.eecs.uottawa.ca/umpleonline/umple.php?model=181109551413
+Nous utilisons UmpleOnline pour notre UML du code. Voici le lien pour notre livrable, il est mis à jour pour chaque livrable: http://cruise.eecs.uottawa.ca/umpleonline/umple.php?model=181109551413
 Faire sûr de peser le M pour voir les méthodes sur Umple après avoir clické le lien SVP. Vous pouvez aussi visionner le diagramme UML dans le fichier pdf nommé SEG2505_Android_UML.
 
 ## Notes
