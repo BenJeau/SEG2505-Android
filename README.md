@@ -21,7 +21,7 @@ Pour les inscriptions de fournisseurs de services, il faut que:
   1. Street number doit être un integer.
   2. Street name doit contenir UNIQUEMENT des lettres, espaces, nombres et traits d'union.
   3. Le code postal doit être du format X1X1X1, donc LettreChiffreLettreChiffreLettreChiffre, avec aucun espace et les lettres sont toutes des lettres majuscules.
-  4. City name, province/state name et country namme peuvent UNIQUEMENT contenir des lettres, traits d'union.
+  4. City name, province/state name et country namme peuvent UNIQUEMENT contenir des lettres, traits d'union et la première lettre doit être une lettre majuscule.
   5. Company name doit contenir seulement des lettres, traits d'union, espaces et AUCUN numéro.
   6. Description se limite a 300 charactères. 
   7. Le numéro de téléphone est de ce format 6131234567, avec aucun espace et 10 numéros avec l'indicatif régional. 
