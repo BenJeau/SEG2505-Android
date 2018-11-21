@@ -67,6 +67,7 @@ public class ProviderHomeActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                getInfoDatabase();
                 onCreateDialog();
             }
         });
