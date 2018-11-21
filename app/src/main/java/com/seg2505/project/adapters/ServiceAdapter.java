@@ -7,7 +7,9 @@ import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +20,13 @@ import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.seg2505.project.R;
 import com.seg2505.project.activities.AdminServiceActivity;
+import com.seg2505.project.model.Owner;
+import com.seg2505.project.model.Person;
 import com.seg2505.project.model.Provider;
 import com.seg2505.project.model.Service;
 
@@ -207,8 +213,33 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.MyViewHo
      *
      * @param position the position of the service in the list
      */
-    public void removeAt(int position) {
-        AdminServiceActivity.serviceReference.child(dataset.get(position).getServiceId()).removeValue();
+    public void removeAt(final int position) {
+        final String serviceId = dataset.get(position).getServiceId();
+
+        AdminServiceActivity.serviceReference.child(serviceId).removeValue();
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference userReference = database.getReference("users");
+        userReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    Person user = postSnapshot.getValue(Person.class);
+                    if(user.getRole().equals(("Provider"))){
+                       Provider provider = postSnapshot.getValue(Provider.class);
+                        if(provider.getServices()!= null && provider.getServices().contains(serviceId)){
+                            provider.removeService(provider.getServices().indexOf(serviceId));
+                            userReference.child(provider.getId()).setValue(provider);
+                        }
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
         dataset.remove(position);
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, dataset.size());
