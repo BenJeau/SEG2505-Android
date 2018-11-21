@@ -10,12 +10,13 @@ public class Provider extends Person {
     private List<String> services;
     private List<Availability> availabilities;
     private Address address;
+    private ProviderInfo info;
 
     public Provider() {
 
     }
 
-    public Provider(String username, String password,String id) {
+    public Provider(String username, String password, String id) {
         super(username, password,id);
         setRole("Provider");
         services = new ArrayList<String>();
@@ -28,6 +29,14 @@ public class Provider extends Person {
 
     public List<Availability> getAvailabilities() {
         return availabilities;
+    }
+
+    public void setInfo( ProviderInfo info){
+        this.info = info;
+    }
+
+    public ProviderInfo getInfo() {
+        return this.info;
     }
 
     public void setAddress(Address address) {

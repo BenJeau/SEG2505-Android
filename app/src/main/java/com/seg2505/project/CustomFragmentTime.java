@@ -1,8 +1,6 @@
 package com.seg2505.project;
 
-import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.app.TimePickerDialog;
+
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,12 +9,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.seg2505.project.interfaces.Timeable;
 
-import org.w3c.dom.Text;
 
 
 public class CustomFragmentTime extends Fragment {
