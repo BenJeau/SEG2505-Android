@@ -1,5 +1,6 @@
 package com.seg2505.project.adapters;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,7 +8,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.seg2505.project.R;
+import com.seg2505.project.model.LoggedUser;
 import com.seg2505.project.model.Person;
 import com.seg2505.project.model.Service;
 
@@ -16,6 +23,7 @@ import java.util.List;
 
 public class ProviderRecyclerViewAdapter extends RecyclerView.Adapter<ProviderRecyclerViewAdapter.MyViewHolder> {
     private List<Service> mDataset;
+    private FirebaseDatabase database;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -35,8 +43,10 @@ public class ProviderRecyclerViewAdapter extends RecyclerView.Adapter<ProviderRe
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public ProviderRecyclerViewAdapter(List<Service> myDataset) {
-        mDataset = myDataset;
+    public ProviderRecyclerViewAdapter(List<String> myDataset) {
+        database = FirebaseDatabase.getInstance();
+
+        updateList(myDataset);
     }
 
     // Create new views (invoked by the layout manager)
@@ -69,7 +79,22 @@ public class ProviderRecyclerViewAdapter extends RecyclerView.Adapter<ProviderRe
      * @param position the position of the service in the list
      */
     public void removeAt(int position) {
+
+        List<String> providersIds = mDataset.get(position).getProviders();
+        providersIds.remove(LoggedUser.id);
+
+        DatabaseReference serviceReference = database.getReference("services");
+        serviceReference.child(mDataset.get(position).getServiceId()).child("providers").setValue(providersIds);
+
         mDataset.remove(position);
+        List<String> serviceIds = new ArrayList<String>();
+
+        DatabaseReference userReference = database.getReference("users").child(LoggedUser.id).child("services");
+        for (Service service : mDataset) {
+            serviceIds.add(service.getServiceId());
+        }
+        userReference.setValue(serviceIds);
+
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, mDataset.size());
     }
@@ -84,9 +109,23 @@ public class ProviderRecyclerViewAdapter extends RecyclerView.Adapter<ProviderRe
         notifyItemInserted(mDataset.size() - 1);
     }
 
-    public void updateList(List<Service> data) {
-        mDataset = data;
+    public void updateList(List<String> data) {
+        DatabaseReference serviceReference = database.getReference("services");
+        mDataset = new ArrayList<>();
         notifyDataSetChanged();
+
+        for (String serviceId : data) {
+            serviceReference.child(serviceId).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    add(dataSnapshot.getValue(Service.class));
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                }
+            });
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)

@@ -6,6 +6,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +14,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.seg2505.project.R;
 import com.seg2505.project.activities.ProviderAvailabilityActivity;
 import com.seg2505.project.model.Availability;
 
+import java.time.DayOfWeek;
 import java.util.ArrayList;
 
 public class AvailabilityAdapter extends RecyclerView.Adapter<AvailabilityAdapter.MyViewHolder> {
@@ -164,20 +167,54 @@ public class AvailabilityAdapter extends RecyclerView.Adapter<AvailabilityAdapte
                     @Override
                     public void onClick(View v) {
 
-                        String serviceNameText = day.getText().toString();
-                        String hourlyRateText = time.getText().toString();
+                        String dayText = day.getText().toString();
+                        String timeText = time.getText().toString();
+                        int start,end;
+                        String startHour,startMinute,endHour,endMinute;
+                        if(timeText.length()==14){
+                            startHour=timeText.substring(0,2);
+                            startMinute=timeText.substring(3,5);
+                            endHour=timeText.substring(9,11);
+                            endMinute=timeText.substring(12,14);
+                            if(validate(startHour)&&validate(startMinute)&&validate(endHour)&&validate(endMinute)&&timeText.length()==14){
+                                start=Integer.valueOf(timeText.substring(0,2))*60+Integer.valueOf(timeText.substring(3,5));
+                                end=Integer.valueOf(timeText.substring(9,11))*60+Integer.valueOf(timeText.substring(12,14));
 
-                        if (true) {
-                            Availability availability = dataset.get(position);
-                            availability.setTime(hourlyRateText);
-                            availability.setDay(serviceNameText);
+                                if (verifyDay(dayText)&&end-start>30 && end<1440 && start<1440) {
+                                    Availability availability = dataset.get(position);
+                                    availability.setTime(timeText);
+                                    availability.setDay(dayText);
 
-                            modifyAt(availability, position);
+                                    modifyAt(availability, position);
 
-                            modifyDialog.dismiss();
+                                    modifyDialog.dismiss();
 
-                            // TODO : Modify availability from firebase database
+                                    // TODO : Modify availability from firebase database
+                                }
+                                else if(!verifyDay(dayText)){
+                                    Toast.makeText(v.getContext(), "Wrong day", Toast.LENGTH_SHORT).show();
+
+                                }
+                                else if(end-start<30){
+                                    Toast.makeText(v.getContext(), "TimeSlot needs to be greater than 30 minutes", Toast.LENGTH_SHORT).show();
+
+                                }
+                                else if(end<1440||start<1440){
+                                    Toast.makeText(v.getContext(), "Please enter correct time format", Toast.LENGTH_SHORT).show();
+
+                                }
+                            }
+                            else {
+                                Toast.makeText(v.getContext(), "Please enter correct time format hh:mm to hh:mm", Toast.LENGTH_SHORT).show();
+
+                            }
                         }
+                        else {
+                            Toast.makeText(v.getContext(), "Please enter correct time format hh:mm to hh:mm", Toast.LENGTH_SHORT).show();
+
+                        }
+
+
                     }
                 });
             }
@@ -230,5 +267,18 @@ public class AvailabilityAdapter extends RecyclerView.Adapter<AvailabilityAdapte
     @Override
     public int getItemCount() {
         return dataset.size();
+    }
+
+    public Boolean verifyDay(String day){
+        if(day.equals("Monday")||day.equals("Tuesday")||day.equals("Wednesday")||day.equals("Thursday")||day.equals("Friday")||day.equals("Saturday")||day.equals("Sunday")){
+            return true;
+        }
+        return false;
+    }
+    private Boolean validate(String text){
+        if (text.matches("[0-9]+") && text.length() == 2){
+            return true;
+        }
+        return false;
     }
 }

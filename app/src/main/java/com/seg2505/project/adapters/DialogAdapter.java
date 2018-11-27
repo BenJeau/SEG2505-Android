@@ -2,6 +2,7 @@ package com.seg2505.project.adapters;
 
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -10,9 +11,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.seg2505.project.R;
+import com.seg2505.project.activities.ProviderHomeActivity;
 import com.seg2505.project.model.LoggedUser;
 import com.seg2505.project.model.Provider;
 import com.seg2505.project.model.Service;
@@ -56,23 +61,34 @@ public class DialogAdapter extends RecyclerView.Adapter<DialogAdapter.MyViewHold
 
         }
     }
+
+    public DatabaseReference serviceReference;
+    private FirebaseDatabase database;
+
+
     public DialogAdapter(ArrayList<Service> mdataset, Provider provider) {
 
         this.provider = provider;
         this.mdata = new ArrayList<>();
+        this.dataset = new ArrayList<>();
 
-        // Enleve service deja selectionner
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        serviceReference = database.getReference().child("services");
 
-        Iterator<Service> i = provider.getServices().iterator();
-        while(i.hasNext()){
-            Service s = i.next();
-            if(mdataset.contains(s)){
-                mdataset.remove(s);
+        for (Service service : mdataset) {
+            if (!provider.getServices().contains(service.getServiceId())) {
+                serviceReference.child(service.getServiceId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        dataset.add(dataSnapshot.getValue(Service.class));
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
+                });
             }
         }
-        this.dataset = mdataset;
-
-
     }
 
 

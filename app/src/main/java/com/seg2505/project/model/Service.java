@@ -10,14 +10,14 @@ import java.util.*;
 public class Service {
 
     //Service Associations
-    private List<Provider> providers;
+    private List<String> providers;
     private String serviceName;
     private double hourlyRate;
     private String serviceId;
 
     // CONSTRUCTOR
     public Service(String serviceName, double hourlyRate, String serviceId){
-        providers = new ArrayList<Provider>();
+        providers = new ArrayList<String>();
 
         this.serviceName = serviceName;
         this.hourlyRate = hourlyRate;
@@ -44,11 +44,15 @@ public class Service {
         return this.hourlyRate;
     }
 
-    public void addProvider(Provider provider) {
+    public void addProvider(String provider) {
+        if (providers == null) {
+            providers = new ArrayList<String>();
+        }
+
         this.providers.add(provider);
     }
 
-    public List<Provider> getProviders() {
+    public List<String> getProviders() {
         return this.providers;
     }
 

@@ -100,7 +100,7 @@ public class ProviderAvailabilityActivity extends AppCompatActivity implements C
         });
     }
 
-    private void onCreateDialog1() {
+    public void onCreateDialog1() {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         Fragment prev = getSupportFragmentManager().findFragmentByTag("dialog");
         if (prev != null) {

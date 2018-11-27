@@ -61,18 +61,12 @@ public class AdminServiceActivity extends AppCompatActivity {
                 adapter = new ServiceAdapter(data, AdminServiceActivity.this);
                 recyclerView.setAdapter(adapter);
 
-
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-
-
-
-
-
 
         // A floating action button which helps the user to add a service
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -115,9 +109,6 @@ public class AdminServiceActivity extends AppCompatActivity {
                 if (validateDialog(serviceName, hourlyRate, serviceText, hourlyRateText)) {
                     String id = serviceReference.push().getKey();
                     final Service service = new Service(serviceText, Double.parseDouble(hourlyRateText),id);
-                    service.addProvider(new Provider("", "",""));
-                    /*service.addProvider(new Provider("Jen", "password"));
-                    service.addProvider(new Provider("dd", "password"));*/
                     serviceReference.child(id).setValue(service);
                     adapter.add(service);
                     dialog.dismiss();

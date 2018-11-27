@@ -65,6 +65,7 @@ public class ProviderInfoActivity  extends AppCompatActivity {
         edtPhoneNumber = findViewById(R.id.phoneNumber);
         edtCompanyName = findViewById(R.id.companyName);
         edtDescription = findViewById(R.id.description);
+
         edtLicensedCheckbox = findViewById(R.id.licensedCheckbox);
         userId=LoggedUser.id;
 
@@ -129,7 +130,7 @@ public class ProviderInfoActivity  extends AppCompatActivity {
                     edtCountryName.setError("Country name field cannot be empty.");
                     error = true;
                 } else if (isValidName(countryName)) {
-                    edtCountryName.setError("Country name must use valid characters: letters and hyphens.");
+                    edtCountryName.setError("Country name must start with Caps use valid characters: letters and hyphens.");
                     error = true;
                 }
 
@@ -206,7 +207,6 @@ public class ProviderInfoActivity  extends AppCompatActivity {
 
             }
         });
-
     }
 
         public static boolean isValidStreetNum(String streetNum) {

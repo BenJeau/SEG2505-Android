@@ -36,20 +36,21 @@ import com.seg2505.project.model.Service;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.PropertyPermission;
 
 public class ProviderHomeActivity extends AppCompatActivity {
 
     private Provider provider;
     private DatabaseReference userReference;
-
-
-    static public DatabaseReference serviceReference;
+    private DatabaseReference serviceReference;
     private FirebaseDatabase database;
+    private DialogAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_provider_home);
+
 
         getInfoDatabase();
 
@@ -66,15 +67,14 @@ public class ProviderHomeActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                getInfoDatabase();
                 onCreateDialog();
             }
         });
     }
 
 
-    private DialogAdapter adapter;
     public void onCreateDialog() {
-
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
@@ -95,31 +95,26 @@ public class ProviderHomeActivity extends AppCompatActivity {
                         Iterator<Service> i = s.iterator();
                         while(i.hasNext()){
                             Service service = i.next();
-                            provider.addService(service);
+                            service.addProvider(provider.getId());
+                            provider.addService(service.getServiceId());
+
+                            serviceReference = database.getReference("services");
+                            serviceReference.child(service.getServiceId()).child("providers").setValue(service.getProviders());
                         }
 
                         if(provider.getServices() != null) {
                             serviceAdapter.updateList(provider.getServices());
                         }
 
-//                        Service service = dataset.get(position);
-//                        service.addProvider(provider);
-//                        provider.addService(service);
-//
-//                        String userId = LoggedUser.id;
-//
-//                        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//                        DatabaseReference userReference =  database.getReference().child("users").child(userId);
-//
-//                        String id = userReference.push().getKey();
-//                        userReference.child(id).setValue(service);
-//                        adapter.add(service);
+                        userReference = database.getReference().child("users").child(LoggedUser.id);
+                        userReference.setValue(provider);
                     }
                 });
         builder.setNegativeButton("Cancel", null);
+        final AlertDialog dialog = builder.create();
 
 
-        final ArrayList<Service> data = new ArrayList<Service>();
+        final ArrayList<Service> data = new ArrayList<>();
         database = FirebaseDatabase.getInstance();
         serviceReference = database.getReference("services");
 
@@ -128,8 +123,8 @@ public class ProviderHomeActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Service user = postSnapshot.getValue(Service.class);
-                    data.add(user);
+                    Service service = postSnapshot.getValue(Service.class);
+                    data.add(service);
                 }
 
                 // Uses a linear layout manager
@@ -140,9 +135,7 @@ public class ProviderHomeActivity extends AppCompatActivity {
                 adapter = new DialogAdapter(data, provider);
                 recyclerView.setAdapter(adapter);
 
-
-
-
+                dialog.show();
             }
 
             @Override
@@ -150,18 +143,10 @@ public class ProviderHomeActivity extends AppCompatActivity {
             }
         });
 
-        final AlertDialog dialog = builder.create();
-        dialog.show();
-
-
-
     }
     private void getInfoDatabase() {
-        String userId = LoggedUser.id;
-
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        userReference = database.getReference().child("users").child(userId);
-
+        database = FirebaseDatabase.getInstance();
+        userReference = database.getReference().child("users").child(LoggedUser.id);
         userReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -209,7 +194,7 @@ public class ProviderHomeActivity extends AppCompatActivity {
     }
     ProviderRecyclerViewAdapter serviceAdapter;
 
-    private void populateServiceRecyclerView(List<Service> data) {
+    private void populateServiceRecyclerView(List<String> data) {
 
         // Gets the recycler view and sets it to have a dataset that may vary in size
         RecyclerView recyclerView = findViewById(R.id.serviceRecyclerView);

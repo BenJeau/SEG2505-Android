@@ -7,7 +7,7 @@ import java.util.*;
  */
 public class Provider extends Person {
     //Provider Associations
-    private List<Service> services;
+    private List<String> services;
     private List<Availability> availabilities;
     private Address address;
     private ProviderInfo info;
@@ -19,7 +19,7 @@ public class Provider extends Person {
     public Provider(String username, String password, String id) {
         super(username, password,id);
         setRole("Provider");
-        services = new ArrayList<Service>();
+        services = new ArrayList<String>();
         availabilities = new ArrayList<Availability>();
     }
 
@@ -47,7 +47,7 @@ public class Provider extends Person {
         return this.address;
     }
 
-    public void addService(Service service) {
+    public void addService(String service) {
         services.add(service);
     }
 
@@ -55,12 +55,12 @@ public class Provider extends Person {
         services.remove(position);
     }
 
-    public List<Service> getServices() {
+    public List<String> getServices() {
         return services;
     }
 
     public void createServices(){
-        services = new ArrayList<Service>();
+        services = new ArrayList<String>();
     }
 
     public void createAvailabilities(){

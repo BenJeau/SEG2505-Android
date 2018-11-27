@@ -14,9 +14,10 @@ import com.seg2505.project.interfaces.Timeable;
 
 public class CustomFragmentDay extends Fragment implements View.OnClickListener {
     private TextView edtDay;
-    private TextView monday,tuesday,wedsnday,thursday,friday,saturaday,sunday;
+    private TextView monday,tuesday,Wednesday,thursday,friday,saturaday,sunday;
     private String dayPicked;
     public static Timeable timeable;
+
 
 
     public static CustomFragmentDay createInstance()
@@ -31,12 +32,12 @@ public class CustomFragmentDay extends Fragment implements View.OnClickListener 
         View v = inflater.inflate(R.layout.fragment_day,container,false);
         edtDay = v.findViewById(R.id.day);
         monday = v.findViewById(R.id.mon);tuesday = v.findViewById(R.id.tue);
-        wedsnday = v.findViewById(R.id.wed);thursday = v.findViewById(R.id.thu);
+        Wednesday = v.findViewById(R.id.wed);thursday = v.findViewById(R.id.thu);
         friday = v.findViewById(R.id.fri);saturaday = v.findViewById(R.id.sat);
         sunday = v.findViewById(R.id.sun);
         monday.setOnClickListener(this);
         tuesday.setOnClickListener(this);
-        wedsnday.setOnClickListener(this);
+        Wednesday.setOnClickListener(this);
         thursday.setOnClickListener(this);
         friday.setOnClickListener(this);
         saturaday.setOnClickListener(this);
@@ -57,7 +58,7 @@ public class CustomFragmentDay extends Fragment implements View.OnClickListener 
                 dayPicked="Tuesday";
                 break;
             case R.id.wed:
-                dayPicked="Wedsnday";
+                dayPicked="Wednesday";
                 break;
             case R.id.thu:
                 dayPicked="Thursday";
