@@ -15,10 +15,6 @@
             android:name=".activities.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".activities.WelcomeActivity"
@@ -42,12 +38,21 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.ProviderHomeActivity"
-            android:label="Provider"></activity>
-        <activity android:name=".activities.ProviderInfoActivity"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".activities.ProviderAvailabilityActivity"
+            android:label="Provider" />
+        <activity
+            android:name=".activities.ProviderInfoActivity"
             android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activities.ProviderAvailabilityActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activities.OwnerActivity"
+            android:screenOrientation="portrait"
+            android:label="Owner" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter></activity>
     </application>
 
 </manifest>

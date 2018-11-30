@@ -11,9 +11,12 @@ public class Provider extends Person {
     private List<Availability> availabilities;
     private Address address;
     private ProviderInfo info;
+    private List<Double> ratings;
 
     public Provider() {
-
+        services = new ArrayList<String>();
+        availabilities = new ArrayList<Availability>();
+        ratings = new ArrayList<Double>();
     }
 
     public Provider(String username, String password, String id) {
@@ -21,6 +24,7 @@ public class Provider extends Person {
         setRole("Provider");
         services = new ArrayList<String>();
         availabilities = new ArrayList<Availability>();
+        ratings = new ArrayList<Double>();
     }
 
     public void addAvailabity( Availability a){
