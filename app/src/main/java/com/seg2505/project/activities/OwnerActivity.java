@@ -9,6 +9,8 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.text.format.DateFormat;
 import android.view.KeyEvent;
@@ -43,6 +45,7 @@ public class OwnerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_owner);
 
         searchFiltersLayout = findViewById(R.id.searchFilters);
+        populateServiceRecyclerView();
 
         /*
         searchBox = findViewById(R.id.searchBox);
@@ -153,19 +156,19 @@ public class OwnerActivity extends AppCompatActivity {
     }
 
 
-//    private void populateServiceRecyclerView(List<String> data) {
-//
-//        // Gets the recycler view and sets it to have a dataset that may vary in size
-//        RecyclerView recyclerView = findViewById(R.id.serviceRecyclerView);
-//        recyclerView.setHasFixedSize(false);
-//
-//        // Uses a linear layout manager
-//        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(ProviderHomeActivity.this);
-//        recyclerView.setLayoutManager(layoutManager);
-//
-//        // Specify an adapter (see also next example)
-//        serviceAdapter = new OwnerHomeAdapter(data);
-//        recyclerView.setAdapter(serviceAdapter);
-//    }
+    private void populateServiceRecyclerView() {
+
+        // Gets the recycler view and sets it to have a dataset that may vary in size
+        RecyclerView recyclerView = findViewById(R.id.ownerRecyclerView);
+        recyclerView.setHasFixedSize(false);
+
+        // Uses a linear layout manager
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(OwnerActivity.this);
+        recyclerView.setLayoutManager(layoutManager);
+
+        // Specify an adapter (see also next example)
+        OwnerHomeAdapter serviceAdapter = new OwnerHomeAdapter();
+        recyclerView.setAdapter(serviceAdapter);
+    }
 }
 

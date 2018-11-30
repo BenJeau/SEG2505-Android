@@ -1,5 +1,6 @@
 package com.seg2505.project.model;
 
+import java.text.DecimalFormat;
 import java.util.*;
 /**
  * Diedrick Ng
@@ -69,5 +70,19 @@ public class Provider extends Person {
 
     public void createAvailabilities(){
         availabilities = new ArrayList<Availability>();
+    }
+
+    public String getRating() {
+        if (ratings.size() == 0) {
+            return "N.A.";
+        }
+
+        Double rating = 0.0;
+        for (Double rate : ratings) {
+            rating += rate;
+        }
+        DecimalFormat df = new DecimalFormat("#.##");
+
+        return df.format(rating);
     }
 }
