@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
@@ -33,6 +34,7 @@ public class RatingProviderActivity  extends AppCompatActivity {
 
     Button BtnSubmitInfo;
     EditText edtComment;
+    TextView edtProviderName;
     RatingBar edtRating;
 
     FirebaseDatabase database;
@@ -41,6 +43,7 @@ public class RatingProviderActivity  extends AppCompatActivity {
     private String userId;
     private List<Double> ratings;
     private String comment;
+    private String providerName;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,11 +52,32 @@ public class RatingProviderActivity  extends AppCompatActivity {
         BtnSubmitInfo = findViewById(R.id.BtnSubmitInfo);
         edtRating = findViewById(R.id.ratingBar);
         edtComment = findViewById(R.id.rateComment);
+        edtProviderName = findViewById(R.id.providerTitle);
 
         userId = getIntent().getExtras().getString(OwnerHomeAdapter.INTENT_PROVIDER, "");
 
         database = FirebaseDatabase.getInstance();
         userReference = database.getReference().child("users").child(userId);
+
+
+        userReference.addListenerForSingleValueEvent(new ValueEventListener(){
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                provider = dataSnapshot.getValue(Provider.class);
+
+                providerName = provider.getUsername();
+                edtProviderName.setText(providerName);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
 
 
         BtnSubmitInfo.setOnClickListener(new View.OnClickListener() {
@@ -80,6 +104,9 @@ public class RatingProviderActivity  extends AppCompatActivity {
                             provider = dataSnapshot.getValue(Provider.class);
 
                             ratings = provider.getRatings();
+                            if(ratings == null){
+                                ratings = provider.createRatings();
+                            }
                             ratings.add(rating);
                             provider.setRatings(ratings);
                             comment = provider.getComment();

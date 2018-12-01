@@ -89,6 +89,10 @@ public class Provider extends Person {
         return this.comment;
     }
 
+    public List<Double> createRatings(){
+        return new ratings;
+    }
+
     public String getRating() {
         if (ratings.size() == 0) {
             return "N.A.";
