@@ -115,47 +115,6 @@ public class ProviderAvailabilityActivity extends AppCompatActivity implements C
     }
 
 
-    public void onCreateDialog() {
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-
-        // Get the layout inflater
-        LayoutInflater inflater = this.getLayoutInflater();
-        View view = inflater.inflate(R.layout.create_availability, null);
-        final EditText time = view.findViewById(R.id.time);
-        final EditText day = view.findViewById(R.id.day);
-
-        builder.setTitle("Add Availability");
-        builder.setView(view);
-        builder.setPositiveButton("Create",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                });
-        builder.setNegativeButton("Cancel", null);
-
-        final AlertDialog dialog = builder.create();
-        dialog.show();
-        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String dayText = day.getText().toString();
-                String timeText = time.getText().toString();
-
-                if (true) {
-                    final Availability availability = new Availability(dayText, timeText);
-                    provider.addAvailabity(availability);
-                    userReference.setValue(provider);
-                    adapter.add(availability);
-                    dialog.dismiss();
-
-                    // TODO : Integrate firebase database here (when adding availability)
-                }
-            }
-        });
-    }
 
 
     @Override
