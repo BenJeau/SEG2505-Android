@@ -10,39 +10,60 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/searchFilters"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@android:color/background_light"
         android:translationZ="10dp"
         android:visibility="gone"
-        android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:textColor="@android:color/black"
             android:id="@+id/timeTitle"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
+            android:layout_height="56dp"
             android:gravity="center"
             android:padding="10dp"
             android:text="Time"
-            app:layout_constraintBottom_toBottomOf="@id/timeContent"
+            android:textColor="@android:color/black"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
+        <TextView
             android:id="@+id/timeContent"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@id/timeTitle"
-            app:layout_constraintLeft_toRightOf="@id/timeTitle"
+            android:layout_width="60dp"
+            android:layout_height="56dp"
+            android:gravity="center"
+            app:layout_constraintLeft_toRightOf="@id/clearButton"
             app:layout_constraintTop_toTopOf="@id/timeTitle" />
 
+        <Button
+            android:layout_marginLeft="7dp"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:id="@+id/setTimeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Set Time"
+            app:layout_constraintLeft_toRightOf="@id/weekdayTitle"
+            app:layout_constraintTop_toTopOf="@id/timeTitle"
+            app:layout_constraintBottom_toBottomOf="@id/timeTitle" />
+
+        <Button
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:id="@+id/clearButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Clear"
+            app:layout_constraintLeft_toRightOf="@id/setTimeButton"
+            app:layout_constraintTop_toTopOf="@id/timeTitle"
+            app:layout_constraintBottom_toBottomOf="@id/timeTitle"/>
+
+
         <TextView
-            android:textColor="@android:color/black"
             android:id="@+id/weekdayTitle"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:gravity="center"
             android:padding="10dp"
             android:text="Weekday"
+            android:textColor="@android:color/black"
             app:layout_constraintBottom_toBottomOf="@id/weekdayContent"
             app:layout_constraintTop_toBottomOf="@id/timeTitle" />
 
@@ -50,6 +71,8 @@
             android:id="@+id/weekdayContent"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
             app:layout_constraintLeft_toRightOf="@id/weekdayTitle"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@id/weekdayTitle">
@@ -254,71 +277,37 @@
         </android.support.constraint.ConstraintLayout>
 
         <TextView
-            android:textColor="@android:color/black"
             android:id="@+id/ratingTitle"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:text="Rating"
+            android:layout_height="56dp"
             android:gravity="center"
             android:padding="10dp"
-            app:layout_constraintBottom_toBottomOf="@id/ratingContent"
-            app:layout_constraintTop_toBottomOf="@id/weekdayTitle"/>
+            android:text="Rating"
+            android:textColor="@android:color/black"
+            app:layout_constraintTop_toBottomOf="@id/weekdayTitle" />
 
         <RatingBar
-            app:layout_constraintLeft_toRightOf="@id/ratingTitle"
-            app:layout_constraintTop_toTopOf="@id/ratingTitle"
+            android:layout_marginLeft="7dp"
             android:id="@+id/ratingContent"
             android:layout_width="0dp"
-            android:layout_height="wrap_content" />
-        <!--
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/line_height"
-                    android:layout_below="@id/text_vendor"
-                    android:layout_marginEnd="@dimen/line_margin"
-                    android:layout_toEndOf="@id/image_vendor"
-                    android:background="@color/colorLine" />-->
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toRightOf="@id/weekdayTitle"
+            app:layout_constraintTop_toTopOf="@id/ratingTitle"
+            app:layout_constraintBottom_toBottomOf="@id/ratingTitle"/>
 
     </android.support.constraint.ConstraintLayout>
 
-    <!--
-
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/searchBoxLayout"
-            android:layout_margin="10dp"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/searchType">
-
-            <android.support.design.widget.TextInputEditText
-                android:hint="Search"
-                android:id="@+id/searchBox"
-                android:imeOptions="actionSearch"
-                android:layout_height="match_parent"
-                android:layout_width="match_parent"/>
-        </android.support.design.widget.TextInputLayout>
-
-
-        <Spinner
-            style="@style/Widget.AppCompat.Spinner.Underlined"
-            android:entries="@array/owner_dropdown_list"
-            android:id="@+id/searchType"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toBottomOf="@id/searchBoxLayout"/>
-
-    -->
     <android.support.v7.widget.RecyclerView
         android:id="@+id/ownerRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <View
+        android:id="@+id/black_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent" />
 
 </android.support.constraint.ConstraintLayout>

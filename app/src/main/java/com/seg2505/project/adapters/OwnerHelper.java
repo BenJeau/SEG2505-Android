@@ -10,7 +10,7 @@ public class OwnerHelper {
     private String providerName;
     private String providerRating;
     private boolean booked;
-    private String weekdays;
+    private List<Availability> availabilities;
 
     public String getServiceName() {
         return serviceName;
@@ -45,11 +45,7 @@ public class OwnerHelper {
     }
 
     public String getWeekdays() {
-        return weekdays;
-    }
-
-    public void setWeekdays(List<Availability> availabilities) {
-        weekdays = "";
+        String weekdays = "";
 
         for (Availability availability : availabilities) {
             weekdays += availability.getDay().substring(0, 3).toUpperCase() + ", ";
@@ -58,5 +54,20 @@ public class OwnerHelper {
         if (!weekdays.equals("")) {
             weekdays = weekdays.substring(0, weekdays.length() - 2);
         }
+
+        return weekdays;
+    }
+
+    public void setWeekdays(List<Availability> availabilities) {
+        this.availabilities = availabilities;
+    }
+
+    public List<Availability> getAvailabilities() {
+        return availabilities;
+    }
+
+    @Override
+    public String toString() {
+        return serviceName + providerName + providerRating + getWeekdays() + booked;
     }
 }
