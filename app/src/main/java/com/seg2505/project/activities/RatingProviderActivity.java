@@ -110,7 +110,9 @@ public class RatingProviderActivity  extends AppCompatActivity {
                             ratings.add(rating);
                             provider.setRatings(ratings);
                             comment = provider.getComment();
-                            comment = comment + " | "+ description;
+                            if(!description.isEmpty()){
+                                comment = comment + " | "+ description;
+                            }
                             provider.setComment(comment);
 
                             userReference.setValue(provider);
