@@ -28,42 +28,25 @@ public class BookingActivity extends AppCompatActivity {
 
 
         DatabaseReference serviceReference = FirebaseDatabase.getInstance().getReference("users");
-        serviceReference.child("LSRz1tVfbUvEzYpaDCq").addListenerForSingleValueEvent(new ValueEventListener() {
+        serviceReference.child("-LSRz1tVfbUvEzYpaDCq").addListenerForSingleValueEvent(new ValueEventListener() {
+            List<Availability> availabilities;
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Provider provider = dataSnapshot.getValue(Provider.class);
-                List<Availability> availabilities = provider.getAvailabilities();
-                populateServiceRecyclerView(availabilities);
 
-//                if (providers != null) {
-//
-//                    DatabaseReference usersReference = FirebaseDatabase.getInstance().getReference("users");
-//                    for (int i = 0; i < providers.size(); i++) {
-//                        usersReference.child(providers.get(i)).addListenerForSingleValueEvent(new ValueEventListener() {
-//                            @Override
-//                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                                Provider provider = dataSnapshot.getValue(Provider.class);
-//
-//
-//                                if (provider != null) {
-//                                    List<Availability> availabilities = provider.getAvailabilities();
-//
-//
-//                                }
-//                            }
-//
-//                            @Override
-//                            public void onCancelled(@NonNull DatabaseError databaseError) {
-//                            }
-//                        });
-//                    }
-//                }
+
+                if (provider != null) {
+                    availabilities = provider.getAvailabilities();
+                    populateServiceRecyclerView(availabilities);
+
+                }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
+
     }
     private void populateServiceRecyclerView(List<Availability> data) {
 

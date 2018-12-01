@@ -18,8 +18,6 @@
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="57dp"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp" />
+        android:text="TextView" />
 
 </android.support.constraint.ConstraintLayout>

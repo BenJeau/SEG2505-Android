@@ -54,38 +54,21 @@ public class AvailAdapter extends RecyclerView.Adapter<AvailAdapter.MyViewHolder
         }
     }
 
-    public DatabaseReference serviceReference;
-    private FirebaseDatabase database;
+
 
 
     public AvailAdapter(List<Availability> mdataset) {
 
        this.mdata = mdataset;
 
-//        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        serviceReference = database.getReference().child("services");
-//
-//        for (Service service : mdataset) {
-//            if (!provider.getServices().contains(service.getServiceId())) {
-//                serviceReference.child(service.getServiceId()).addListenerForSingleValueEvent(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                        dataset.add(dataSnapshot.getValue(Service.class));
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError databaseError) {
-//                    }
-//                });
-//            }
-//        }
+
     }
 
 
     @Override
 
     public AvailAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int i) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.dialog_service_recyler_view, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_service_provider, parent, false);
         return new AvailAdapter.MyViewHolder(v);
     }
 
@@ -93,15 +76,9 @@ public class AvailAdapter extends RecyclerView.Adapter<AvailAdapter.MyViewHolder
     public void onBindViewHolder(AvailAdapter.MyViewHolder holder, final int position) {
         holder.radioButton.setText(mdata.get(position).getDay() + " : " + mdata.get(position).getTime());
 
-//        holder.addIcon.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                add(position);
-//            }
-//        });
-
 
     }
+    
 
     @Override
     public int getItemCount() {
