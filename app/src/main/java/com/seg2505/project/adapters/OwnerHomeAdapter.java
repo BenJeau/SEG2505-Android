@@ -130,16 +130,18 @@ public class OwnerHomeAdapter  extends RecyclerView.Adapter<OwnerHomeAdapter.MyV
                         Provider provider = snapshot.getValue(Provider.class);
                         final OwnerHelper helper = new OwnerHelper();
 
+                        helper.setProviderID(provider.getId());
                         helper.setProviderName(provider.getUsername());
                         helper.setProviderRating(provider.getRating());
                         helper.setWeekdays(provider.getAvailabilities());
 
-                        for (String serviceID : provider.getServices()) {
+                        for (final String serviceID : provider.getServices()) {
                             serviceReference.child(serviceID).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     Service service = dataSnapshot.getValue(Service.class);
                                     helper.setServiceName(service.getServiceName());
+                                    helper.setProviderID(serviceID);
                                     System.out.println(helper.toString());
                                     dataset.add(helper);
                                     add(helper);
@@ -221,10 +223,15 @@ public class OwnerHomeAdapter  extends RecyclerView.Adapter<OwnerHomeAdapter.MyV
                 } else {
                    // intent = new Intent(OwnerHomeAdapter.this, RateProviderActivity.class);
                 }
+                intent.putExtra(INTENT_PROVIDER, current.getProviderID());
+                intent.putExtra(INTENT_SERVICE, current.getServiceID());
                  context.startActivity(intent);
             }
         });
     }
+
+    public static final String INTENT_SERVICE = "SERVICE_ID";
+    public static final String INTENT_PROVIDER = "PROVIDER_ID";
 
     @Override
     public int getItemCount() {
