@@ -13,6 +13,7 @@ public class Provider extends Person {
     private Address address;
     private ProviderInfo info;
     private List<Double> ratings;
+    private String comment;
 
     public Provider() {
         services = new ArrayList<String>();
@@ -72,17 +73,37 @@ public class Provider extends Person {
         availabilities = new ArrayList<Availability>();
     }
 
-    public String getRating() {
-        if (ratings.size() == 0) {
-            return "N.A.";
-        }
-
-        Double rating = 0.0;
-        for (Double rate : ratings) {
-            rating += rate;
-        }
-        DecimalFormat df = new DecimalFormat("#.##");
-
-        return df.format(rating);
+    public void setRatings(List<Double> ratings) {
+        this.ratings = ratings;
     }
+
+    public List<Double> getRatings() {
+        return ratings;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public String getComment() {
+        return this.comment;
+    }
+
+    public List<Double> createRatings(){
+        return new ArrayList<Double>();
+    }
+
+//    public String getRating() {
+//        if (ratings.size() == 0) {
+//            return "N.A.";
+//        }
+//
+//        Double rating = 0.0;
+//        for (Double rate : ratings) {
+//            rating += rate;
+//        }
+//        DecimalFormat df = new DecimalFormat("#.##");
+//
+//        return df.format(rating);
+//    }
 }

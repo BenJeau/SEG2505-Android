@@ -98,7 +98,7 @@ public class ProviderInfoActivity  extends AppCompatActivity {
                     edtStreetNumber.setError("Street number field cannot be empty.");
                     error = true;
                 } else if (!isValidStreetNum(streetNumber)) {
-                    edtStreetNumber.setError("Street number must be an integer");
+                    edtStreetNumber.setError("Street number must be a valid number");
                     error = true;
                 }
 
@@ -146,7 +146,7 @@ public class ProviderInfoActivity  extends AppCompatActivity {
                     edtPhoneNumber.setError("Phone number field cannot be empty.");
                     error = true;
                 } else if (!isValidPhoneNumber(phoneNumber)) {
-                    edtPhoneNumber.setError("Phone number must follow specific pattern: XXX-XXX-XXXX. \n X: a valid number.");
+                    edtPhoneNumber.setError("Phone number must follow specific pattern: XXXXXXXXXX. \n X: A valid number.");
                     error = true;
                 }
 

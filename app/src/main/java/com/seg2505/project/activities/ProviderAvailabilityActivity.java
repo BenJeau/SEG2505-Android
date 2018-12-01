@@ -1,20 +1,14 @@
 package com.seg2505.project.activities;
 
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.view.LayoutInflater;
-import android.content.DialogInterface;
-import android.widget.EditText;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,7 +16,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.seg2505.project.R;
-import com.seg2505.project.TabbedDialog;
+import com.seg2505.project.fragments.TabbedDialog;
 import com.seg2505.project.adapters.AvailabilityAdapter;
 import com.seg2505.project.interfaces.Cancelable;
 import com.seg2505.project.model.Availability;

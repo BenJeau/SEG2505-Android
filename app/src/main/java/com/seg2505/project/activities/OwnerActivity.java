@@ -1,30 +1,22 @@
 package com.seg2505.project.activities;
 
-import android.animation.ArgbEvaluator;
-import android.animation.ValueAnimator;
-import android.graphics.Color;
-import android.graphics.drawable.TransitionDrawable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.seg2505.project.R;
-import com.seg2505.project.TimePickerFragment;
+import com.seg2505.project.fragments.TimePickerFragment;
 import com.seg2505.project.adapters.OwnerHelper;
 import com.seg2505.project.adapters.OwnerHomeAdapter;
 import com.seg2505.project.model.Availability;
@@ -38,10 +30,13 @@ import java.util.List;
 public class OwnerActivity extends AppCompatActivity {
 
     private ConstraintLayout searchFiltersLayout;
-
     private CheckBox monday, tuesday, wednesday, thursday, friday, saturday, sunday;
     private TextView time;
     private RatingBar rating;
+    private View blackOverlay;
+    private SearchView searchView;
+    private OwnerHomeAdapter adapter;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,10 +143,6 @@ public class OwnerActivity extends AppCompatActivity {
         populateServiceRecyclerView();
     }
 
-    private View blackOverlay;
-    private ValueAnimator colorAnimation;
-    private SearchView searchView;
-
     public void setSearchText(String s) {
         time.setText(s);
     }
@@ -164,19 +155,6 @@ public class OwnerActivity extends AppCompatActivity {
         final MenuItem filterItem = menu.findItem(R.id.menu_filter);
 
         searchView = (SearchView) menuItem.getActionView();
-
-        int colorFrom = Color.parseColor("#00000000");
-        int colorTo = Color.parseColor("#BD000000");
-        colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
-        colorAnimation.setDuration(250); // milliseconds
-        colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-
-            @Override
-            public void onAnimationUpdate(ValueAnimator animator) {
-                blackOverlay.setBackgroundColor((int) animator.getAnimatedValue());
-            }
-
-        });
 
         // Listens when SearchView field is changing to filter the products
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -230,18 +208,12 @@ public class OwnerActivity extends AppCompatActivity {
     private void removeFilter() {
         searchFiltersLayout.setVisibility(View.GONE);
         blackOverlay.setVisibility(View.GONE);
-       // colorAnimation.reverse();
     }
 
     private void putFilter() {
         searchFiltersLayout.setVisibility(View.VISIBLE);
         blackOverlay.setVisibility(View.VISIBLE);
-       // colorAnimation.start();
     }
-
-
-    private OwnerHomeAdapter adapter;
-    private RecyclerView recyclerView;
 
     @Override
     public void onBackPressed() {
