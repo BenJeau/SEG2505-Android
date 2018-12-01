@@ -13,6 +13,7 @@ public class Provider extends Person {
     private Address address;
     private ProviderInfo info;
     private List<Double> ratings;
+    private String comment;
 
     public Provider() {
         services = new ArrayList<String>();
@@ -70,6 +71,26 @@ public class Provider extends Person {
 
     public void createAvailabilities(){
         availabilities = new ArrayList<Availability>();
+    }
+
+    public void setRatings(List<Double> ratings) {
+        ratings = ratings;
+    }
+
+    public List<Double> getRatings() {
+        return ratings;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public String getComment() {
+        return this.comment;
+    }
+
+    public List<Double> createRatings(){
+        return new ratings;
     }
 
     public String getRating() {
