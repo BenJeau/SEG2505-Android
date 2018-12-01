@@ -74,7 +74,7 @@ public class Provider extends Person {
     }
 
     public void setRatings(List<Double> ratings) {
-        ratings = ratings;
+        this.ratings = ratings;
     }
 
     public List<Double> getRatings() {
