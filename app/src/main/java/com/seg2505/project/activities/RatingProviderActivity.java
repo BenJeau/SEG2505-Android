@@ -52,8 +52,6 @@ public class RatingProviderActivity  extends AppCompatActivity {
 
         userId = getIntent().getExtras().getString(OwnerHomeAdapter.INTENT_PROVIDER, "");
 
-        userId=LoggedUser.id;
-
         database = FirebaseDatabase.getInstance();
         userReference = database.getReference().child("users").child(userId);
 

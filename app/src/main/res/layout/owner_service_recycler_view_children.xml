@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardViewLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp">
@@ -14,6 +15,9 @@
             android:id="@+id/serviceName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="Service Name"
+            android:textColor="@color/secondaryColor"
+            android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -22,13 +26,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=" - "
+            android:textStyle="bold"
             app:layout_constraintLeft_toRightOf="@id/serviceName"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/providerRating"
+            android:id="@+id/providerRatingText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="N.A."
+            android:textStyle="bold"
+            app:layout_constraintLeft_toRightOf="@id/serviceSpacer"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RatingBar
+            android:id="@+id/providerRatingStars"
+            style="@style/Widget.AppCompat.RatingBar.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
             app:layout_constraintLeft_toRightOf="@id/serviceSpacer"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -36,6 +52,8 @@
             android:id="@+id/providerName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="Provier Name"
+            android:textColor="@color/secondaryColor"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/serviceName" />
 
@@ -43,6 +61,7 @@
             android:id="@+id/booking"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
+            android:src="@drawable/ic_bookmark_unbooked_24dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -51,6 +70,7 @@
             android:id="@+id/weekdays"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="WEEKDAYS"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/providerName" />
 

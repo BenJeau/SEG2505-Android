@@ -29,7 +29,10 @@ import com.seg2505.project.adapters.OwnerHelper;
 import com.seg2505.project.adapters.OwnerHomeAdapter;
 import com.seg2505.project.model.Availability;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class OwnerActivity extends AppCompatActivity {
@@ -226,12 +229,14 @@ public class OwnerActivity extends AppCompatActivity {
 
     private void removeFilter() {
         searchFiltersLayout.setVisibility(View.GONE);
-        colorAnimation.reverse();
+        blackOverlay.setVisibility(View.GONE);
+       // colorAnimation.reverse();
     }
 
     private void putFilter() {
         searchFiltersLayout.setVisibility(View.VISIBLE);
-        colorAnimation.start();
+        blackOverlay.setVisibility(View.VISIBLE);
+       // colorAnimation.start();
     }
 
 
@@ -260,7 +265,7 @@ public class OwnerActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         // Specify an adapter (see also next example)
-        adapter = new OwnerHomeAdapter();
+        adapter = new OwnerHomeAdapter(this);
         recyclerView.setAdapter(adapter);
     }
 
@@ -275,6 +280,10 @@ public class OwnerActivity extends AppCompatActivity {
 
         ArrayList<OwnerHelper> list = new ArrayList<>();
 
+        if (oHelpers.isEmpty()) {
+            return list;
+        }
+
         boolean filterWeekdays = monday.isChecked() || tuesday.isChecked() ||
                 wednesday.isChecked() || thursday.isChecked() || friday.isChecked() ||
                 saturday.isChecked() || sunday.isChecked();
@@ -284,6 +293,7 @@ public class OwnerActivity extends AppCompatActivity {
         boolean filterRating = rating.getRating() > 0.001f;
 
         boolean filterName = lowerCaseQuery.length() != 0;
+
 
         for (OwnerHelper oHelper : oHelpers) {
             if (filterWeekdays) {
@@ -299,9 +309,32 @@ public class OwnerActivity extends AppCompatActivity {
             }
 
             if (filterTime) {
-                for (Availability availability : oHelper.getAvailabilities()) {
-                    String[] times = availability.getTime().split(" to ");
-                    //if (time.getText().compareTo(times[0]));
+                SimpleDateFormat parser = new SimpleDateFormat("HH:mm");
+                if (filterWeekdays) {
+                    boolean hasSpecifiedTime = false;
+                    //if (monday)
+
+                } else {
+                    boolean hasTime = false;
+
+                    for (Availability availability : oHelper.getAvailabilities()) {
+                        String[] times = availability.getTime().split(" to ");
+
+                        try {
+                            Date ten = parser.parse(times[0]);
+                            Date eighteen = parser.parse(times[1]);
+                            Date userDate = parser.parse("10:00");
+                            if (userDate.after(ten) && userDate.before(eighteen)) {
+                                hasTime = true;
+                            }
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    if (!hasTime) {
+                        continue;
+                    }
                 }
             }
 

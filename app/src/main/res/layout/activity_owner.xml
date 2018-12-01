@@ -23,37 +23,44 @@
             android:gravity="center"
             android:padding="10dp"
             android:text="Time"
-            android:textColor="@android:color/black"
+            android:textColor="@color/secondaryDarkColor"
+            android:textStyle="bold"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/timeContent"
-            android:layout_width="60dp"
+            android:layout_width="0dp"
             android:layout_height="56dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:gravity="center"
-            app:layout_constraintLeft_toRightOf="@id/clearButton"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/clearButton"
             app:layout_constraintTop_toTopOf="@id/timeTitle" />
 
         <Button
-            android:layout_marginLeft="7dp"
-            style="@style/Widget.AppCompat.Button.Colored"
             android:id="@+id/setTimeButton"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="7dp"
             android:text="Set Time"
+            android:textColor="@color/secondaryTextColor"
+            app:layout_constraintBottom_toBottomOf="@id/timeTitle"
             app:layout_constraintLeft_toRightOf="@id/weekdayTitle"
-            app:layout_constraintTop_toTopOf="@id/timeTitle"
-            app:layout_constraintBottom_toBottomOf="@id/timeTitle" />
+            app:layout_constraintTop_toTopOf="@id/timeTitle" />
 
         <Button
-            style="@style/Widget.AppCompat.Button.Colored"
             android:id="@+id/clearButton"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Clear"
+            android:textColor="@color/secondaryDarkColor"
+            app:layout_constraintBottom_toBottomOf="@id/timeTitle"
             app:layout_constraintLeft_toRightOf="@id/setTimeButton"
-            app:layout_constraintTop_toTopOf="@id/timeTitle"
-            app:layout_constraintBottom_toBottomOf="@id/timeTitle"/>
+            app:layout_constraintTop_toTopOf="@id/timeTitle" />
 
 
         <TextView
@@ -63,7 +70,8 @@
             android:gravity="center"
             android:padding="10dp"
             android:text="Weekday"
-            android:textColor="@android:color/black"
+            android:textColor="@color/secondaryDarkColor"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/weekdayContent"
             app:layout_constraintTop_toBottomOf="@id/timeTitle" />
 
@@ -91,6 +99,7 @@
                     android:layout_height="wrap_content"
                     android:text="Mon"
                     android:textAlignment="center"
+                    android:textColor="@color/secondaryDarkColor"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -119,6 +128,7 @@
                     android:layout_height="wrap_content"
                     android:text="Tue"
                     android:textAlignment="center"
+                    android:textColor="@color/secondaryDarkColor"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -148,6 +158,7 @@
                     android:layout_height="wrap_content"
                     android:text="Wed"
                     android:textAlignment="center"
+                    android:textColor="@color/secondaryDarkColor"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -176,6 +187,7 @@
                     android:layout_height="wrap_content"
                     android:text="Thu"
                     android:textAlignment="center"
+                    android:textColor="@color/secondaryDarkColor"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -204,6 +216,7 @@
                     android:layout_height="wrap_content"
                     android:text="Fru"
                     android:textAlignment="center"
+                    android:textColor="@color/secondaryDarkColor"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -232,6 +245,7 @@
                     android:layout_height="wrap_content"
                     android:text="Sat"
                     android:textAlignment="center"
+                    android:textColor="@color/secondaryDarkColor"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -260,6 +274,7 @@
                     android:layout_height="wrap_content"
                     android:text="Sun"
                     android:textAlignment="center"
+                    android:textColor="@color/secondaryDarkColor"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -283,17 +298,18 @@
             android:gravity="center"
             android:padding="10dp"
             android:text="Rating"
-            android:textColor="@android:color/black"
+            android:textColor="@color/secondaryDarkColor"
+            android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@id/weekdayTitle" />
 
         <RatingBar
-            android:layout_marginLeft="7dp"
             android:id="@+id/ratingContent"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginLeft="7dp"
+            app:layout_constraintBottom_toBottomOf="@id/ratingTitle"
             app:layout_constraintLeft_toRightOf="@id/weekdayTitle"
-            app:layout_constraintTop_toTopOf="@id/ratingTitle"
-            app:layout_constraintBottom_toBottomOf="@id/ratingTitle"/>
+            app:layout_constraintTop_toTopOf="@id/ratingTitle" />
 
     </android.support.constraint.ConstraintLayout>
 
@@ -306,8 +322,9 @@
 
     <View
         android:id="@+id/black_overlay"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/transparent" />
+        android:background="#BD000000" />
 
 </android.support.constraint.ConstraintLayout>

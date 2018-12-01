@@ -1,12 +1,16 @@
 package com.seg2505.project.adapters;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.util.SortedList;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -16,10 +20,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.seg2505.project.R;
+import com.seg2505.project.activities.BookingActivity;
 import com.seg2505.project.model.Provider;
 import com.seg2505.project.model.Service;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +31,7 @@ public class OwnerHomeAdapter  extends RecyclerView.Adapter<OwnerHomeAdapter.MyV
 
     private ArrayList<OwnerHelper> dataset;
     private FirebaseDatabase database;
+    private Context context;
 
     private final SortedList<OwnerHelper> ownerHelperSortedList = new SortedList<>(OwnerHelper.class, new SortedList.Callback<OwnerHelper>() {
         @Override
@@ -125,16 +130,18 @@ public class OwnerHomeAdapter  extends RecyclerView.Adapter<OwnerHomeAdapter.MyV
                         Provider provider = snapshot.getValue(Provider.class);
                         final OwnerHelper helper = new OwnerHelper();
 
+                        helper.setProviderID(provider.getId());
                         helper.setProviderName(provider.getUsername());
                         helper.setProviderRating(provider.getRating());
                         helper.setWeekdays(provider.getAvailabilities());
 
-                        for (String serviceID : provider.getServices()) {
+                        for (final String serviceID : provider.getServices()) {
                             serviceReference.child(serviceID).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     Service service = dataSnapshot.getValue(Service.class);
                                     helper.setServiceName(service.getServiceName());
+                                    helper.setProviderID(serviceID);
                                     System.out.println(helper.toString());
                                     dataset.add(helper);
                                     add(helper);
@@ -158,19 +165,28 @@ public class OwnerHomeAdapter  extends RecyclerView.Adapter<OwnerHomeAdapter.MyV
         });
     }
 
+    public OwnerHomeAdapter(Context context) {
+        this();
+        this.context = context;
+    }
+
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView serviceName, providerRating, weekdays, providerName;
+        private TextView serviceName, providerRatingText, weekdays, providerName;
         private ImageView bookingIcon;
+        private RatingBar providerRatingStars;
+        private CardView cardView;
 
-        public MyViewHolder (View v) {
+        private MyViewHolder (View v) {
             super(v);
 
             serviceName = v.findViewById(R.id.serviceName);
-            providerRating = v.findViewById(R.id.providerRating);
+            providerRatingText = v.findViewById(R.id.providerRatingText);
+            providerRatingStars = v.findViewById(R.id.providerRatingStars);
             providerName = v.findViewById(R.id.providerName);
             weekdays = v.findViewById(R.id.weekdays);
             bookingIcon = v.findViewById(R.id.booking);
+            cardView = v.findViewById(R.id.cardViewLayout);
         }
     }
 
@@ -182,19 +198,40 @@ public class OwnerHomeAdapter  extends RecyclerView.Adapter<OwnerHomeAdapter.MyV
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder vHolder, int i) {
-        OwnerHelper current = ownerHelperSortedList.get(i);
+        final OwnerHelper current = ownerHelperSortedList.get(i);
 
-        vHolder.providerRating.setText(current.getProviderRating());
+        if (!current.getProviderRating().equals("N.A.")) {
+            vHolder.providerRatingStars.setVisibility(View.VISIBLE);
+            vHolder.providerRatingStars.setRating(Float.parseFloat(current.getProviderRating()));
+            vHolder.providerRatingText.setVisibility(View.GONE);
+        }
+
         vHolder.providerName.setText(current.getProviderName());
         vHolder.serviceName.setText(current.getServiceName());
         vHolder.weekdays.setText(current.getWeekdays());
 
         if (current.isBooked()) {
             vHolder.bookingIcon.setImageResource(R.drawable.ic_bookmark_booked_24dp);
-        } else {
-            vHolder.bookingIcon.setImageResource(R.drawable.ic_bookmark_unbooked_24dp);
         }
+
+        vHolder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent;
+                intent = new Intent(context, BookingActivity.class);
+                if (current.isBooked()) {
+                } else {
+                   // intent = new Intent(OwnerHomeAdapter.this, RateProviderActivity.class);
+                }
+                intent.putExtra(INTENT_PROVIDER, current.getProviderID());
+                intent.putExtra(INTENT_SERVICE, current.getServiceID());
+                context.startActivity(intent);
+            }
+        });
     }
+
+    public static final String INTENT_SERVICE = "SERVICE_ID";
+    public static final String INTENT_PROVIDER = "PROVIDER_ID";
 
     @Override
     public int getItemCount() {

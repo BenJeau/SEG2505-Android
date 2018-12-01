@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OwnerHelper {
+    private String providerID;
+    private String servicerID;
     private String serviceName;
     private String providerName;
     private String providerRating;
@@ -64,6 +66,23 @@ public class OwnerHelper {
 
     public List<Availability> getAvailabilities() {
         return availabilities;
+    }
+
+
+    public String getProviderID() {
+        return providerID;
+    }
+
+    public String getServiceID() {
+        return servicerID;
+    }
+
+    public void setProviderID(String providerID) {
+        this.providerID = providerID;
+    }
+
+    public void setServicerID(String servicerID) {
+        this.servicerID = servicerID;
     }
 
     @Override
