@@ -260,7 +260,7 @@ public class OwnerActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         // Specify an adapter (see also next example)
-        adapter = new OwnerHomeAdapter();
+        adapter = new OwnerHomeAdapter(this);
         recyclerView.setAdapter(adapter);
     }
 
