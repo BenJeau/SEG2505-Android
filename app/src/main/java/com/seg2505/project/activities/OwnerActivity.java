@@ -229,12 +229,14 @@ public class OwnerActivity extends AppCompatActivity {
 
     private void removeFilter() {
         searchFiltersLayout.setVisibility(View.GONE);
-        colorAnimation.reverse();
+        blackOverlay.setVisibility(View.GONE);
+       // colorAnimation.reverse();
     }
 
     private void putFilter() {
         searchFiltersLayout.setVisibility(View.VISIBLE);
-        colorAnimation.start();
+        blackOverlay.setVisibility(View.VISIBLE);
+       // colorAnimation.start();
     }
 
 

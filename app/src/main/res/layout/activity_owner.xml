@@ -322,8 +322,9 @@
 
     <View
         android:id="@+id/black_overlay"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/transparent" />
+        android:background="#BD000000" />
 
 </android.support.constraint.ConstraintLayout>

@@ -225,7 +225,7 @@ public class OwnerHomeAdapter  extends RecyclerView.Adapter<OwnerHomeAdapter.MyV
                 }
                 intent.putExtra(INTENT_PROVIDER, current.getProviderID());
                 intent.putExtra(INTENT_SERVICE, current.getServiceID());
-                 context.startActivity(intent);
+                context.startActivity(intent);
             }
         });
     }
