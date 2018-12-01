@@ -1,5 +1,6 @@
 package com.seg2505.project.model;
 
+import java.text.DecimalFormat;
 import java.util.*;
 /**
  * Diedrick Ng
@@ -11,9 +12,12 @@ public class Provider extends Person {
     private List<Availability> availabilities;
     private Address address;
     private ProviderInfo info;
+    private List<Double> ratings;
 
     public Provider() {
-
+        services = new ArrayList<String>();
+        availabilities = new ArrayList<Availability>();
+        ratings = new ArrayList<Double>();
     }
 
     public Provider(String username, String password, String id) {
@@ -21,6 +25,7 @@ public class Provider extends Person {
         setRole("Provider");
         services = new ArrayList<String>();
         availabilities = new ArrayList<Availability>();
+        ratings = new ArrayList<Double>();
     }
 
     public void addAvailabity( Availability a){
@@ -65,5 +70,19 @@ public class Provider extends Person {
 
     public void createAvailabilities(){
         availabilities = new ArrayList<Availability>();
+    }
+
+    public String getRating() {
+        if (ratings.size() == 0) {
+            return "N.A.";
+        }
+
+        Double rating = 0.0;
+        for (Double rate : ratings) {
+            rating += rate;
+        }
+        DecimalFormat df = new DecimalFormat("#.##");
+
+        return df.format(rating);
     }
 }

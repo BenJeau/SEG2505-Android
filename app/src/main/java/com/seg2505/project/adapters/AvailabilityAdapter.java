@@ -3,7 +3,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -17,13 +20,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.seg2505.project.R;
+import com.seg2505.project.TabbedDialog;
 import com.seg2505.project.activities.ProviderAvailabilityActivity;
+import com.seg2505.project.interfaces.Cancelable;
 import com.seg2505.project.model.Availability;
 
 import java.time.DayOfWeek;
 import java.util.ArrayList;
 
-public class AvailabilityAdapter extends RecyclerView.Adapter<AvailabilityAdapter.MyViewHolder> {
+public class AvailabilityAdapter extends RecyclerView.Adapter<AvailabilityAdapter.MyViewHolder> implements Cancelable {
+
+    private TabbedDialog dialogFragment;
+
 
     /**
      * The dataset/database used by the recycler view
@@ -39,6 +47,10 @@ public class AvailabilityAdapter extends RecyclerView.Adapter<AvailabilityAdapte
      * The layout to be displayed when the recycler view is empty
      */
     private ConstraintLayout emptyLayout;
+
+    private static int position;
+
+
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -82,6 +94,7 @@ public class AvailabilityAdapter extends RecyclerView.Adapter<AvailabilityAdapte
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
+        this.position=position;
         String timeText = dataset.get(position).getTime();
         String dayText = dataset.get(position).getDay();
 
@@ -132,25 +145,8 @@ public class AvailabilityAdapter extends RecyclerView.Adapter<AvailabilityAdapte
 
         final AlertDialog deleteDialog = deleteDialogBuilder.create();
 
-        // Creates the modify dialog
-        AlertDialog.Builder modifyDialogBuilder = new AlertDialog.Builder(context);
-        modifyDialogBuilder.setTitle("Modify Availability");
 
-        View view = layoutInflater.inflate(R.layout.create_availability, null);
-        final EditText time = view.findViewById(R.id.time);
-        final EditText day = view.findViewById(R.id.day);
 
-        time.setText(dataset.get(position).getTime());
-        day.setText(dataset.get(position).getDay());
-
-        modifyDialogBuilder.setView(view);
-
-        modifyDialogBuilder.setPositiveButton("Modify", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-            }
-        });
-        modifyDialogBuilder.setNegativeButton("Cancel", null);
-        final AlertDialog modifyDialog = modifyDialogBuilder.create();
 
         // The callback methods for the buttons in each CardView/children
         holder.deleteButton.setOnClickListener(new View.OnClickListener() {
@@ -162,61 +158,7 @@ public class AvailabilityAdapter extends RecyclerView.Adapter<AvailabilityAdapte
         holder.modifyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                modifyDialog.show();
-                modifyDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        String dayText = day.getText().toString();
-                        String timeText = time.getText().toString();
-                        int start,end;
-                        String startHour,startMinute,endHour,endMinute;
-                        if(timeText.length()==14){
-                            startHour=timeText.substring(0,2);
-                            startMinute=timeText.substring(3,5);
-                            endHour=timeText.substring(9,11);
-                            endMinute=timeText.substring(12,14);
-                            if(validate(startHour)&&validate(startMinute)&&validate(endHour)&&validate(endMinute)&&timeText.length()==14){
-                                start=Integer.valueOf(timeText.substring(0,2))*60+Integer.valueOf(timeText.substring(3,5));
-                                end=Integer.valueOf(timeText.substring(9,11))*60+Integer.valueOf(timeText.substring(12,14));
-
-                                if (verifyDay(dayText)&&end-start>30 && end<1440 && start<1440) {
-                                    Availability availability = dataset.get(position);
-                                    availability.setTime(timeText);
-                                    availability.setDay(dayText);
-
-                                    modifyAt(availability, position);
-
-                                    modifyDialog.dismiss();
-
-                                    // TODO : Modify availability from firebase database
-                                }
-                                else if(!verifyDay(dayText)){
-                                    Toast.makeText(v.getContext(), "Wrong day", Toast.LENGTH_SHORT).show();
-
-                                }
-                                else if(end-start<30){
-                                    Toast.makeText(v.getContext(), "TimeSlot needs to be greater than 30 minutes", Toast.LENGTH_SHORT).show();
-
-                                }
-                                else if(end<1440||start<1440){
-                                    Toast.makeText(v.getContext(), "Please enter correct time format", Toast.LENGTH_SHORT).show();
-
-                                }
-                            }
-                            else {
-                                Toast.makeText(v.getContext(), "Please enter correct time format hh:mm to hh:mm", Toast.LENGTH_SHORT).show();
-
-                            }
-                        }
-                        else {
-                            Toast.makeText(v.getContext(), "Please enter correct time format hh:mm to hh:mm", Toast.LENGTH_SHORT).show();
-
-                        }
-
-
-                    }
-                });
+                onCreateDialog1();
             }
         });
     }
@@ -269,16 +211,34 @@ public class AvailabilityAdapter extends RecyclerView.Adapter<AvailabilityAdapte
         return dataset.size();
     }
 
-    public Boolean verifyDay(String day){
-        if(day.equals("Monday")||day.equals("Tuesday")||day.equals("Wednesday")||day.equals("Thursday")||day.equals("Friday")||day.equals("Saturday")||day.equals("Sunday")){
-            return true;
+
+
+    public void onCreateDialog1() {
+        FragmentTransaction ft =     ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+        Fragment prev =     ((AppCompatActivity) context).getSupportFragmentManager().findFragmentByTag("dialog");
+        if (prev != null) {
+            ft.remove(prev);
         }
-        return false;
+        ft.addToBackStack(null);
+        dialogFragment = new TabbedDialog();
+        dialogFragment.show(ft,"dialog");
+        dialogFragment.setCancelable(this);
+
+
     }
-    private Boolean validate(String text){
-        if (text.matches("[0-9]+") && text.length() == 2){
-            return true;
+
+    @Override
+    public void setCanceled(Boolean canceled, String day, String time) {
+        if (canceled){
+            Log.i("tagged","dddddd");
+
         }
-        return false;
+        else{
+            final Availability availability = new Availability(day, time);
+            modifyAt(availability,position);
+
+        }
+        dialogFragment.dismiss();
+
     }
 }

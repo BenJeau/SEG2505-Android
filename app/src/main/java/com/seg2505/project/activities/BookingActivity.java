@@ -13,14 +13,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.seg2505.project.R;
 import com.seg2505.project.adapters.AvailAdapter;
-import com.seg2505.project.adapters.ProviderRecyclerViewAdapter;
 import com.seg2505.project.model.Availability;
 import com.seg2505.project.model.Provider;
-import com.seg2505.project.model.Service;
 
 import java.util.List;
 
-public class bookingActivity extends AppCompatActivity {
+public class BookingActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +72,7 @@ public class bookingActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(false);
 
         // Uses a linear layout manager
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(bookingActivity.this);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(BookingActivity.this);
         recyclerView.setLayoutManager(layoutManager);
 
         // Specify an adapter (see also next example)

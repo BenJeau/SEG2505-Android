@@ -25,19 +25,17 @@ public class WelcomeActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+                Intent intent;
                 if (role.equals("Provider")) {
-                    Intent intent;
-
                     if (hasInfo) {
                         intent = new Intent(WelcomeActivity.this, ProviderHomeActivity.class);
                     } else {
                         intent = new Intent(WelcomeActivity.this, ProviderInfoActivity.class);
                     }
-
-                    WelcomeActivity.this.startActivity(intent);
-                }else {
-                    Intent intent = new Intent(WelcomeActivity.this, bookingActivity.class);
+                } else {
+                    intent = new Intent(WelcomeActivity.this, OwnerActivity.class);
                 }
+                WelcomeActivity.this.startActivity(intent);
             }
         }, 2000);
     }
