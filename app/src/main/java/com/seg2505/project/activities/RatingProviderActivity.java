@@ -137,8 +137,7 @@ public class RatingProviderActivity  extends AppCompatActivity {
                             progressDialog.dismiss();
                             Toast.makeText(getApplicationContext(), "Rating was successfully completed", Toast.LENGTH_SHORT).show();
 
-                            Intent intent = new Intent(RatingProviderActivity.this, OwnerActivity.class);
-                            startActivity(intent);
+                            finish();
                         }
                     };
 
