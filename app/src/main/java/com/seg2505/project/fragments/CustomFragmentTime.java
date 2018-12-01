@@ -1,4 +1,4 @@
-package com.seg2505.project;
+package com.seg2505.project.fragments;
 
 
 import android.os.Build;
@@ -6,12 +6,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TimePicker;
 
+import com.seg2505.project.R;
 import com.seg2505.project.interfaces.Timeable;
 
 

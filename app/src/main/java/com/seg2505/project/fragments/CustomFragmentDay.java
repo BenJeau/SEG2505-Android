@@ -1,4 +1,4 @@
-package com.seg2505.project;
+package com.seg2505.project.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.seg2505.project.R;
 import com.seg2505.project.interfaces.Timeable;
 
 

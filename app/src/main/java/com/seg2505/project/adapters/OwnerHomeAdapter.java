@@ -21,6 +21,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.seg2505.project.R;
 import com.seg2505.project.activities.BookingActivity;
+import com.seg2505.project.activities.RatingProviderActivity;
 import com.seg2505.project.model.Provider;
 import com.seg2505.project.model.Service;
 
@@ -132,7 +133,7 @@ public class OwnerHomeAdapter  extends RecyclerView.Adapter<OwnerHomeAdapter.MyV
 
                         helper.setProviderID(provider.getId());
                         helper.setProviderName(provider.getUsername());
-                        helper.setProviderRating(provider.getRating());
+                        helper.setProviderRating("N.A.");
                         helper.setWeekdays(provider.getAvailabilities());
 
                         for (final String serviceID : provider.getServices()) {
@@ -141,7 +142,7 @@ public class OwnerHomeAdapter  extends RecyclerView.Adapter<OwnerHomeAdapter.MyV
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     Service service = dataSnapshot.getValue(Service.class);
                                     helper.setServiceName(service.getServiceName());
-                                    helper.setProviderID(serviceID);
+                                    helper.setServicerID(serviceID);
                                     System.out.println(helper.toString());
                                     dataset.add(helper);
                                     add(helper);
@@ -218,11 +219,11 @@ public class OwnerHomeAdapter  extends RecyclerView.Adapter<OwnerHomeAdapter.MyV
             @Override
             public void onClick(View v) {
                 Intent intent;
-                intent = new Intent(context, BookingActivity.class);
                 if (current.isBooked()) {
                 } else {
-                   // intent = new Intent(OwnerHomeAdapter.this, RateProviderActivity.class);
+                    //intent = new Intent(context, BookingActivity.class);
                 }
+                intent = new Intent(context, RatingProviderActivity.class);
                 intent.putExtra(INTENT_PROVIDER, current.getProviderID());
                 intent.putExtra(INTENT_SERVICE, current.getServiceID());
                 context.startActivity(intent);
