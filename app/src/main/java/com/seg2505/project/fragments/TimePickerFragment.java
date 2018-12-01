@@ -1,4 +1,4 @@
-package com.seg2505.project;
+package com.seg2505.project.fragments;
 
 import android.app.Dialog;
 import android.app.TimePickerDialog;
@@ -28,7 +28,7 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
     }
 
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        ((OwnerActivity)getActivity()).setSearchText(hourOfDay + ":" + minute);
+        ((OwnerActivity)getActivity()).setSearchText(String.format("%02d:%02d", hourOfDay, minute));
         ((OwnerActivity)getActivity()).onQueryChange("");
     }
 }

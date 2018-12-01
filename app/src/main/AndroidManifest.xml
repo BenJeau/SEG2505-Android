@@ -60,6 +60,9 @@
                 android:resource="@xml/searchable"/>
         </activity>
 
+        <activity android:name=".activities.RatingProviderActivity"
+            android:screenOrientation="portrait"></activity>
+
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package com.seg2505.project;
+package com.seg2505.project.fragments;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -7,8 +7,6 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,12 +20,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.seg2505.project.activities.LoginActivity;
-import com.seg2505.project.activities.ProviderAvailabilityActivity;
-import com.seg2505.project.adapters.AvailabilityAdapter;
+import com.seg2505.project.R;
 import com.seg2505.project.interfaces.Cancelable;
 import com.seg2505.project.interfaces.Timeable;
-import com.seg2505.project.model.Availability;
 import com.seg2505.project.model.LoggedUser;
 import com.seg2505.project.model.Provider;
 

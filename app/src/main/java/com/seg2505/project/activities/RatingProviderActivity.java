@@ -57,18 +57,18 @@ public class RatingProviderActivity  extends AppCompatActivity {
         userId = getIntent().getExtras().getString(OwnerHomeAdapter.INTENT_PROVIDER, "");
 
         database = FirebaseDatabase.getInstance();
-        userReference = database.getReference().child("users").child(userId);
+        userReference = database.getReference("users").child(userId);
 
 
-        userReference.addListenerForSingleValueEvent(new ValueEventListener(){
-
+        userReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                provider = dataSnapshot.getValue(Provider.class);
+                if (dataSnapshot.exists()) {
+                    provider = dataSnapshot.getValue(Provider.class);
 
-                providerName = provider.getUsername();
-                edtProviderName.setText(providerName);
-
+                    providerName = provider.getUsername();
+                    edtProviderName.setText(providerName);
+                }
             }
 
             @Override
@@ -85,7 +85,7 @@ public class RatingProviderActivity  extends AppCompatActivity {
             public void onClick(View v) {
 
                 final String description = edtComment.getText().toString();
-                final double rating = edtRating.getNumStars();
+                final double rating = edtRating.getRating();
 
                 boolean error = false;
 

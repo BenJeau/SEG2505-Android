@@ -90,20 +90,20 @@ public class Provider extends Person {
     }
 
     public List<Double> createRatings(){
-        return new ratings;
+        return new ArrayList<Double>();
     }
 
-    public String getRating() {
-        if (ratings.size() == 0) {
-            return "N.A.";
-        }
-
-        Double rating = 0.0;
-        for (Double rate : ratings) {
-            rating += rate;
-        }
-        DecimalFormat df = new DecimalFormat("#.##");
-
-        return df.format(rating);
-    }
+//    public String getRating() {
+//        if (ratings.size() == 0) {
+//            return "N.A.";
+//        }
+//
+//        Double rating = 0.0;
+//        for (Double rate : ratings) {
+//            rating += rate;
+//        }
+//        DecimalFormat df = new DecimalFormat("#.##");
+//
+//        return df.format(rating);
+//    }
 }
