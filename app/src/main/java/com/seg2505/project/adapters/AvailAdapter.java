@@ -46,13 +46,15 @@ public class AvailAdapter extends RecyclerView.Adapter<AvailAdapter.MyViewHolder
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         private RadioButton radioButton;
-
+        private  TextView Day, Time;
 
 
         private MyViewHolder(View v) {
             super(v);
 
             radioButton = v.findViewById(R.id.radioButton);
+            Time = v.findViewById(R.id.time);
+            Day = v.findViewById(R.id.day);
 
 
         }
@@ -78,7 +80,9 @@ public class AvailAdapter extends RecyclerView.Adapter<AvailAdapter.MyViewHolder
 
     @Override
     public void onBindViewHolder(AvailAdapter.MyViewHolder holder, final int position) {
-        holder.radioButton.setText(mdata.get(position).getDay() + " : " + mdata.get(position).getTime());
+
+        holder.Day.setText("Day: " + mdata.get(position).getDay());
+        holder.Time.setText("Time: " + mdata.get(position).getTime());
         holder.radioButton.setTag(position);
         holder.radioButton.setOnCheckedChangeListener(ls);
 
@@ -106,5 +110,7 @@ public class AvailAdapter extends RecyclerView.Adapter<AvailAdapter.MyViewHolder
         return mdata.size();
     }
 
-
+    public CompoundButton getLastCheckedRB() {
+        return lastCheckedRB;
+    }
 }
