@@ -164,6 +164,7 @@ public class OwnerHomeAdapter  extends RecyclerView.Adapter<OwnerHomeAdapter.MyV
     }
 
     public OwnerHomeAdapter(Context context) {
+        this();
         this.context = context;
     }
 
