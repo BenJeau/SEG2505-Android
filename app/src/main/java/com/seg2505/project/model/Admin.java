@@ -6,7 +6,7 @@ public class Admin extends Person {
 
     private List<Service> services;
     public Admin(){
-
+        services = new ArrayList<Service>();
     }
 
     public Admin(String username, String password,String id){

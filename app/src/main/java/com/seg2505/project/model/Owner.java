@@ -10,7 +10,7 @@ public class Owner extends Person {
     //Owner Associations
     private List<Service> services;
     public Owner() {
-
+        services = new ArrayList<Service>();
     }
 
     // CONSTRUCTOR
