@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -23,6 +24,7 @@ import com.seg2505.project.model.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.widget.CompoundButton;
 /**
  * Diedrick Ng
  * Kame House
@@ -35,6 +37,8 @@ public class AvailAdapter extends RecyclerView.Adapter<AvailAdapter.MyViewHolder
      */
 
     private  List<Availability> mdata;
+    private CompoundButton lastCheckedRB = null;
+
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -75,10 +79,27 @@ public class AvailAdapter extends RecyclerView.Adapter<AvailAdapter.MyViewHolder
     @Override
     public void onBindViewHolder(AvailAdapter.MyViewHolder holder, final int position) {
         holder.radioButton.setText(mdata.get(position).getDay() + " : " + mdata.get(position).getTime());
+        holder.radioButton.setTag(position);
+        holder.radioButton.setOnCheckedChangeListener(ls);
 
 
     }
-    
+
+    private CompoundButton.OnCheckedChangeListener ls  = (new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            int tag = (int) buttonView.getTag();
+            ;
+            if (lastCheckedRB == null) {
+                lastCheckedRB = buttonView;
+            } else if (tag != (int) lastCheckedRB.getTag()) {
+                lastCheckedRB.setChecked(false);
+                lastCheckedRB = buttonView;
+            }
+
+        }
+    });
+
 
     @Override
     public int getItemCount() {
