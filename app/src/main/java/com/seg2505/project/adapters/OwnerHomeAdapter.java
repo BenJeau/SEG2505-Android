@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.seg2505.project.R;
+import com.seg2505.project.activities.BookingActivity;
 import com.seg2505.project.model.Provider;
 import com.seg2505.project.model.Service;
 
@@ -214,12 +215,12 @@ public class OwnerHomeAdapter  extends RecyclerView.Adapter<OwnerHomeAdapter.MyV
             @Override
             public void onClick(View v) {
                 Intent intent;
+                intent = new Intent(context, BookingActivity.class);
                 if (current.isBooked()) {
-                   // intent = new Intent(OwnerHomeAdapter.this, BookingActivity.class);
                 } else {
                    // intent = new Intent(OwnerHomeAdapter.this, RateProviderActivity.class);
                 }
-                // context.startActivity(intent);
+                 context.startActivity(intent);
             }
         });
     }
