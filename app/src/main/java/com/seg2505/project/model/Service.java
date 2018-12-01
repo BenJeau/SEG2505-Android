@@ -25,7 +25,7 @@ public class Service {
     }
 
     public Service(){
-
+        providers = new ArrayList<String>();
     }
 
     public void setServiceName(String serviceName){
