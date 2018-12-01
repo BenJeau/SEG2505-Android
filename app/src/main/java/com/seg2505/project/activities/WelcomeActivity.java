@@ -35,6 +35,8 @@ public class WelcomeActivity extends AppCompatActivity {
                     }
 
                     WelcomeActivity.this.startActivity(intent);
+                }else {
+                    Intent intent = new Intent(WelcomeActivity.this, bookingActivity.class);
                 }
             }
         }, 2000);

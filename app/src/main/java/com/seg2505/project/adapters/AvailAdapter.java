@@ -21,6 +21,7 @@ import com.seg2505.project.model.Service;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Diedrick Ng
@@ -33,7 +34,7 @@ public class AvailAdapter extends RecyclerView.Adapter<AvailAdapter.MyViewHolder
      * The dataset/database used by the recycler view
      */
 
-    private  ArrayList<Availability> mdata;
+    private  List<Availability> mdata;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -57,7 +58,7 @@ public class AvailAdapter extends RecyclerView.Adapter<AvailAdapter.MyViewHolder
     private FirebaseDatabase database;
 
 
-    public AvailAdapter(ArrayList<Availability> mdataset, Provider provider) {
+    public AvailAdapter(List<Availability> mdataset) {
 
        this.mdata = mdataset;
 
