@@ -25,6 +25,7 @@ import com.seg2505.project.activities.RatingProviderActivity;
 import com.seg2505.project.model.Provider;
 import com.seg2505.project.model.Service;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -133,7 +134,20 @@ public class OwnerHomeAdapter  extends RecyclerView.Adapter<OwnerHomeAdapter.MyV
 
                         helper.setProviderID(provider.getId());
                         helper.setProviderName(provider.getUsername());
-                        helper.setProviderRating("N.A.");
+
+                        if (provider.getRatings() == null || provider.getRatings().isEmpty()) {
+                            helper.setProviderRating("N.A.");
+                        } else {
+                            DecimalFormat df = new DecimalFormat("#.##");
+                            Double sum = 0.0;
+
+                            for (Double i : provider.getRatings()) {
+                                sum += i;
+                            }
+
+                            helper.setProviderRating(df.format(sum/provider.getRatings().size()));
+                        }
+
                         helper.setWeekdays(provider.getAvailabilities());
 
                         for (final String serviceID : provider.getServices()) {
