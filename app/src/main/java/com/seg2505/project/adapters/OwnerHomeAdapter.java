@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -157,10 +158,11 @@ public class OwnerHomeAdapter  extends RecyclerView.Adapter<OwnerHomeAdapter.MyV
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     Service service = dataSnapshot.getValue(Service.class);
                                     helper.setServiceName(service.getServiceName());
-                                    helper.setServicerID(serviceID);
+                                    helper.setServiceID(serviceID);
                                     System.out.println(helper.toString());
-                                    dataset.add(helper);
-                                    add(helper);
+
+                                    dataset.add(helper.copy());
+                                    ownerHelperSortedList.add(helper.copy());
                                 }
 
                                 @Override

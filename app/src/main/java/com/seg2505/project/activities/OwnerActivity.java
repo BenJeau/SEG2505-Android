@@ -280,7 +280,7 @@ public class OwnerActivity extends AppCompatActivity {
                 }
             }
 
-            if (filterTime) {
+            if (false) {
                 SimpleDateFormat parser = new SimpleDateFormat("HH:mm");
                 boolean hasTime = false;
 
