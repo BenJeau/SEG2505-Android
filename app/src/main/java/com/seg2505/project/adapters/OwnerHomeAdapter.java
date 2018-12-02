@@ -74,7 +74,6 @@ public class OwnerHomeAdapter  extends RecyclerView.Adapter<OwnerHomeAdapter.MyV
     // The following 5 functions are for the manipulation of the SortedList
     public void add(OwnerHelper oHelper) {
         ownerHelperSortedList.add(oHelper);
-        notifyItemInserted(ownerHelperSortedList.size() - 1);
     }
 
     public void remove(OwnerHelper oHelper) {
