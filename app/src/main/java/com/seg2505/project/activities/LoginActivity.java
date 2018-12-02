@@ -18,6 +18,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.seg2505.project.EncryptTools;
 import com.seg2505.project.R;
 import com.seg2505.project.model.LoggedUser;
 import com.seg2505.project.model.Owner;
@@ -113,10 +114,17 @@ public class LoginActivity extends AppCompatActivity {
                                                 break;
                                             }
                                         }
+                                        String decryptedPass ="";
+                                        try{
+                                            decryptedPass= EncryptTools.decrypt(user.getPassword());
+                                        }
+                                        catch (Exception e){
+
+                                        }
 
                                         if (!exists) {
                                             Toast.makeText(getApplicationContext(), "Wrong login, username not found", Toast.LENGTH_SHORT).show();
-                                        } else if (user.getPassword().equals(password)) {
+                                        } else if (decryptedPass.equals(password)) {
                                             Intent intent = new Intent(LoginActivity.this, WelcomeActivity.class);
                                             intent.putExtra(INTENT_KEY_NAME, user.getUsername());
                                             intent.putExtra(INTENT_KEY_ROLE, user.getRole());

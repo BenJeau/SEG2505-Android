@@ -17,6 +17,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.seg2505.project.EncryptTools;
 import com.seg2505.project.R;
 import com.seg2505.project.model.Admin;
 import com.seg2505.project.model.Owner;
@@ -122,12 +123,21 @@ public class SignupActivity extends AppCompatActivity {
                                             startActivity(intent);
                                         }
                                     };
+                                    String encryptedPassword="";
+                                    try{
+                                        encryptedPassword= EncryptTools.encrypt(password);
+                                    }
+                                    catch (Exception e){
+
+                                    }
                                     String id = databaseReference.push().getKey();
                                     if (role.getSelectedItem().equals("Provider")) {
-                                        Provider ac = new Provider(username, password,id);
+
+
+                                        Provider ac = new Provider(username, encryptedPassword,id);
                                         databaseReference.child(id).setValue(ac);
                                     } else if (role.getSelectedItem().equals("Owner")) {
-                                        Owner ac = new Owner(username, password,id);
+                                        Owner ac = new Owner(username, encryptedPassword,id);
                                         databaseReference.child(id).setValue(ac);
                                     }
                                     handler.postDelayed(r,1000);

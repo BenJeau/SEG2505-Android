@@ -1,26 +1,37 @@
 package com.seg2505.project.model;
 
 public class Booking {
-    private String startTime;
-    private String endTime;
+    private String idProvider, date;
+    private int index;
 
-    public Booking() {
+    public Booking(String idProvider, int index, String date) {
+        this.idProvider = idProvider;
+        this.index = index;
+        this.date = date;
 
     }
 
-    public String getEndTime() {
-        return endTime;
+    public String getIdProvider() {
+        return idProvider;
     }
 
-    public String getStartTime() {
-        return startTime;
+    public int getIndex() {
+        return index;
     }
 
-    public void setEndTime(String endTime) {
-        this.endTime = endTime;
+    public String getDate() {
+        return date;
     }
 
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public void setIdProvider(String idProvider) {
+        this.idProvider = idProvider;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
     }
 }
