@@ -1,10 +1,12 @@
-package com.seg2505.project;
+package com.seg2505.project.fragments;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.widget.DatePicker;
+
+import com.seg2505.project.activities.BookingActivity;
 
 import java.util.Calendar;
 
@@ -28,6 +30,8 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
         // Do something with the date chosen by the user
+        ((BookingActivity)getActivity()).Book(day +"/"+ month+1 +"/"+ year);
+
 
     }
 }

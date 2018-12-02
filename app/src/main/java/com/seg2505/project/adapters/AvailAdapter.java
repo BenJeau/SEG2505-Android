@@ -110,6 +110,11 @@ public class AvailAdapter extends RecyclerView.Adapter<AvailAdapter.MyViewHolder
         return mdata.size();
     }
 
+    public List<Availability> getMdata() {
+        return mdata;
+    }
+
+
     public CompoundButton getLastCheckedRB() {
         return lastCheckedRB;
     }

@@ -21,7 +21,6 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.seg2505.project.R;
 import com.seg2505.project.activities.BookingActivity;
-import com.seg2505.project.activities.RatingProviderActivity;
 import com.seg2505.project.model.Provider;
 import com.seg2505.project.model.Service;
 
@@ -223,7 +222,7 @@ public class OwnerHomeAdapter  extends RecyclerView.Adapter<OwnerHomeAdapter.MyV
                 } else {
                     //intent = new Intent(context, BookingActivity.class);
                 }
-                intent = new Intent(context, RatingProviderActivity.class);
+                intent = new Intent(context, BookingActivity.class);
                 intent.putExtra(INTENT_PROVIDER, current.getProviderID());
                 intent.putExtra(INTENT_SERVICE, current.getServiceID());
                 context.startActivity(intent);
