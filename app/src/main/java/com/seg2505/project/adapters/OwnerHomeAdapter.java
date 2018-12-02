@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,6 +22,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.seg2505.project.R;
 import com.seg2505.project.activities.BookingActivity;
+import com.seg2505.project.activities.RatingProviderActivity;
 import com.seg2505.project.model.Provider;
 import com.seg2505.project.model.Service;
 
@@ -81,7 +83,9 @@ public class OwnerHomeAdapter  extends RecyclerView.Adapter<OwnerHomeAdapter.MyV
     }
 
     public void add(List<OwnerHelper> oHelpers) {
-        ownerHelperSortedList.addAll(oHelpers);
+        for (OwnerHelper i : oHelpers) {
+            add(i);
+        }
     }
 
     public void remove(List<OwnerHelper> oHelpers) {
@@ -155,19 +159,16 @@ public class OwnerHomeAdapter  extends RecyclerView.Adapter<OwnerHomeAdapter.MyV
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     Service service = dataSnapshot.getValue(Service.class);
                                     helper.setServiceName(service.getServiceName());
-                                    helper.setServicerID(serviceID);
-                                    System.out.println(helper.toString());
-                                    dataset.add(helper);
-                                    add(helper);
+                                    helper.setServiceID(serviceID);
+                                    dataset.add(helper.copy());
+                                    ownerHelperSortedList.add(helper.copy());
                                 }
 
                                 @Override
                                 public void onCancelled(@NonNull DatabaseError databaseError) {
-
                                 }
                             });
                         }
-
                     }
                 }
             }
@@ -177,6 +178,7 @@ public class OwnerHomeAdapter  extends RecyclerView.Adapter<OwnerHomeAdapter.MyV
 
             }
         });
+
     }
 
     public OwnerHomeAdapter(Context context) {
@@ -233,10 +235,10 @@ public class OwnerHomeAdapter  extends RecyclerView.Adapter<OwnerHomeAdapter.MyV
             public void onClick(View v) {
                 Intent intent;
                 if (current.isBooked()) {
+                    intent = new Intent(context, RatingProviderActivity.class);
                 } else {
-                    //intent = new Intent(context, BookingActivity.class);
+                    intent = new Intent(context, BookingActivity.class);
                 }
-                intent = new Intent(context, BookingActivity.class);
                 intent.putExtra(INTENT_PROVIDER, current.getProviderID());
                 intent.putExtra(INTENT_SERVICE, current.getServiceID());
                 context.startActivity(intent);

@@ -72,7 +72,7 @@ public class DialogAdapter extends RecyclerView.Adapter<DialogAdapter.MyViewHold
         this.mdata = new ArrayList<>();
         this.dataset = new ArrayList<>();
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
         serviceReference = database.getReference().child("services");
 
         for (Service service : mdataset) {
@@ -81,6 +81,7 @@ public class DialogAdapter extends RecyclerView.Adapter<DialogAdapter.MyViewHold
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         dataset.add(dataSnapshot.getValue(Service.class));
+                        notifyItemInserted(dataset.size()-1);
                     }
 
                     @Override

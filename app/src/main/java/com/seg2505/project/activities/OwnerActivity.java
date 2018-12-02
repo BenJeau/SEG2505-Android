@@ -260,12 +260,11 @@ public class OwnerActivity extends AppCompatActivity {
                 wednesday.isChecked() || thursday.isChecked() || friday.isChecked() ||
                 saturday.isChecked() || sunday.isChecked();
 
-        boolean filterTime = time.getText().toString().equals("");
+        boolean filterTime = !time.getText().toString().trim().equals("");
 
         boolean filterRating = rating.getRating() > 0.001f;
 
         boolean filterName = lowerCaseQuery.length() != 0;
-
 
         for (OwnerHelper oHelper : oHelpers) {
             if (filterWeekdays) {

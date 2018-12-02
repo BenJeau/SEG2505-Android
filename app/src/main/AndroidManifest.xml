@@ -46,12 +46,15 @@
             android:label="Provider" />
         <activity
             android:name=".activities.ProviderInfoActivity"
+            android:label="Information"
             android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activities.ProviderAvailabilityActivity"
+            android:label="Availability"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".activities.BookingActivity"></activity>
+        <activity android:name=".activities.BookingActivity"
+            android:label="Booking"></activity>
 
         <activity android:name=".activities.OwnerActivity"
             android:screenOrientation="portrait"
@@ -61,6 +64,7 @@
         </activity>
 
         <activity android:name=".activities.RatingProviderActivity"
+            android:label="Rate Provider"
             android:screenOrientation="portrait"></activity>
 
     </application>
