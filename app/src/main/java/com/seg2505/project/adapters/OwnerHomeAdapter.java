@@ -74,6 +74,7 @@ public class OwnerHomeAdapter  extends RecyclerView.Adapter<OwnerHomeAdapter.MyV
     // The following 5 functions are for the manipulation of the SortedList
     public void add(OwnerHelper oHelper) {
         ownerHelperSortedList.add(oHelper);
+        notifyItemInserted(ownerHelperSortedList.size() - 1);
     }
 
     public void remove(OwnerHelper oHelper) {
@@ -81,7 +82,9 @@ public class OwnerHomeAdapter  extends RecyclerView.Adapter<OwnerHomeAdapter.MyV
     }
 
     public void add(List<OwnerHelper> oHelpers) {
-        ownerHelperSortedList.addAll(oHelpers);
+        for (OwnerHelper i : oHelpers) {
+            add(i);
+        }
     }
 
     public void remove(List<OwnerHelper> oHelpers) {
@@ -169,6 +172,7 @@ public class OwnerHomeAdapter  extends RecyclerView.Adapter<OwnerHomeAdapter.MyV
                         }
 
                     }
+
                 }
             }
 
@@ -177,6 +181,7 @@ public class OwnerHomeAdapter  extends RecyclerView.Adapter<OwnerHomeAdapter.MyV
 
             }
         });
+
     }
 
     public OwnerHomeAdapter(Context context) {
