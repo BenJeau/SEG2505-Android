@@ -43,7 +43,7 @@ public class BookingActivity extends AppCompatActivity {
     private  Owner owner;
     private int Index;
     private DatabaseReference userReference;
-
+    private TextView txt;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -51,6 +51,8 @@ public class BookingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booking);
         userId = getIntent().getExtras().getString(OwnerHomeAdapter.INTENT_PROVIDER, "");
+
+
 
          final DatePickerFragment newfra = new DatePickerFragment();
         FloatingActionButton fab = findViewById(R.id.book);
@@ -109,7 +111,8 @@ public class BookingActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
-        TextView txt = findViewById(R.id.)
+
+
     }
 
     private void populateServiceRecyclerView(List<Availability> data) {
