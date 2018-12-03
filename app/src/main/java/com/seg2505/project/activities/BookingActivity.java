@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -25,6 +27,7 @@ import com.seg2505.project.model.Availability;
 import com.seg2505.project.model.Booking;
 import com.seg2505.project.model.LoggedUser;
 import com.seg2505.project.model.Owner;
+import com.seg2505.project.model.Person;
 import com.seg2505.project.model.Provider;
 
 import java.util.ArrayList;
@@ -40,6 +43,7 @@ public class BookingActivity extends AppCompatActivity {
     private  Owner owner;
     private int Index;
     private DatabaseReference userReference;
+
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -59,8 +63,9 @@ public class BookingActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Please choose something", Toast.LENGTH_SHORT).show();
                 }else {
                     newfra.show(getSupportFragmentManager(), "timePicker");
-                    chosenAvaility = adapter.getMdata().get((int)lastCheckedRB.getTag());
-                    Index = (int)lastCheckedRB.getTag();
+                    Index = adapter.getClickedPosition();
+                    chosenAvaility = adapter.getMdata().get(Index);
+                    Log.e("dsd", String.valueOf(adapter.getClickedPosition()) );
 
                 }
 
@@ -70,8 +75,6 @@ public class BookingActivity extends AppCompatActivity {
          userReference = FirebaseDatabase.getInstance().getReference("users");
 
          userReference.child(LoggedUser.id).addListenerForSingleValueEvent(new ValueEventListener() {
-
-
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 owner = dataSnapshot.getValue(Owner.class);
@@ -106,7 +109,7 @@ public class BookingActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
-
+        TextView txt = findViewById(R.id.)
     }
 
     private void populateServiceRecyclerView(List<Availability> data) {
@@ -123,27 +126,48 @@ public class BookingActivity extends AppCompatActivity {
          adapter = new AvailAdapter(data, owner);
         recyclerView.setAdapter(adapter);
     }
-    public void Book(String s){
+    public void Book(final String s){
+        final List<String> dates = new ArrayList<>();
+         final Booking booking  = new Booking(provider.getId(), Index, s);
+
+        userReference.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    DataSnapshot snapshot = postSnapshot;
+                    Person person = snapshot.getValue(Person.class);
+                    if (person.getRole().equals("Owner")){
+                        Owner user = snapshot.getValue(Owner.class);
+                        List<Booking> bookings = user.getBookings();
+                        for (int i =0; i<bookings.size();i++){
+                            String date = bookings.get(i).getDate();
+                            String providerid = bookings.get(i).getIdProvider();
+                            int index = bookings.get(i).getIndex();
+                            if(providerid.equals(userId) && index == Index ){
+                                Log.e("date", date );
+                                dates.add(date);
+                            }
+                        }
+                    }
+                }
+                if(dates.contains(s)){
+                    Toast.makeText(getApplicationContext(), "Date already booked", Toast.LENGTH_SHORT).show();
+                }else{
+                    owner.addBookings(booking);
+                    userReference.child(LoggedUser.id).setValue(owner);
+                    Toast.makeText(getApplicationContext(), s +": " + chosenAvaility.getDay() + ": "+chosenAvaility.getTime(), Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
 
 
-        Booking booking  = new Booking(provider.getId(), Index, s);
-
-        List<Booking> bookings = owner.getBookings();
-        List<String> dates = new ArrayList<>();
-
-        for (int i =0; i<bookings.size();i++){
-            String date = bookings.get(i).getDate();
-            dates.add(date);
-
-
-        }
-        if(dates.contains(s)){
-            Toast.makeText(getApplicationContext(), "Date already booked", Toast.LENGTH_SHORT).show();
-        }else{
-            owner.addBookings(booking);
-            userReference.child(LoggedUser.id).setValue(owner);
-            Toast.makeText(getApplicationContext(), s +": " + chosenAvaility.getDay() + ": "+chosenAvaility.getTime(), Toast.LENGTH_SHORT).show();
-        }
 
 
 

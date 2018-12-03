@@ -70,7 +70,7 @@ public class AvailAdapter extends RecyclerView.Adapter<AvailAdapter.MyViewHolder
 
 
     public AvailAdapter(List<Availability> mdataset, Owner owner) {
-
+        List<Booking> bookings = owner.getBookings();
 
        this.mdata = mdataset;
 
@@ -91,11 +91,25 @@ public class AvailAdapter extends RecyclerView.Adapter<AvailAdapter.MyViewHolder
         holder.Day.setText("Day: " + mdata.get(position).getDay());
         holder.Time.setText("Time: " + mdata.get(position).getTime());
         holder.radioButton.setTag(position);
-        holder.radioButton.setOnCheckedChangeListener(ls);
+        holder.radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                int tag = (int) compoundButton.getTag();
+                ;
+                if (lastCheckedRB == null) {
+                    lastCheckedRB = compoundButton;
+                } else if (tag != (int) lastCheckedRB.getTag()) {
+                    lastCheckedRB.setChecked(false);
+                    lastCheckedRB = compoundButton;
+                }
+                clickedPosition = position;
+            }
+        });
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                holder.radioButton.setOnCheckedChangeListener(ls);
+                holder.radioButton.toggle();
+                clickedPosition = position;
             }
         });
 
@@ -103,21 +117,11 @@ public class AvailAdapter extends RecyclerView.Adapter<AvailAdapter.MyViewHolder
 
     }
 
-    private CompoundButton.OnCheckedChangeListener ls  = (new CompoundButton.OnCheckedChangeListener() {
-        @Override
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            int tag = (int) buttonView.getTag();
-            ;
-            if (lastCheckedRB == null) {
-                lastCheckedRB = buttonView;
-            } else if (tag != (int) lastCheckedRB.getTag()) {
-                lastCheckedRB.setChecked(false);
-                lastCheckedRB = buttonView;
-            }
+    private int clickedPosition;
 
-        }
-    });
-
+    public int getClickedPosition() {
+        return clickedPosition;
+    }
 
     @Override
     public int getItemCount() {
