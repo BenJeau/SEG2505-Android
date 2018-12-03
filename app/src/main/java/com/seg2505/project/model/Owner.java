@@ -8,15 +8,23 @@ import java.util.*;
 public class Owner extends Person {
 
     //Owner Associations
-    private List<Service> services;
+    private List<Booking> bookings;
     public Owner() {
-        services = new ArrayList<Service>();
+        bookings = new ArrayList<>();
     }
 
     // CONSTRUCTOR
     public Owner(String username, String password,String id) {
         super(username, password,id);
         setRole("Owner");
-        services = new ArrayList<Service>();
+        bookings = new ArrayList<>();
+    }
+
+    public void addBookings(Booking bookings) {
+        this.bookings.add(bookings);
+    }
+
+    public List<Booking> getBookings() {
+        return bookings;
     }
 }

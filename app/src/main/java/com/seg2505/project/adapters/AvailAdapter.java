@@ -1,7 +1,10 @@
 package com.seg2505.project.adapters;
 
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +20,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.seg2505.project.R;
 import com.seg2505.project.model.Availability;
+import com.seg2505.project.model.Booking;
+import com.seg2505.project.model.Owner;
 import com.seg2505.project.model.Provider;
 import com.seg2505.project.model.Service;
 
@@ -47,11 +52,12 @@ public class AvailAdapter extends RecyclerView.Adapter<AvailAdapter.MyViewHolder
         // each data item is just a string in this case
         private RadioButton radioButton;
         private  TextView Day, Time;
+        private CardView cardView;
 
 
         private MyViewHolder(View v) {
             super(v);
-
+            cardView = v.findViewById(R.id.children);
             radioButton = v.findViewById(R.id.radioButton);
             Time = v.findViewById(R.id.time);
             Day = v.findViewById(R.id.day);
@@ -63,7 +69,8 @@ public class AvailAdapter extends RecyclerView.Adapter<AvailAdapter.MyViewHolder
 
 
 
-    public AvailAdapter(List<Availability> mdataset) {
+    public AvailAdapter(List<Availability> mdataset, Owner owner) {
+
 
        this.mdata = mdataset;
 
@@ -79,12 +86,19 @@ public class AvailAdapter extends RecyclerView.Adapter<AvailAdapter.MyViewHolder
     }
 
     @Override
-    public void onBindViewHolder(AvailAdapter.MyViewHolder holder, final int position) {
+    public void onBindViewHolder(final AvailAdapter.MyViewHolder holder, final int position) {
 
         holder.Day.setText("Day: " + mdata.get(position).getDay());
         holder.Time.setText("Time: " + mdata.get(position).getTime());
         holder.radioButton.setTag(position);
         holder.radioButton.setOnCheckedChangeListener(ls);
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.radioButton.setOnCheckedChangeListener(ls);
+            }
+        });
+
 
 
     }

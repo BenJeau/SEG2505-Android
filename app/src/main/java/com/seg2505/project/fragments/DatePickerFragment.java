@@ -30,7 +30,7 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
         // Do something with the date chosen by the user
-        ((BookingActivity)getActivity()).Book(day +"/"+ month+1 +"/"+ year);
+        ((BookingActivity)getActivity()).Book(day +"/"+ month +"/"+ year);
 
 
     }

@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Toast;
@@ -18,10 +19,12 @@ import com.google.firebase.database.ValueEventListener;
 import com.seg2505.project.adapters.OwnerHomeAdapter;
 import com.seg2505.project.fragments.DatePickerFragment;
 import com.seg2505.project.R;
-import com.seg2505.project.fragments.TimePickerFragment;
+
 import com.seg2505.project.adapters.AvailAdapter;
 import com.seg2505.project.model.Availability;
+import com.seg2505.project.model.Booking;
 import com.seg2505.project.model.LoggedUser;
+import com.seg2505.project.model.Owner;
 import com.seg2505.project.model.Provider;
 
 import java.util.ArrayList;
@@ -33,6 +36,10 @@ public class BookingActivity extends AppCompatActivity {
     private AvailAdapter adapter;
     private Availability chosenAvaility;
     private String userId;
+    private Provider provider;
+    private  Owner owner;
+    private int Index;
+    private DatabaseReference userReference;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -53,20 +60,38 @@ public class BookingActivity extends AppCompatActivity {
                 }else {
                     newfra.show(getSupportFragmentManager(), "timePicker");
                     chosenAvaility = adapter.getMdata().get((int)lastCheckedRB.getTag());
+                    Index = (int)lastCheckedRB.getTag();
 
                 }
 
             }
         });
 
+         userReference = FirebaseDatabase.getInstance().getReference("users");
+         userReference.child(LoggedUser.id).addListenerForSingleValueEvent(new ValueEventListener() {
 
-        DatabaseReference serviceReference = FirebaseDatabase.getInstance().getReference("users");
-        serviceReference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                owner = dataSnapshot.getValue(Owner.class);
+
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+
+
+
+        userReference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
             List<Availability> availabilities;
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Provider provider = dataSnapshot.getValue(Provider.class);
+                provider = dataSnapshot.getValue(Provider.class);
 
 
                 if (provider != null) {
@@ -94,14 +119,36 @@ public class BookingActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         // Specify an adapter (see also next example)
-         adapter = new AvailAdapter(data);
+         adapter = new AvailAdapter(data, owner);
         recyclerView.setAdapter(adapter);
     }
     public void Book(String s){
-        Toast.makeText(getApplicationContext(), s +": " + chosenAvaility.getDay() + ": "+chosenAvaility.getTime(), Toast.LENGTH_SHORT).show();
-        ArrayList<String> a = chosenAvaility.getOwnerid();
 
-        chosenAvaility.add(LoggedUser.id,s);
+
+        Booking booking  = new Booking(provider.getId(), Index, s);
+
+        List<Booking> bookings = owner.getBookings();
+        List<String> dates = new ArrayList<>();
+
+        for (int i =0; i<bookings.size();i++){
+            String date = bookings.get(i).getDate();
+            dates.add(date);
+
+
+        }
+        if(dates.contains(s)){
+            Toast.makeText(getApplicationContext(), "Date already booked", Toast.LENGTH_SHORT).show();
+        }else{
+            owner.addBookings(booking);
+            userReference.child(LoggedUser.id).setValue(owner);
+            Toast.makeText(getApplicationContext(), s +": " + chosenAvaility.getDay() + ": "+chosenAvaility.getTime(), Toast.LENGTH_SHORT).show();
+        }
+
+
+
+
+
+
 
 
     }
