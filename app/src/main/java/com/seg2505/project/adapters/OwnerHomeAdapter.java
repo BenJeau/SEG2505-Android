@@ -119,7 +119,7 @@ public class OwnerHomeAdapter  extends RecyclerView.Adapter<OwnerHomeAdapter.MyV
         ownerHelperSortedList.endBatchedUpdates();
     }
 
-    public OwnerHomeAdapter () {
+    public void getData() {
         dataset = new ArrayList<OwnerHelper>();
 
         database = FirebaseDatabase.getInstance();
@@ -182,7 +182,7 @@ public class OwnerHomeAdapter  extends RecyclerView.Adapter<OwnerHomeAdapter.MyV
     }
 
     public OwnerHomeAdapter(Context context) {
-        this();
+        getData();
         this.context = context;
     }
 
