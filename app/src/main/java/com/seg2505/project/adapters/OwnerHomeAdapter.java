@@ -23,6 +23,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.seg2505.project.R;
 import com.seg2505.project.activities.BookingActivity;
 import com.seg2505.project.activities.RatingProviderActivity;
+import com.seg2505.project.model.Booking;
+import com.seg2505.project.model.LoggedUser;
+import com.seg2505.project.model.Owner;
 import com.seg2505.project.model.Provider;
 import com.seg2505.project.model.Service;
 
@@ -160,8 +163,33 @@ public class OwnerHomeAdapter  extends RecyclerView.Adapter<OwnerHomeAdapter.MyV
                                     Service service = dataSnapshot.getValue(Service.class);
                                     helper.setServiceName(service.getServiceName());
                                     helper.setServiceID(serviceID);
-                                    dataset.add(helper.copy());
-                                    ownerHelperSortedList.add(helper.copy());
+
+                                    database.getReference("users").child(LoggedUser.id).addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            if (dataSnapshot.exists()) {
+                                                Owner owner = dataSnapshot.getValue(Owner.class);
+
+                                                for (Booking booking : owner.getBookings()) {
+                                                    String serviceid = booking.getServiceid();
+                                                    String proverid = booking.getIdProvider();
+                                                    
+                                                    if(helper.getServiceID().equals(serviceID) && helper.getProviderID().equals(proverid)){
+                                                        helper.setBooked(true);
+                                                    }
+
+                                                }
+                                            }
+
+                                            dataset.add(helper.copy());
+                                            ownerHelperSortedList.add(helper.copy());
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                        }
+                                    });
                                 }
 
                                 @Override

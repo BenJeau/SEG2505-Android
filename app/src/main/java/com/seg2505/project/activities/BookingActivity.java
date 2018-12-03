@@ -43,7 +43,8 @@ public class BookingActivity extends AppCompatActivity {
     private  Owner owner;
     private int Index;
     private DatabaseReference userReference;
-    private TextView txt;
+
+    private String serviceid;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -51,6 +52,7 @@ public class BookingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booking);
         userId = getIntent().getExtras().getString(OwnerHomeAdapter.INTENT_PROVIDER, "");
+        serviceid = getIntent().getExtras().getString(OwnerHomeAdapter.INTENT_SERVICE,"");
 
 
 
@@ -131,7 +133,7 @@ public class BookingActivity extends AppCompatActivity {
     }
     public void Book(final String s){
         final List<String> dates = new ArrayList<>();
-         final Booking booking  = new Booking(provider.getId(), Index, s);
+         final Booking booking  = new Booking(provider.getId(), Index, s,serviceid);
 
         userReference.addListenerForSingleValueEvent(new ValueEventListener() {
 
@@ -161,6 +163,7 @@ public class BookingActivity extends AppCompatActivity {
                     owner.addBookings(booking);
                     userReference.child(LoggedUser.id).setValue(owner);
                     Toast.makeText(getApplicationContext(), s +": " + chosenAvaility.getDay() + ": "+chosenAvaility.getTime(), Toast.LENGTH_SHORT).show();
+
                 }
 
             }
