@@ -166,8 +166,8 @@ public class AvailabilityAdapter extends RecyclerView.Adapter<AvailabilityAdapte
      * @param position the position of the availability in the list
      */
     public void removeAt(int position) {
-        ProviderAvailabilityActivity.userReference.child("availabilities").child(String.valueOf(position)).removeValue();
         dataset.remove(position);
+        ProviderAvailabilityActivity.userReference.child("availabilities").child(String.valueOf(position)).removeValue();
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, dataset.size());
 
