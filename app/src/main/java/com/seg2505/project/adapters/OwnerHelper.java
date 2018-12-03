@@ -7,12 +7,16 @@ import java.util.List;
 
 public class OwnerHelper {
     private String providerID;
-    private String servicerID;
+    private String serviceID;
     private String serviceName;
     private String providerName;
     private String providerRating;
     private boolean booked;
     private List<Availability> availabilities;
+
+    public OwnerHelper () {
+        availabilities = new ArrayList<>();
+    }
 
     public String getServiceName() {
         return serviceName;
@@ -74,19 +78,39 @@ public class OwnerHelper {
     }
 
     public String getServiceID() {
-        return servicerID;
+        return serviceID;
     }
 
     public void setProviderID(String providerID) {
         this.providerID = providerID;
     }
 
-    public void setServicerID(String servicerID) {
-        this.servicerID = servicerID;
+    public void setServiceID(String serviceID) {
+        this.serviceID = serviceID;
     }
 
     @Override
     public String toString() {
         return serviceName + providerName + providerRating + getWeekdays() + booked;
+    }
+
+    public OwnerHelper copy() {
+        OwnerHelper copy = new OwnerHelper();
+
+        for (Availability i : availabilities) {
+            Availability temp = new Availability();
+            temp.setDay(i.getDay());
+            temp.setTime(i.getTime());
+            copy.availabilities.add(temp);
+        }
+
+        copy.providerID = this.providerID;
+        copy.serviceID = this.serviceID;
+        copy.booked = this.booked;
+        copy.serviceName = this.serviceName;
+        copy.providerName = this.providerName;
+        copy.providerRating = this.providerRating;
+
+        return copy;
     }
 }

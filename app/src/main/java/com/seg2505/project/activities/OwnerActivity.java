@@ -241,6 +241,14 @@ public class OwnerActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (adapter != null) {
+            adapter.getData();
+        }
+    }
+
     public void onQueryChange(String s) {
         ArrayList<OwnerHelper> filteredList = filter(adapter.getDataset(), s);
         adapter.replaceAll(filteredList);
@@ -260,12 +268,11 @@ public class OwnerActivity extends AppCompatActivity {
                 wednesday.isChecked() || thursday.isChecked() || friday.isChecked() ||
                 saturday.isChecked() || sunday.isChecked();
 
-        boolean filterTime = time.getText().toString().equals("");
+        boolean filterTime = !time.getText().toString().trim().equals("");
 
         boolean filterRating = rating.getRating() > 0.001f;
 
         boolean filterName = lowerCaseQuery.length() != 0;
-
 
         for (OwnerHelper oHelper : oHelpers) {
             if (filterWeekdays) {
@@ -282,12 +289,38 @@ public class OwnerActivity extends AppCompatActivity {
 
             if (filterTime) {
                 SimpleDateFormat parser = new SimpleDateFormat("HH:mm");
-                if (filterWeekdays) {
-                    boolean hasSpecifiedTime = false;
-                    //if (monday)
+                boolean hasTime = false;
 
-                } else {
-                    boolean hasTime = false;
+                if (filterWeekdays) {
+
+                    ArrayList<String> dates = new ArrayList<String>();
+                    if (monday.isChecked()) {
+                        dates.add("mon");
+                    }
+
+                    if (tuesday.isChecked()) {
+                        dates.add("tue");
+                    }
+
+                    if (wednesday.isChecked()) {
+                        dates.add("wed");
+                    }
+
+                    if (thursday.isChecked()) {
+                        dates.add("thu");
+                    }
+
+                    if (friday.isChecked()) {
+                        dates.add("fri");
+                    }
+
+                    if (saturday.isChecked()) {
+                        dates.add("sat");
+                    }
+
+                    if (sunday.isChecked()) {
+                        dates.add("sun");
+                    }
 
                     for (Availability availability : oHelper.getAvailabilities()) {
                         String[] times = availability.getTime().split(" to ");
@@ -295,18 +328,35 @@ public class OwnerActivity extends AppCompatActivity {
                         try {
                             Date ten = parser.parse(times[0]);
                             Date eighteen = parser.parse(times[1]);
-                            Date userDate = parser.parse("10:00");
-                            if (userDate.after(ten) && userDate.before(eighteen)) {
+                            Date userDate = parser.parse(time.getText().toString());
+                            if (userDate.after(ten) && userDate.before(eighteen) && checkStringInArrayList(availability.getDay(), dates)) {
                                 hasTime = true;
+                                break;
                             }
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
                     }
+                } else {
+                    for (Availability availability : oHelper.getAvailabilities()) {
+                        String[] times = availability.getTime().split(" to ");
 
-                    if (!hasTime) {
-                        continue;
+                        try {
+                            Date ten = parser.parse(times[0]);
+                            Date eighteen = parser.parse(times[1]);
+                            Date userDate = parser.parse(time.getText().toString());
+                            if (userDate.after(ten) && userDate.before(eighteen)) {
+                                hasTime = true;
+                                break;
+                            }
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
                     }
+                }
+
+                if (!hasTime) {
+                    continue;
                 }
             }
 
@@ -327,5 +377,19 @@ public class OwnerActivity extends AppCompatActivity {
 
         return list;
     }
+
+    public boolean checkStringInArrayList(String text, ArrayList<String> list) {
+        boolean temp = false;
+
+        for (String i : list) {
+            if (text.toLowerCase().contains(i)){
+                temp = true;
+                break;
+            }
+        }
+
+        return temp;
+    }
+
 }
 

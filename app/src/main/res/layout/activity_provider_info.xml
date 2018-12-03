@@ -26,85 +26,86 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
-            android:id="@+id/streetNumber"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:backgroundTint="@color/secondaryColor"
-            android:ems="10"
-            android:hint="Street Number"
-            android:inputType="textPersonName"
-            android:textColor="@android:color/black"
-            app:layout_constraintBottom_toTopOf="@id/cityName"
-            app:layout_constraintEnd_toStartOf="@+id/guideline"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/addressTitle" />
+    <EditText
+        android:id="@+id/streetNumber"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:backgroundTint="@color/secondaryColor"
+        android:ems="10"
+        android:hint="Street Number"
+        android:inputType="number"
+        android:textColor="@android:color/black"
+        app:layout_constraintBottom_toTopOf="@id/cityName"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/addressTitle" />
 
-        <EditText
-            android:id="@+id/streetName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:textColor="@android:color/black"
-            android:hint="Street Name"
-            android:backgroundTint="@color/secondaryColor"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/streetNumber"
-            app:layout_constraintTop_toTopOf="@id/streetNumber" />
+    <EditText
+        android:id="@+id/streetName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/secondaryColor"
+        android:ems="10"
+        android:hint="Street Name"
+        android:inputType="textCapWords"
+        android:textColor="@android:color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/streetNumber"
+        app:layout_constraintTop_toTopOf="@id/streetNumber" />
 
-        <EditText
-            android:id="@+id/cityName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/secondaryColor"
-            android:ems="10"
-            android:hint="City Name"
-            android:inputType="textPersonName"
-            android:textColor="@android:color/black"
-            app:layout_constraintEnd_toStartOf="@id/provinceName"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/streetNumber" />
+    <EditText
+        android:id="@+id/cityName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/secondaryColor"
+        android:ems="10"
+        android:hint="City Name"
+        android:inputType="textCapWords"
+        android:textColor="@android:color/black"
+        app:layout_constraintEnd_toStartOf="@id/provinceName"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/streetNumber" />
 
-        <EditText
-            android:id="@+id/provinceName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:textColor="@android:color/black"
-            android:hint="Province/State Name"
-            android:backgroundTint="@color/secondaryColor"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/cityName"
-            app:layout_constraintTop_toBottomOf="@id/streetName" />
+    <EditText
+        android:id="@+id/provinceName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/secondaryColor"
+        android:ems="10"
+        android:hint="Province/State Name"
+        android:inputType="textCapWords"
+        android:textColor="@android:color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/cityName"
+        app:layout_constraintTop_toBottomOf="@id/streetName" />
 
-        <EditText
-            android:id="@+id/countryName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:textColor="@android:color/black"
-            android:hint="Country Name"
-            android:backgroundTint="@color/secondaryColor"
-            app:layout_constraintEnd_toStartOf="@id/postalCode"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cityName" />
+    <EditText
+        android:id="@+id/countryName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/secondaryColor"
+        android:ems="10"
+        android:hint="Country Name"
+        android:inputType="textCapWords"
+        android:textColor="@android:color/black"
+        app:layout_constraintEnd_toStartOf="@id/postalCode"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cityName" />
 
-        <EditText
-            android:id="@+id/postalCode"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:textColor="@android:color/black"
-            android:hint="Postal Code"
-            android:backgroundTint="@color/secondaryColor"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/countryName"
-            app:layout_constraintTop_toBottomOf="@id/cityName" />
+    <EditText
+        android:id="@+id/postalCode"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/secondaryColor"
+        android:ems="10"
+        android:hint="Postal Code"
+        android:inputType="textCapCharacters"
+        android:textColor="@android:color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/countryName"
+        app:layout_constraintTop_toBottomOf="@id/cityName" />
 
     <TextView
         android:id="@+id/phoneNumberTitle"
@@ -121,11 +122,11 @@
         android:id="@+id/phoneNumber"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:textColor="@android:color/black"
-        android:hint="Phone Number"
         android:backgroundTint="@color/secondaryColor"
+        android:ems="10"
+        android:hint="Phone Number"
+        android:inputType="number"
+        android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/phoneNumberTitle" />
@@ -169,11 +170,11 @@
         android:id="@+id/description"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:textColor="@android:color/black"
-        android:hint="Company Name"
         android:backgroundTint="@color/secondaryColor"
+        android:ems="10"
+        android:hint="Company Name"
+        android:inputType="textCapSentences|textMultiLine"
+        android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/descriptionTitle" />
@@ -201,9 +202,11 @@
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="139dp"
         android:layout_height="58dp"
-        android:layout_marginStart="120dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="44dp"
+        android:layout_marginEnd="8dp"
         android:text="submit"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/licensedTitle" />
 

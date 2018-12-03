@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,9 +22,11 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.seg2505.project.R;
 import com.seg2505.project.activities.BookingActivity;
+import com.seg2505.project.activities.RatingProviderActivity;
 import com.seg2505.project.model.Provider;
 import com.seg2505.project.model.Service;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,7 +83,9 @@ public class OwnerHomeAdapter  extends RecyclerView.Adapter<OwnerHomeAdapter.MyV
     }
 
     public void add(List<OwnerHelper> oHelpers) {
-        ownerHelperSortedList.addAll(oHelpers);
+        for (OwnerHelper i : oHelpers) {
+            add(i);
+        }
     }
 
     public void remove(List<OwnerHelper> oHelpers) {
@@ -114,7 +119,7 @@ public class OwnerHomeAdapter  extends RecyclerView.Adapter<OwnerHomeAdapter.MyV
         ownerHelperSortedList.endBatchedUpdates();
     }
 
-    public OwnerHomeAdapter () {
+    public void getData() {
         dataset = new ArrayList<OwnerHelper>();
 
         database = FirebaseDatabase.getInstance();
@@ -132,7 +137,20 @@ public class OwnerHomeAdapter  extends RecyclerView.Adapter<OwnerHomeAdapter.MyV
 
                         helper.setProviderID(provider.getId());
                         helper.setProviderName(provider.getUsername());
-                        helper.setProviderRating("N.A.");
+
+                        if (provider.getRatings() == null || provider.getRatings().isEmpty()) {
+                            helper.setProviderRating("N.A.");
+                        } else {
+                            DecimalFormat df = new DecimalFormat("#.##");
+                            Double sum = 0.0;
+
+                            for (Double i : provider.getRatings()) {
+                                sum += i;
+                            }
+
+                            helper.setProviderRating(df.format(sum/provider.getRatings().size()));
+                        }
+
                         helper.setWeekdays(provider.getAvailabilities());
 
                         for (final String serviceID : provider.getServices()) {
@@ -141,19 +159,16 @@ public class OwnerHomeAdapter  extends RecyclerView.Adapter<OwnerHomeAdapter.MyV
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     Service service = dataSnapshot.getValue(Service.class);
                                     helper.setServiceName(service.getServiceName());
-                                    helper.setServicerID(serviceID);
-                                    System.out.println(helper.toString());
-                                    dataset.add(helper);
-                                    add(helper);
+                                    helper.setServiceID(serviceID);
+                                    dataset.add(helper.copy());
+                                    ownerHelperSortedList.add(helper.copy());
                                 }
 
                                 @Override
                                 public void onCancelled(@NonNull DatabaseError databaseError) {
-
                                 }
                             });
                         }
-
                     }
                 }
             }
@@ -163,10 +178,11 @@ public class OwnerHomeAdapter  extends RecyclerView.Adapter<OwnerHomeAdapter.MyV
 
             }
         });
+
     }
 
     public OwnerHomeAdapter(Context context) {
-        this();
+        getData();
         this.context = context;
     }
 
@@ -219,10 +235,10 @@ public class OwnerHomeAdapter  extends RecyclerView.Adapter<OwnerHomeAdapter.MyV
             public void onClick(View v) {
                 Intent intent;
                 if (current.isBooked()) {
+                    intent = new Intent(context, RatingProviderActivity.class);
                 } else {
-                    //intent = new Intent(context, BookingActivity.class);
+                    intent = new Intent(context, BookingActivity.class);
                 }
-                intent = new Intent(context, BookingActivity.class);
                 intent.putExtra(INTENT_PROVIDER, current.getProviderID());
                 intent.putExtra(INTENT_SERVICE, current.getServiceID());
                 context.startActivity(intent);

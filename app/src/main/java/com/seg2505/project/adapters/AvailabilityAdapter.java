@@ -45,7 +45,7 @@ public class AvailabilityAdapter extends RecyclerView.Adapter<AvailabilityAdapte
     private ConstraintLayout emptyLayout;
 
     private static int position;
-
+    private String timeText,dayText;
 
 
     // Provide a reference to the views for each data item
@@ -91,8 +91,8 @@ public class AvailabilityAdapter extends RecyclerView.Adapter<AvailabilityAdapte
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         this.position=position;
-        String timeText = dataset.get(position).getTime();
-        String dayText = dataset.get(position).getDay();
+         timeText = dataset.get(position).getTime();
+         dayText = dataset.get(position).getDay();
 
         holder.day.setText(dayText);
         holder.time.setText(timeText );
@@ -154,7 +154,8 @@ public class AvailabilityAdapter extends RecyclerView.Adapter<AvailabilityAdapte
         holder.modifyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onCreateDialog1();
+
+                onCreateDialog1(position);
             }
         });
     }
@@ -165,10 +166,11 @@ public class AvailabilityAdapter extends RecyclerView.Adapter<AvailabilityAdapte
      * @param position the position of the availability in the list
      */
     public void removeAt(int position) {
-        ProviderAvailabilityActivity.userReference.child("availabilities").child(String.valueOf(position)).removeValue();
         dataset.remove(position);
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, dataset.size());
+        ProviderAvailabilityActivity.userReference.child("availabilities").child(String.valueOf(position)).removeValue();
+
 
     }
 
@@ -182,6 +184,7 @@ public class AvailabilityAdapter extends RecyclerView.Adapter<AvailabilityAdapte
      * @param position the position of the service object in the dataset
      */
     public void modifyAt(Availability availability, int position) {
+
         ProviderAvailabilityActivity.userReference.child("availabilities").child(String.valueOf(position)).setValue(availability);
         dataset.set(position, availability);
         notifyItemChanged(position);
@@ -209,7 +212,7 @@ public class AvailabilityAdapter extends RecyclerView.Adapter<AvailabilityAdapte
 
 
 
-    public void onCreateDialog1() {
+    public void onCreateDialog1(int position) {
         FragmentTransaction ft =     ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
         Fragment prev =     ((AppCompatActivity) context).getSupportFragmentManager().findFragmentByTag("dialog");
         if (prev != null) {
@@ -219,6 +222,8 @@ public class AvailabilityAdapter extends RecyclerView.Adapter<AvailabilityAdapte
         dialogFragment = new TabbedDialog();
         dialogFragment.show(ft,"dialog");
         dialogFragment.setCancelable(this);
+        Log.i("kkk",position+"");
+        dialogFragment.modified(true,dataset.get(position));
 
 
     }
