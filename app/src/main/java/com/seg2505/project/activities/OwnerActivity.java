@@ -241,6 +241,14 @@ public class OwnerActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (adapter != null) {
+            adapter.getData();
+        }
+    }
+
     public void onQueryChange(String s) {
         ArrayList<OwnerHelper> filteredList = filter(adapter.getDataset(), s);
         adapter.replaceAll(filteredList);
