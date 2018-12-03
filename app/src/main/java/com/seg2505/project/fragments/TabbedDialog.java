@@ -73,6 +73,13 @@ public class TabbedDialog extends DialogFragment implements Timeable {
             timeAvailability.setText(day+" from "+starttext+" to "+endText);
 
         }
+        else{
+            start=Calendar.getInstance().get(Calendar.HOUR_OF_DAY)*60+Calendar.getInstance().get(Calendar.MINUTE);
+            end=Calendar.getInstance().get(Calendar.HOUR_OF_DAY)*60+Calendar.getInstance().get(Calendar.MINUTE);
+        }
+
+
+
 
         // Gets the information from firebase
         final ArrayList<String> data = new ArrayList<String>();
@@ -98,8 +105,25 @@ public class TabbedDialog extends DialogFragment implements Timeable {
                             end=start=hourCurrent*60+minuteCurrent;
                         }
                         if(end-start>30){
-                            canceled=false;
-                            cancelable.setCanceled(canceled,day,starttext+" to "+endText);
+                            if(modified){
+                                Log.i("hhhh","kkkk");
+
+                                canceled=false;
+                                cancelable.setCanceled(canceled,day,starttext+" to "+endText);
+                            }
+                            else{
+                                if (data.contains(day) ){
+                                    Toast.makeText(getContext(), "Day has already been picked", Toast.LENGTH_SHORT).show();
+                                }
+                                else{
+                                    canceled=false;
+                                    cancelable.setCanceled(canceled,day,starttext+" to "+endText);
+                                }
+
+                            }
+
+
+
                         }
 
                         if(day==null){
@@ -169,11 +193,19 @@ public class TabbedDialog extends DialogFragment implements Timeable {
         else {
             if (starttext==null){
 
+
                 starttext=hourCurrent+":"+minuteCurrent;
             }
             if (endText==null){
+                if (minuteCurrent<10){
+                    endText=hourCurrent+":0"+minuteCurrent;
+                }
+                else{
+                    endText=hourCurrent+":"+minuteCurrent;
 
-                endText=hourCurrent+":"+minuteCurrent;            }
+                }
+
+            }
             if (day==null){
                 day=" ";
             }
@@ -185,7 +217,7 @@ public class TabbedDialog extends DialogFragment implements Timeable {
 
     @Override
     public void setEndTime(int hour, int minute) {
-        Log.i("ggh",hour+"");
+        Log.i("ggh",minute+"");
 
         end=hour*60+minute;
         endText=String.format("%02d:%02d", hour, minute);
@@ -234,6 +266,8 @@ public class TabbedDialog extends DialogFragment implements Timeable {
     public void modified(Boolean modified, Availability availability) {
         this.modified=modified;
         this.day=availability.getDay();
+        Log.i("kkk",availability.getTime()+"ll");
+
         starttext=availability.getTime().substring(0,5);
         endText=availability.getTime().substring(9,14);
         start=Integer.valueOf(starttext.substring(0,2))*60+Integer.valueOf(starttext.substring(3,5));

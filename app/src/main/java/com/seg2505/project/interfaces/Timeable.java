@@ -10,4 +10,5 @@ public interface Timeable {
     public void setDay(String dayPicked);
 
     public void modified(Boolean modified, Availability availability);
+
 }
