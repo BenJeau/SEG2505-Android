@@ -4,6 +4,8 @@ public class Booking {
     private String idProvider, date;
     private int index;
 
+    public Booking(){}
+
     public Booking(String idProvider, int index, String date) {
         this.idProvider = idProvider;
         this.index = index;

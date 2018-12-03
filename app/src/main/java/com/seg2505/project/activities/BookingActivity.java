@@ -68,6 +68,7 @@ public class BookingActivity extends AppCompatActivity {
         });
 
          userReference = FirebaseDatabase.getInstance().getReference("users");
+
          userReference.child(LoggedUser.id).addListenerForSingleValueEvent(new ValueEventListener() {
 
 
