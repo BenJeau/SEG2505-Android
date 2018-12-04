@@ -95,6 +95,19 @@ public class OwnerHelper {
         return serviceName + providerName + providerRating + getWeekdays() + booked;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        OwnerHelper helper = (OwnerHelper) obj;
+        return helper.providerRating.equals(providerRating) &&
+                helper.providerName.equals(providerName) &&
+                helper.booked == booked &&
+                helper.serviceName.equals(serviceName) &&
+                helper.serviceID.equals(serviceID) &&
+                helper.getWeekdays().equals(getWeekdays());
+    }
+
+
+
     public OwnerHelper copy() {
         OwnerHelper copy = new OwnerHelper();
 

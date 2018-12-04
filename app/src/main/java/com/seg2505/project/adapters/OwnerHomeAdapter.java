@@ -141,7 +141,7 @@ public class OwnerHomeAdapter extends RecyclerView.Adapter<OwnerHomeAdapter.MyVi
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             if (dataSnapshot.exists()) {
                                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                    Provider provider = snapshot.getValue(Provider.class);
+                                    final Provider provider = snapshot.getValue(Provider.class);
                                     final OwnerHelper helper = new OwnerHelper();
 
                                     helper.setProviderID(provider.getId());
@@ -171,21 +171,23 @@ public class OwnerHomeAdapter extends RecyclerView.Adapter<OwnerHomeAdapter.MyVi
                                                 helper.setServiceID(serviceID);
 
 
-                                                for (Booking booking : owner.getBookings()) {
-                                                    String serviceid = booking.getServiceid();
-                                                    String proverid = booking.getIdProvider();
+                                                if (owner.getBookings() != null) {
+                                                    for (Booking booking : owner.getBookings()) {
+                                                        String serviceid = booking.getServiceid();
+                                                        String proverid = booking.getIdProvider();
 
-                                                    if (helper.getServiceID().equals(serviceid) && helper.getProviderID().equals(proverid)) {
-                                                        helper.setBooked(true);
-                                                        break;
+                                                        if (serviceID.equals(serviceid) && provider.getId().equals(proverid)) {
+                                                            helper.setBooked(true);
+                                                            break;
+                                                        }
+
                                                     }
-
                                                 }
 
 
-                                                System.out.println(helper);
-                                                dataset.add(helper.copy());
-                                                ownerHelperSortedList.add(dataset.get(dataset.size() - 1));
+                                                OwnerHelper copy = helper.copy();
+                                                dataset.add(copy);
+                                                ownerHelperSortedList.add(copy);
                                             }
 
                                             @Override
@@ -260,6 +262,8 @@ public class OwnerHomeAdapter extends RecyclerView.Adapter<OwnerHomeAdapter.MyVi
 
         if (current.isBooked()) {
             vHolder.bookingIcon.setImageResource(R.drawable.ic_bookmark_booked_24dp);
+        } else {
+            vHolder.bookingIcon.setImageResource(R.drawable.ic_bookmark_unbooked_24dp);
         }
 
         vHolder.cardView.setOnClickListener(new View.OnClickListener() {
