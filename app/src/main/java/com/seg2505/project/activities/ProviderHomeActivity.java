@@ -2,19 +2,15 @@ package com.seg2505.project.activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -26,17 +22,13 @@ import com.seg2505.project.R;
 
 import com.seg2505.project.adapters.DialogAdapter;
 import com.seg2505.project.adapters.ProviderRecyclerViewAdapter;
-import com.seg2505.project.adapters.ServiceAdapter;
-import com.seg2505.project.model.Availability;
 import com.seg2505.project.model.LoggedUser;
-import com.seg2505.project.model.Person;
 import com.seg2505.project.model.Provider;
 import com.seg2505.project.model.Service;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.PropertyPermission;
 
 public class ProviderHomeActivity extends AppCompatActivity {
 

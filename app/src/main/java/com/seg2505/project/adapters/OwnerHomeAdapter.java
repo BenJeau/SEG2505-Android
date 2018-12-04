@@ -123,6 +123,11 @@ public class OwnerHomeAdapter extends RecyclerView.Adapter<OwnerHomeAdapter.MyVi
     }
 
     public void getData() {
+        int size = ownerHelperSortedList.size();
+        for (int i = 0; i < size; i++) {
+            remove(ownerHelperSortedList.get(0));
+        }
+
         dataset = new ArrayList<OwnerHelper>();
 
         database = FirebaseDatabase.getInstance();
@@ -170,6 +175,7 @@ public class OwnerHomeAdapter extends RecyclerView.Adapter<OwnerHomeAdapter.MyVi
                                                 helper.setServiceName(service.getServiceName());
                                                 helper.setServiceID(serviceID);
 
+                                                helper.setBooked(false);
 
                                                 if (owner.getBookings() != null) {
                                                     for (Booking booking : owner.getBookings()) {
@@ -178,6 +184,10 @@ public class OwnerHomeAdapter extends RecyclerView.Adapter<OwnerHomeAdapter.MyVi
 
                                                         if (serviceID.equals(serviceid) && provider.getId().equals(proverid)) {
                                                             helper.setBooked(true);
+                                                            System.out.println("-------------------");
+                                                            System.out.println(helper);
+                                                            System.out.println(serviceID);
+                                                            System.out.println(provider.getId());
                                                             break;
                                                         }
 
@@ -254,6 +264,9 @@ public class OwnerHomeAdapter extends RecyclerView.Adapter<OwnerHomeAdapter.MyVi
             vHolder.providerRatingStars.setVisibility(View.VISIBLE);
             vHolder.providerRatingStars.setRating(Float.parseFloat(current.getProviderRating()));
             vHolder.providerRatingText.setVisibility(View.GONE);
+        } else {
+            vHolder.providerRatingStars.setVisibility(View.GONE);
+            vHolder.providerRatingText.setVisibility(View.VISIBLE);
         }
 
         vHolder.providerName.setText(current.getProviderName());

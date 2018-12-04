@@ -6,20 +6,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
-import android.view.LayoutInflater;
-import android.content.DialogInterface;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.CheckBox;
 import android.widget.Toast;
 
@@ -30,13 +20,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.seg2505.project.R;
 import com.seg2505.project.model.LoggedUser;
-import com.seg2505.project.model.Person;
 import com.seg2505.project.model.Provider;
-import com.seg2505.project.model.Service;
 import com.seg2505.project.model.Address;
 import com.seg2505.project.model.ProviderInfo;
 
-import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

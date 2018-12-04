@@ -10,7 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -31,7 +30,6 @@ import com.seg2505.project.model.Person;
 import com.seg2505.project.model.Provider;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class BookingActivity extends AppCompatActivity {
@@ -40,7 +38,7 @@ public class BookingActivity extends AppCompatActivity {
     private Availability chosenAvaility;
     private String userId;
     private Provider provider;
-    private  Owner owner;
+    private Owner owner;
     private int Index;
     private DatabaseReference userReference;
 
@@ -52,37 +50,39 @@ public class BookingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booking);
         userId = getIntent().getExtras().getString(OwnerHomeAdapter.INTENT_PROVIDER, "");
-        serviceid = getIntent().getExtras().getString(OwnerHomeAdapter.INTENT_SERVICE,"");
+        serviceid = getIntent().getExtras().getString(OwnerHomeAdapter.INTENT_SERVICE, "");
 
 
-
-         final DatePickerFragment newfra = new DatePickerFragment();
+        final DatePickerFragment newfra = new DatePickerFragment();
         FloatingActionButton fab = findViewById(R.id.book);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 CompoundButton lastCheckedRB = adapter.getLastCheckedRB();
 
-                if(lastCheckedRB == null){
+                if (lastCheckedRB == null) {
                     Toast.makeText(getApplicationContext(), "Please choose something", Toast.LENGTH_SHORT).show();
-                }else {
+                } else {
                     newfra.show(getSupportFragmentManager(), "timePicker");
                     Index = adapter.getClickedPosition();
                     chosenAvaility = adapter.getMdata().get(Index);
-                    Log.e("dsd", String.valueOf(adapter.getClickedPosition()) );
+                    Log.e("dsd", String.valueOf(adapter.getClickedPosition()));
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString("date", chosenAvaility.getDay());
+                    newfra.setArguments(bundle);
 
                 }
 
             }
         });
 
-         userReference = FirebaseDatabase.getInstance().getReference("users");
+        userReference = FirebaseDatabase.getInstance().getReference("users");
 
-         userReference.child(LoggedUser.id).addListenerForSingleValueEvent(new ValueEventListener() {
+        userReference.child(LoggedUser.id).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 owner = dataSnapshot.getValue(Owner.class);
-
 
 
             }
@@ -91,7 +91,6 @@ public class BookingActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
-
 
 
         userReference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -128,12 +127,13 @@ public class BookingActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         // Specify an adapter (see also next example)
-         adapter = new AvailAdapter(data, owner);
+        adapter = new AvailAdapter(data, owner);
         recyclerView.setAdapter(adapter);
     }
-    public void Book(final String s){
+
+    public void book(final String s) {
         final List<String> dates = new ArrayList<>();
-         final Booking booking  = new Booking(provider.getId(), Index, s,serviceid);
+        final Booking booking = new Booking(provider.getId(), Index, s, serviceid);
 
         userReference.addListenerForSingleValueEvent(new ValueEventListener() {
 
@@ -143,26 +143,26 @@ public class BookingActivity extends AppCompatActivity {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     DataSnapshot snapshot = postSnapshot;
                     Person person = snapshot.getValue(Person.class);
-                    if (person.getRole().equals("Owner")){
+                    if (person.getRole().equals("Owner")) {
                         Owner user = snapshot.getValue(Owner.class);
                         List<Booking> bookings = user.getBookings();
-                        for (int i =0; i<bookings.size();i++){
+                        for (int i = 0; i < bookings.size(); i++) {
                             String date = bookings.get(i).getDate();
                             String providerid = bookings.get(i).getIdProvider();
                             int index = bookings.get(i).getIndex();
-                            if(providerid.equals(userId) && index == Index ){
-                                Log.e("date", date );
+                            if (providerid.equals(userId) && index == Index) {
+                                Log.e("date", date);
                                 dates.add(date);
                             }
                         }
                     }
                 }
-                if(dates.contains(s)){
+                if (dates.contains(s)) {
                     Toast.makeText(getApplicationContext(), "Date already booked", Toast.LENGTH_SHORT).show();
-                }else{
+                } else {
                     owner.addBookings(booking);
                     userReference.child(LoggedUser.id).setValue(owner);
-                    Toast.makeText(getApplicationContext(), s +": " + chosenAvaility.getDay() + ": "+chosenAvaility.getTime(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), s + ": " + chosenAvaility.getDay() + ": " + chosenAvaility.getTime(), Toast.LENGTH_SHORT).show();
 
                 }
 
@@ -172,14 +172,6 @@ public class BookingActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
-
-
-
-
-
-
-
-
 
 
     }

@@ -44,11 +44,4 @@
     <string name="view_services">View services</string>
     <string name="view_user">View users</string>
 
-    <!-- Owner Activity -->
-    <string-array name="owner_dropdown_list">
-        <item>Type of Service</item>
-        <item>Time</item>
-        <item>Rating</item>
-    </string-array>
-
 </resources>

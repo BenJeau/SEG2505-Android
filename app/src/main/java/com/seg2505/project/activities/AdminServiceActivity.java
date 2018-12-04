@@ -1,6 +1,5 @@
 package com.seg2505.project.activities;
 
-import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -18,9 +17,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.seg2505.project.R;
-import com.seg2505.project.adapters.AdminRecyclerViewAdapter;
 import com.seg2505.project.adapters.ServiceAdapter;
-import com.seg2505.project.model.Provider;
 import com.seg2505.project.model.Service;
 
 import java.util.ArrayList;

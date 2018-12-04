@@ -219,7 +219,7 @@ public class OwnerActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (searchFiltersLayout.getVisibility() != View.GONE) {
             removeFilter();
-        } else if (!searchView.isIconified()){
+        } else if (!searchView.isIconified()) {
             searchView.setIconified(true);
         } else {
             super.onBackPressed();
@@ -367,7 +367,7 @@ public class OwnerActivity extends AppCompatActivity {
             }
 
             if (filterRating) {
-                if (!oHelper.getProviderRating().equals("N.A.") && rating.getRating() < Double.parseDouble(oHelper.getProviderRating())) {
+                if (!oHelper.getProviderRating().equals("N.A.") && rating.getRating() >= Double.parseDouble(oHelper.getProviderRating())) {
                     continue;
                 }
             }
@@ -382,7 +382,7 @@ public class OwnerActivity extends AppCompatActivity {
         boolean temp = false;
 
         for (String i : list) {
-            if (text.toLowerCase().contains(i)){
+            if (text.toLowerCase().contains(i)) {
                 temp = true;
                 break;
             }
