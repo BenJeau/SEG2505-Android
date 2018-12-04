@@ -33,7 +33,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OwnerHomeAdapter  extends RecyclerView.Adapter<OwnerHomeAdapter.MyViewHolder> {
+public class OwnerHomeAdapter extends RecyclerView.Adapter<OwnerHomeAdapter.MyViewHolder> {
 
     private ArrayList<OwnerHelper> dataset;
     private FirebaseDatabase database;
@@ -114,7 +114,7 @@ public class OwnerHomeAdapter  extends RecyclerView.Adapter<OwnerHomeAdapter.MyV
         }
         ArrayList<OwnerHelper> pos1 = new ArrayList<>(oHelpers);
         ownerHelperSortedList.addAll(oHelpers);
-        for (int i = 0; i < pos1.size(); i++){
+        for (int i = 0; i < pos1.size(); i++) {
             // Updates the position of the children of RecyclerView when items are moved
             this.notifyItemMoved(i, ownerHelperSortedList.indexOf(pos1.get(i)));
             this.notifyItemRangeChanged(i, ownerHelperSortedList.size());
@@ -128,76 +128,80 @@ public class OwnerHomeAdapter  extends RecyclerView.Adapter<OwnerHomeAdapter.MyV
         database = FirebaseDatabase.getInstance();
 
         final DatabaseReference serviceReference = database.getReference("services");
-        Query providerQuery  = database.getReference("users").orderByChild("role").equalTo("Provider");
+        final Query providerQuery = database.getReference("users").orderByChild("role").equalTo("Provider");
 
-        providerQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+        database.getReference("users").child(LoggedUser.id).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        Provider provider = snapshot.getValue(Provider.class);
-                        final OwnerHelper helper = new OwnerHelper();
+                    final Owner owner = dataSnapshot.getValue(Owner.class);
 
-                        helper.setProviderID(provider.getId());
-                        helper.setProviderName(provider.getUsername());
+                    providerQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                    Provider provider = snapshot.getValue(Provider.class);
+                                    final OwnerHelper helper = new OwnerHelper();
 
-                        if (provider.getRatings() == null || provider.getRatings().isEmpty()) {
-                            helper.setProviderRating("N.A.");
-                        } else {
-                            DecimalFormat df = new DecimalFormat("#.##");
-                            Double sum = 0.0;
+                                    helper.setProviderID(provider.getId());
+                                    helper.setProviderName(provider.getUsername());
 
-                            for (Double i : provider.getRatings()) {
-                                sum += i;
-                            }
+                                    if (provider.getRatings() == null || provider.getRatings().isEmpty()) {
+                                        helper.setProviderRating("N.A.");
+                                    } else {
+                                        DecimalFormat df = new DecimalFormat("#.##");
+                                        Double sum = 0.0;
 
-                            helper.setProviderRating(df.format(sum/provider.getRatings().size()));
-                        }
+                                        for (Double i : provider.getRatings()) {
+                                            sum += i;
+                                        }
 
-                        helper.setWeekdays(provider.getAvailabilities());
+                                        helper.setProviderRating(df.format(sum / provider.getRatings().size()));
+                                    }
 
-                        for (final String serviceID : provider.getServices()) {
-                            serviceReference.child(serviceID).addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    Service service = dataSnapshot.getValue(Service.class);
-                                    helper.setServiceName(service.getServiceName());
-                                    helper.setServiceID(serviceID);
+                                    helper.setWeekdays(provider.getAvailabilities());
 
-                                    database.getReference("users").child(LoggedUser.id).addListenerForSingleValueEvent(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                            if (dataSnapshot.exists()) {
-                                                Owner owner = dataSnapshot.getValue(Owner.class);
+                                    for (final String serviceID : provider.getServices()) {
+                                        serviceReference.child(serviceID).addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                Service service = dataSnapshot.getValue(Service.class);
+                                                helper.setServiceName(service.getServiceName());
+                                                helper.setServiceID(serviceID);
+
 
                                                 for (Booking booking : owner.getBookings()) {
                                                     String serviceid = booking.getServiceid();
                                                     String proverid = booking.getIdProvider();
-                                                    
-                                                    if(helper.getServiceID().equals(serviceID) && helper.getProviderID().equals(proverid)){
+
+                                                    if (helper.getServiceID().equals(serviceid) && helper.getProviderID().equals(proverid)) {
                                                         helper.setBooked(true);
+                                                        break;
                                                     }
 
                                                 }
+
+
+                                                System.out.println(helper);
+                                                dataset.add(helper.copy());
+                                                ownerHelperSortedList.add(dataset.get(dataset.size() - 1));
                                             }
 
-                                            dataset.add(helper.copy());
-                                            ownerHelperSortedList.add(helper.copy());
-                                        }
-
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                        }
-                                    });
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                            }
+                                        });
+                                    }
                                 }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-                                }
-                            });
+                            }
                         }
-                    }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
                 }
             }
 
@@ -221,7 +225,7 @@ public class OwnerHomeAdapter  extends RecyclerView.Adapter<OwnerHomeAdapter.MyV
         private RatingBar providerRatingStars;
         private CardView cardView;
 
-        private MyViewHolder (View v) {
+        private MyViewHolder(View v) {
             super(v);
 
             serviceName = v.findViewById(R.id.serviceName);

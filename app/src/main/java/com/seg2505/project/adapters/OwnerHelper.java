@@ -54,7 +54,8 @@ public class OwnerHelper {
         String weekdays = "";
 
         for (Availability availability : availabilities) {
-            weekdays += availability.getDay().substring(0, 3).toUpperCase() + ", ";
+            if (!weekdays.contains(availability.getDay().substring(0, 3).toUpperCase()))
+                weekdays += availability.getDay().substring(0, 3).toUpperCase() + ", ";
         }
 
         if (!weekdays.equals("")) {
