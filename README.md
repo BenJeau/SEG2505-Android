@@ -43,4 +43,4 @@ Veuillez noter que si le Provider a déjà entré son information, l'activity po
 |amprodz          | Aymen Mhamdi          |300034572|
 
 ## Nous avons connecté circleci à notre projet
-![alt text](https://github.com/BenJeau/SEG2505-Android/blob/master/circleCiConnected.png)
+![CircleCI](circleCiConnected.png)
